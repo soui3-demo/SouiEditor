@@ -8,12 +8,12 @@
 #include "SRotateWindow.h"
 #include "SImgCanvas.h"
 #include "CmdLine.h"
-#include <helper/AppDir.h>
+#include <helper/SAppDir.h>
 
 //扩展控件
 #include "stabctrl2.h"
 #include "SButtonEx.h"
-#include "SSkinMutiFrameImg.h"
+//#include "SSkinMutiFrameImg.h"
 #include "simagemaskwnd.h"
 #include "SFreeMoveWindow.h"
 #include "SVscrollbar.h"
@@ -146,7 +146,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		//读取自定义消息框布局
 		int ret = 0;
 		pugi::xml_document xmlDoc;
-		if (!theApp->LoadXmlDocment(xmlDoc, _T("xml_messagebox"), _T("LAYOUT")) || !SetMsgTemplate(xmlDoc.child(L"SOUI")))
+		if (!theApp->LoadXmlDocment(xmlDoc, _T("LAYOUT:xml_messagebox")) || !SetMsgTemplate(xmlDoc.child(L"SOUI")))
 			ret = -1;
 		if (ret == -1)
 			SMessageBox(NULL, _T("【消息框皮肤】读取失败"), _T("提示"), 0);
@@ -165,7 +165,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         {	//加载语言翻译包
             theApp->SetTranslator(trans);
             pugi::xml_document xmlLang;
-            if(theApp->LoadXmlDocment(xmlLang,_T("lang_cn"),_T("translator")))
+            if(theApp->LoadXmlDocment(xmlLang,_T("translator:lang_cn")))
             {
                 CAutoRefPtr<ITranslator> langCN;
                 trans->CreateTranslator(&langCN);
@@ -209,7 +209,7 @@ void RegisterExtendControl(SApplication *theApp)
 	theApp->RegisterWindowClass<SWindowEx>();
 	theApp->RegisterWindowClass<SGifPlayer>();//注册gif
 	theApp->RegisterWindowClass<SRatingBar>();
-	theApp->RegisterWindowClass<SListCtrlEx>();
+	//theApp->RegisterWindowClass<SListCtrlEx>();
 	theApp->RegisterWindowClass<SIPAddressCtrl>();
 	theApp->RegisterWindowClass<STurn3dView>();
 	theApp->RegisterWindowClass<SRadioBox2>();
@@ -218,7 +218,7 @@ void RegisterExtendControl(SApplication *theApp)
 	
 	//extened skins
 	theApp->RegisterSkinClass<SColorMask>();
-	theApp->RegisterSkinClass<SSkinMutiFrameImg>();
+//	theApp->RegisterSkinClass<SSkinMutiFrameImg>();
 	theApp->RegisterSkinClass<SSkinVScrollbar>();
 	theApp->RegisterSkinClass<SSkinNewScrollbar>();
 	theApp->RegisterSkinClass<SSkinGif>();

@@ -1,10 +1,14 @@
-###                                       SouiEdiotr界面编辑器使用说明
+**编译**
 
-准备工作, 编译SouiEditor后, 需要将SouiEditor目录的**Config目录拷贝到SouiEditor可执行文件**所在目录.
+请将代码Clone到  SOUI目录/Demos\SouiEditor
+
+编译SouiEditor后, 需要将SouiEditor目录的**Config目录拷贝到SouiEditor可执行文件**所在目录.
+
+**使用**
 
 运行后主界面如下图:
 
-![img](https://raw.githubusercontent.com/soui-demo/SouiEditor/master/docimage/1.png)
+![img](https://raw.githubusercontent.com/soui3-demo/SouiEditor/master/docimage/1.png)
 
  
 
@@ -20,7 +24,7 @@
 
 在可视化编辑模式时，在窗体可视编辑窗口中点击控件，代码窗口会自动定位此控件代码。演示如下
 
-![img](https://raw.githubusercontent.com/soui-demo/SouiEditor/master/docimage/1.gif)
+![img](https://raw.githubusercontent.com/soui3-demo/SouiEditor/master/docimage/1.gif)
 
 
 
@@ -28,7 +32,7 @@
 
 **SouiEditor也支持以命令行方式打开工程, 如VS中可设置如下, 方便随时编辑**.
 
-![img](https://raw.githubusercontent.com/soui-demo/SouiEditor/master/docimage/2.png)
+![img](https://raw.githubusercontent.com/soui3-demo/SouiEditor/master/docimage/2.png)
 
  
 
@@ -64,4 +68,4 @@
 
 自动提示功能的演示参见下图：
 
-![img](https://raw.githubusercontent.com/soui-demo/SouiEditor/master/docimage/3.gif)
+![img](https://raw.githubusercontent.com/soui3-demo/SouiEditor/master/docimage/3.gif)

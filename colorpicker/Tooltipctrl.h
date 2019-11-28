@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <core/SimpleWnd.h>
+#include <core/SNativeWnd.h>
 
 namespace SOUI{
 
@@ -14,7 +14,7 @@ typedef struct tagAFX_OLDTOOLINFO1 {
 	LPTSTR lpszText;
 } AFX_OLDTOOLINFO1;
 
-class CSimpleToolTip : public CSimpleWnd
+class CSimpleToolTip : public SNativeWnd
 {
 public:
 	BOOL Create(HWND hParent,DWORD dwExStyle,HINSTANCE hInst=NULL)

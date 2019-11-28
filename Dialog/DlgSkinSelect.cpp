@@ -3,7 +3,7 @@
 #include "helper/SplitString.h"
 #include "CDebug.h"
 
-#include "helper\mybuffer.h"
+//#include "helper\mybuffer.h"
 #include "DlgNewSkin.h"
 #include "DlgInput.h"
 #include "propgrid/SPropertyGrid.h"

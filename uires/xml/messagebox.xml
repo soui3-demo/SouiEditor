@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<SOUI title="mesagebox" width="200" height="200" appwin="0" frameSize="80,60,20,100" minSize="300,132" resize="0" translucent="1" trCtx="messagebox">
+<SOUI title="mesagebox" width="376" height="200" appwin="0" frameSize="80,60,20,100" minSize="300,132" resize="0" translucent="1" trCtx="messagebox">
 	<buttonText>
 		<ok>确定</ok>
 		<cancel>取消</cancel>
@@ -20,7 +20,7 @@
 			<img name="img_icon_information" pos="9,|0, @48, @48" offset="0,-0.5" skin="sking_main_icon" display="0" />
 			<img name="img_icon_question" pos="9,|0,@48, @48" offset="0,-0.5" skin="sking_main_icon" display="0" />
 			<img name="img_icon_exclamation" pos="9,|0,@48, @48" offset="0,-0.5" skin="sking_main_icon" display="0" />
-			<text name="msgtext" pos="[5,0" colorText="@color/white" multilines="1" valign="middle" maxWidth="600" />
+			<text name="msgtext" pos="[5,|-40" colorText="@color/white" multilines="1" valign="middle" maxWidth="350" text="    " />
 		</window>
 		<img pos="1,-50,-1,-1" colorBkgnd="#292b2f" skin="" />
 		<tabctrl name="btnSwitch" pos="0,-50,-0,-0" tabHeight="0">

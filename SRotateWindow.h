@@ -2,7 +2,7 @@
 
 //作者：望天涯
 
-#include "helper/SMatrix.h"
+#include "matrix/SMatrix.h"
 class SRotateWindow :
 	public SWindow
 {
@@ -53,9 +53,9 @@ protected:
 		SMatrix form = InitMatrix( m_nTurn == TURN_RIGHT ?  nTmp : -nTmp, center);
 		CRect rcImg(CPoint(0,0),m_pAnimImg->Size());
 
-		pRT->SetTransform(&form, NULL);
+		pRT->SetTransform(form.GetData());
 		pRT->DrawBitmapEx(m_rcItem, m_pAnimImg ,&rcImg , EM_TILE, 200);
-		pRT->SetTransform(&SMatrix());
+		pRT->SetTransform(SMatrix().GetData());
 	}
 
 	void OnTimer(char cTimerID)

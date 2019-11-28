@@ -13,7 +13,7 @@
 #include "SImageBtnEx.h"
 #include "SListBoxDrop.h"
 #include "ResManger.h"
-#include <helper/SMenu.h>
+#include <helper/SMenuEx.h>
 #include <vector>
 
 

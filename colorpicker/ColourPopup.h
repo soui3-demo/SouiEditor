@@ -34,7 +34,7 @@ struct IColorPicker{
 /////////////////////////////////////////////////////////////////////////////
 // CColourPopup window
 
-class CColourPopup : public CSimpleWnd,	public IMessageFilter
+class CColourPopup : public SNativeWnd,	public IMessageFilter
 
 {
 // Construction

@@ -16,7 +16,7 @@ void SOUI::SImageBtnEx::OnPaint( IRenderTarget *pRT )
 		rc.top += m_IconOffsetY;
 		rc.right = rc.left + sz.cx;
 		rc.bottom = rc.top + sz.cy;
-		m_pIcon->Draw(pRT, rc, 0);
+		m_pIcon->DrawByIndex(pRT, rc, 0);
 	}
 
 	if (!m_strText.IsEmpty())

@@ -18,7 +18,7 @@ namespace SOUI
 	{
 		CRect rcWnd = GetWindowRect();
 		if (m_pSkin)
-			m_pSkin->Draw(pRT, rcWnd, 0);
+			m_pSkin->DrawByState(pRT, rcWnd, 0);
 		if (!m_pSkinForce) 
 			return;
 		UINT uState = _GetDrawState();
@@ -31,7 +31,7 @@ namespace SOUI
 		dwRet.bottom = skSize.cy;
 		POINT dwOff = rcWnd.TopLeft();
 		dwRet.OffsetRect(dwOff);
-		m_pSkinForce->Draw(pRT,dwRet,(DWORD)uState);
+		m_pSkinForce->DrawByState(pRT,dwRet,(DWORD)uState);
 	}
 
 	void SSwitch::OnTimer( char cTimerID )

@@ -443,7 +443,7 @@ void CMainDlg::OnLanguage(int nID)
 	bool bCnLang = nID == 1;
 
 	pugi::xml_document xmlLang;
-	if (SApplication::getSingletonPtr()->LoadXmlDocment(xmlLang, bCnLang ? _T("lang_cn") : _T("lang_jp"), _T("translator")))
+	if (SApplication::getSingletonPtr()->LoadXmlDocment(xmlLang, bCnLang ? _T("translator:lang_cn") : _T("translator:lang_jp")))
 	{
 		CAutoRefPtr<ITranslator> lang;
 		pTransMgr->CreateTranslator(&lang);
@@ -467,7 +467,7 @@ void CMainDlg::OnClose()
 		CloseProject();
 	}
 
-	CSimpleWnd::DestroyWindow();
+	SNativeWnd::DestroyWindow();
 }
 
 void CMainDlg::OnMaximize()
@@ -520,7 +520,7 @@ void CMainDlg::OnTimer(UINT_PTR timeID)
 	if (timeID == TIMERID_RELOAD_LAYOUT)
 	{
 		m_pDesignerView->GetCodeFromEditor(NULL);
-		CSimpleWnd::KillTimer(TIMERID_RELOAD_LAYOUT);
+		SNativeWnd::KillTimer(TIMERID_RELOAD_LAYOUT);
 	}
 	else
 	{
@@ -530,7 +530,7 @@ void CMainDlg::OnTimer(UINT_PTR timeID)
 
 bool CMainDlg::Desiner_TabSelChanged(EventTabSelChanged *evt_sel)
 {
-	CSimpleWnd::SetTimer(TIMERID_RELOAD_LAYOUT, 300);
+	SNativeWnd::SetTimer(TIMERID_RELOAD_LAYOUT, 300);
 	return false;
 }
 
@@ -924,7 +924,7 @@ bool CMainDlg::OnWorkspaceTabSelChanged(EventArgs * pEvtBase)
 		while (pos)
 		{
 			const SMap<SStringT, SStringT>::CPair* item = m_UIResFileMgr.m_mapXmlFile.GetAt(pos);
-			SStringT strLayoutName = RT_LAYOUT;
+			SStringT strLayoutName = _T("LAYOUT");
 			strLayoutName.MakeLower();
 			if (item->m_key.Find(strLayoutName + L":") == -1)
 			{

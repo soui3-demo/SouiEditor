@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <core/simplewnd.h>
+#include <core/SNativeWnd.h>
 
 class CScintillaModule
 {
@@ -20,7 +20,7 @@ class CScintillaWnd;
 typedef void (*SCIWND_FN_CALLBACK)(CScintillaWnd*, int, SStringT);
 
 // CScintillaWnd
-class CScintillaWnd : public CSimpleWnd
+class CScintillaWnd : public SNativeWnd
 {
 public:
 	CScintillaWnd();

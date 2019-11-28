@@ -191,7 +191,7 @@ public:
 		{
 			m_pCDropWnd->SetVisible(FALSE, TRUE);
 			m_pDesignerView->SetSelCtrlNode(ctrlNode);
-			SWND pChild = m_pDesignerView->m_pMoveWndRoot->SwndFromPoint(pt, FALSE);			
+			SWND pChild = m_pDesignerView->m_pMoveWndRoot->SwndFromPoint(pt);			
 			SWindow *pSChild = SWindowMgr::GetWindow(pChild);
 			if (pSChild == 0)
 			{
