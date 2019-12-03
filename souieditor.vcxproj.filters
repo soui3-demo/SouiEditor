@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="SOUI Resource">
+      <UniqueIdentifier>{d4915d71-7d20-4648-908e-d8788fbab6c6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\controls.extend\image3d\3dlib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\image3d\3dmatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\image3d\3dtransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Adapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="colorpicker\ColourPopup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DesignerView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgAbout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgCreatePro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgFontSelect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgNewLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgNewSkin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgSkinSelect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\DlgStyleManage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\ExtendSkins.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="helpapi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pugixml_write.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SButtonEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SChromeTabCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScintillaWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="colorpicker\SColorPicker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDemoSkin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDesignerRoot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SFreeMoveWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\gif\SGifPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SMcListViewEx\SHeaderCtrlEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SImageBtnEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SImageMaskWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SImageSwitcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SImgCanvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SIPAddressCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SListCtrlEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SMoveWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SouiEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SouiRealWndHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="propgrid\SPropertyGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="propgrid\propitem\SPropertyItem-Color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="propgrid\propitem\SPropertyItem-Option.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="propgrid\propitem\SPropertyItem-Size.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="propgrid\propitem\SPropertyItem-Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="propgrid\SPropertyItemBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SRadioBox2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SRatingBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SScrollText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\gif\SSkinAPNG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\gif\SSkinGif.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SSwitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\STabCtrl2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\STurn3DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SysdataMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.h.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SouiEditorApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\controls.extend\SGroupList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\controls.extend\image3d\3dlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\image3d\3dmatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\image3d\3dTransform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Adapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CmdLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CNewGuid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="colorpicker\ColourPopup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignerView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgAbout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgCreatePro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgFontSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgNewLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgNewSkin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgSkinSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog\DlgStyleManage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DragDownMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\ExtendSkins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="helpapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\image3d\PerspectiveTransform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pugixml_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\gif\SAniImgFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SButtonEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SChromeTabCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScintillaWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="colorpicker\SColorPicker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDemoSkin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDesignerRoot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SFreeMoveWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\gif\SGifPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SMcListViewEx\SHeaderCtrlEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SImageBtnEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SImageMaskWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SImageSwitcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SImgCanvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SIPAddressCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SListBoxDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SListCtrlEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SMoveWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SouiRealWndHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\SPropertyEmbedWndHelper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\SPropertyGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\propitem\SPropertyItem-Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\SPropertyItem-i.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\propitem\SPropertyItem-Option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\propitem\SPropertyItem-Size.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\propitem\SPropertyItem-Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="propgrid\SPropertyItemBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SRadioBox2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SRatingBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRotateWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SScrollText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\gif\SSkinAPNG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\gif\SSkinGif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SSwitch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\STabCtrl2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\SText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\controls.extend\STurn3DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SysdataMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="colorpicker\Tooltipctrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xpm_icons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="souieditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="uires\uires.idx">
+      <Filter>SOUI Resource</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
