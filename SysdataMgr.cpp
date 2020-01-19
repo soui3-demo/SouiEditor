@@ -4,6 +4,7 @@
 #include <vector>
 #include "helpapi.h"
 #include "Global.h"
+#include <algorithm>
 
 extern SStringT g_CurDir;
 

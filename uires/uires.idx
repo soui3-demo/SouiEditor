@@ -37,7 +37,7 @@
 		<file name="menu_sep_png" path="image\menu_sep.png" />
 	</IMG>
 	<ICON>
-		<file name="ICON_LOGO" path="image\soui.ico" />
+		<file name="ICON_logo" path="image\soui.ico" />
 	</ICON>
 	<translator>
 		<file name="lang_cn" path="translator\lang_cn.xml" />

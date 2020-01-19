@@ -2,7 +2,7 @@
 <SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16" width="500" height="150" margin="1,5,5,5" wndType="8" toolWindow="1">
 	<root colorBkgnd="@color/bkBlack1" cache="1" skin="">
 		<caption pos="0,0,-0,30" show="1" font="adding:0">
-			<icon name="NAME_UIDESIGNER_main_icon" skin="app_main_icon" pos="8,9" />
+			<icon name="NAME_UIDESIGNER_main_icon" skin="skin_main_icon" pos="8,9" />
 		</caption>
 		<text pos="29,6" class="CLASS_UIDESIGNER_ue_cls_title">新建布局</text>
 		<imgbtn name="NAME_UIDESIGNER_btn_close" skin="_skin.sys.btn.close" pos="-45,0" tip="close" animate="1" />

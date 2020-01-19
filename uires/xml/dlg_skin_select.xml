@@ -5,7 +5,7 @@
 			<window pos="0,0,-0,-0" layout="vbox" show="1" skin="">
 				<window size="-2,30" colorBkgnd="#0063b1" colorText="#FFFFFF">
 					<caption pos="0,0,-0,30" show="1" font="adding:0">
-						<icon name="NAME_UIDESIGNER_main_icon" skin="app_main_icon" pos="8,9" />
+						<icon name="NAME_UIDESIGNER_main_icon" skin="skin_main_icon" pos="8,9" />
 					</caption>
 					<text pos="29,|0" offset="0, -0.5" class="CLASS_UIDESIGNER_ue_cls_title">资源管理</text>
 					<imgbtn name="btn_close" skin="_skin.sys.btn.close" pos="-45,0" tip="close" animate="1" />

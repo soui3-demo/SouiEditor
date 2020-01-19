@@ -2575,7 +2575,6 @@ void SDesignerView::TrimXmlNodeTextBlank(pugi::xml_node xmlNode)
 	}
 }
 
-
 bool SDesignerView::OnPropGridItemActive(EventArgs *pEvt)
 {
 	EventPropGridItemActive *pEvent = (EventPropGridItemActive*)pEvt;
@@ -2590,7 +2589,6 @@ bool SDesignerView::OnPropGridItemActive(EventArgs *pEvt)
 	}
 	else
 	{
-
 		((CMainDlg*)m_pMainHost)->m_edtDesc->SetWindowText(strDesc);
 	}
 
@@ -2601,11 +2599,11 @@ void SDesignerView::UseEditorUIDef(bool bYes) //使用编辑器自身的UIDef还
 {
 	if (bYes)
 	{
-		SUiDef::getSingleton().SetUiDef(m_pOldUiDef);
+		SUiDef::getSingleton().SetUiDef(m_pOldUiDef, false);
 	}
 	else
 	{
-		SUiDef::getSingleton().SetUiDef(m_pUiDef);
+		SUiDef::getSingleton().SetUiDef(m_pUiDef, true);
 	}
 }
 

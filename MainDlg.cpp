@@ -10,6 +10,7 @@
 #include "Dialog/DlgAbout.h"
 #include "SysdataMgr.h"
 #include <vector>
+#include <algorithm>
 #include <helper/SMenu.h>
 #include <helper/SMenuEx.h>
 #include "SImgCanvas.h"

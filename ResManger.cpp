@@ -3,6 +3,7 @@
 #include "CDebug.h"
 #include "helpapi.h"
 #include <vector>
+#include <algorithm>
 
 ResManger::ResManger()
 {
@@ -246,7 +247,7 @@ void ResManger::LoadResFileEx(SStringT& filepath, pugi::xml_document& xmlDoc, SS
 				const SMap<SStringT, SStringT>::CPair * pFilePair = m_mapXmlFile.Lookup(strSrc);
 				if (pFilePair == NULL)
 				{
-					SASSERT_FMTW(L"Locating filepath failed, src=%s", strSrc);
+					SASSERT_FMTW(L"Locating filepath failed, src=%s", (LPCTSTR)strSrc);
 					return;
 				}
 				
