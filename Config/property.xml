@@ -216,7 +216,8 @@
 		<margin/>				
 		<inset/>				
 		<padding/>				
-		<cursor/>				
+		<cursor/>
+		<msgTransparent style="propoption" name="消息穿透" options="是:1|否:0"  description="是否响应鼠标点击事件"/>	
 		<dotted style="propoption" name ="dotted" options="是:1|否:0" description="是否支持省略号显示文本" />
 		<alpha style="proptext" name ="透明度(alpha)" description="数值在0-255之间"/>
 		<trackMouseEvent style="proptext" name ="trackMouseEvent" />		

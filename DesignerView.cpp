@@ -147,7 +147,7 @@ BOOL SDesignerView::CloseProject()
 	m_pContainer->SSendMessage(WM_DESTROY);
 	m_pContainer->Invalidate();
 	m_pScintillaWnd->SendEditor(SCI_CLEARALL);
-	m_pPropertyContainer->SSendMessage(WM_DESTROY);
+	//m_pPropertyContainer->SSendMessage(WM_DESTROY);
 	m_treeXmlStruct->RemoveAllItems();
 	m_pRealWndRoot = NULL;
 	m_pMoveWndRoot = NULL;
@@ -2568,7 +2568,7 @@ void SDesignerView::UseEditorUIDef(bool bYes) //使用编辑器自身的UIDef还
 {
 	if (bYes)
 	{
-		SUiDef::getSingleton().SetUiDef(m_pOldUiDef, false);
+		SUiDef::getSingleton().SetUiDef(m_pOldUiDef, true);
 	}
 	else
 	{

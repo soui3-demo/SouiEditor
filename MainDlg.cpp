@@ -636,11 +636,30 @@ void CMainDlg::OpenProject(SStringT strFileName)
 {
 	//注册事件
 	m_treePro->RemoveAllItems();
-
+	
 	SStringT strFile = strFileName;
 	int n = strFileName.ReverseFind(_T('\\'));
 	m_strUiresPath = strFileName;
 	m_strProPath = strFileName.Mid(0, n);
+	
+	if (!FileIsExist(strFileName))
+	{
+		SStringT notestr;
+		notestr.Format(_T("未能打开 %s, \n是否从最近列表中移除对它的引用?"), strFileName);
+		if (SMessageBox(NULL, notestr, _T("提示"), MB_YESNO) == IDYES)
+		{
+			std::vector<SStringT>::iterator it = std::find(m_vecRecentFile.begin(), m_vecRecentFile.end(), strFileName);
+			if (it != m_vecRecentFile.end())
+			{				
+				m_vecRecentFile.erase(it);
+				SaveAppCfg();
+				LoadAppCfg();
+			}
+		}
+		
+		return;
+	}
+
 	m_pDesignerView->OpenProject(strFileName);
 
 	pugi::xml_document xmlDoc;

@@ -2,6 +2,7 @@
 #include "SysdataMgr.h"
 #include "CDebug.h"
 #include <vector>
+#include <algorithm>
 #include "helpapi.h"
 #include "Global.h"
 #include <algorithm>

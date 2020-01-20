@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <include width="500" height="500">
 	<splitrow name="uidesigner_split_row" sepSkin="" pos="0,[0,-0,-0" sepSize="6">
 		<pane idealSize="220" minSize="30" priority="3" clipClient="1">
@@ -6,6 +6,7 @@
 				<page title="Layout" colorBorder="#ffff00">
 					<treectrl pos="0,0,-0,-0" name="workspace_tree" itemHeight="28" colorItemText="#FFFFFF" colorItemSelText="#FFFFFF" colorItemSelBkgnd="@color/itemSelected" colorHover="@color/itemHover" rightClickSel="1" colorBkgnd="#FFFFFF12" />
 				</page>
+
 				<page title="XML文件" colorBorder="#ffff00">
 					<listbox pos="0,0,-0,-0" name="workspace_xmlfile_lb" weight="1" hotTrack="1" itemHeight="28" colorSelText="#FFFFFF" colorItemSelBkgnd="rgb(234,128,16)" colorBkgnd="#FFFFFF12" text-x="20" />
 				</page>
