@@ -122,8 +122,12 @@ namespace SOUI
 			}
 		}
 
-		CRect rect;
+		CRect rect, rectSizeText;
 		GetWindowRect(rect);
+		rectSizeText.left = rect.right+5;
+		rectSizeText.top = rect.top;
+		rectSizeText.right = rectSizeText.left + 150;
+		rectSizeText.bottom = rectSizeText.top + 20;
 
 		SPainter painter;
 		BeforePaint(pRT, painter);
@@ -149,6 +153,11 @@ namespace SOUI
 			pRT->DrawRectangle(m_rcPos8);
 
 			pRT->DrawRectangle(rect);
+			SStringT strSize;
+			strSize.Format(L"%d,%d", rect.Width(), rect.Height());
+			COLORREF old = pRT->SetTextColor(RGBA(255, 0, 0, 255));
+			pRT->DrawText(strSize, strSize.GetLength(), &rectSizeText, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+			pRT->SetTextColor(old);
 			pRT->SelectObject(oldpen);
 		}
 		else
@@ -185,7 +194,7 @@ namespace SOUI
 		if (m_pRealWnd != m_Desiner->m_pRealWndRoot)
 		{
 			SStringT s;
-			long data = ((SouiEditorApp*)SApplication::getSingletonPtr())->GetWindowIndex(m_pRealWnd);
+			long data = m_pRealWnd->GetUserData();
 			s.Format(_T("%d"), data);
 			m_Desiner->SetCurrentCtrl(m_Desiner->FindNodeByAttr(m_Desiner->m_CurrentLayoutNode, L"data", s), this);
 			m_Desiner->CreatePropGrid(m_Desiner->m_curSelXmlNode.name());

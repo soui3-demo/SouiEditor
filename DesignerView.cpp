@@ -356,13 +356,15 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName)
 		}
 
 		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, nWidth + MARGIN * 2, nHeight + MARGIN * 2);
+		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, 
+			(nWidth == -1) ? 800 : nWidth + MARGIN * 2,
+			(nHeight == -1) ? 500 : nHeight + MARGIN * 2);
 
 		s2 = L"<designerRoot pos=\"20,20\" " + strAttrSize + L" colorBkgnd=\"#d0d0d0\"/>";
 	}
 
 	//wchar_t *s = L"<window pos=\"20,20,@500,@500\" colorBkgnd=\"#d0d0d0\"></window>";
-	const wchar_t *s3 = L"<movewnd pos=\"20,20,@800,@500\" ></movewnd>";
+	const wchar_t *s3 = L"<movewnd pos=\"20,20,@800,@500\"></movewnd>";
 
 	g_bHookCreateWnd = TRUE;
 
@@ -566,27 +568,6 @@ void SDesignerView::RenameWnd(pugi::xml_node xmlNode, BOOL force)
 		return;
 	}
 
-	//if (force)
-	//{
-	//	if (!xmlAttr)
-	//	{
-
-	//		xmlNode.append_attribute(L"data").set_value(GetIndexData());
-	//	}else
-	//	{
-	//		xmlAttr.set_value(GetIndexData());
-	//	}
-
-	//	if (!xmlAttr1)
-	//	{
-	//		xmlNode.append_attribute(L"uidesiner_data").set_value(GetIndexData());
-	//	}else
-	//	{
-	//		xmlAttr1.set_value(GetIndexData());
-	//	}
-	//}
-	//else
-	//{
 	if (!xmlAttr)
 	{
 		xmlNode.append_attribute(L"data").set_value(GetIndexData());
@@ -733,16 +714,6 @@ void SDesignerView::RenameChildeWnd(pugi::xml_node xmlNode)
 			continue;
 		}
 
-
-		////判断NodeChild.name()类型的控件是否注册
-  //      if (!static_cast<SWindowFactoryMgr*>(SApplication::getSingletonPtr())->HasKey(NodeChild.name()))
-		//{
-		//	RenameChildeWnd(NodeChild);
-
-		//	NodeChild = NodeChild.next_sibling();
-		//	continue;
-		//}
-
 		//将<button data = "1"/> 修改为
 		//  <button data = "xxx" uidesiner_data = "1"/> 
 		RenameWnd(NodeChild);
@@ -868,7 +839,7 @@ void SDesignerView::UpdatePosToXmlNode(SUIWindow *pRealWnd, SMoveWnd* pMoveWnd)
 	}
 
 	SStringT s;
-	s.Format(_T("%d"), GetWindowUserData(pRealWnd));
+	s.Format(_T("%d"), pRealWnd->GetUserData());
 	pugi::xml_node xmlNode = FindNodeByAttr(m_CurrentLayoutNode, L"data", s);
 	if (!xmlNode)
 	{
@@ -2204,7 +2175,7 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 	else
 	{
 		SStringT s;
-		s.Format(_T("%d"), GetWindowUserData(pM->m_pRealWnd));
+		s.Format(_T("%d"), pM->m_pRealWnd->GetUserData());
 		pugi::xml_node xmlNodeRealWnd = FindNodeByAttr(m_CurrentLayoutNode, L"data", s);
 		if (bIsContainerCtrl(xmlNodeRealWnd.name()))
 		{
@@ -2290,7 +2261,7 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 	{
 		//找到m_realWnd控件对应的xml节点
 		SStringT s;
-		s.Format(_T("%d"), GetWindowUserData(pRealWnd));
+		s.Format(_T("%d"), pRealWnd->GetUserData());
 		pugi::xml_node xmlNodeRealWnd = FindNodeByAttr(m_CurrentLayoutNode, L"data", s);
 		//将新创建的控件写入父控件的xml节点
 		SetCurrentCtrl(xmlNodeRealWnd.append_copy(m_curSelXmlNode), Wnd1);
@@ -2351,9 +2322,7 @@ int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item)
 	return count;
 }
 
-
-
-BOOL SDesignerView::GoToXmlStructItem(int  data, HSTREEITEM item)
+BOOL SDesignerView::GoToXmlStructItem(int data, HSTREEITEM item)
 {
 	HSTREEITEM SibItem = item;
 
