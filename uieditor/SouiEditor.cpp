@@ -9,31 +9,7 @@
 #include "SImgCanvas.h"
 #include "CmdLine.h"
 #include <helper/SAppDir.h>
-
-//扩展控件
-#include "stabctrl2.h"
-#include "SButtonEx.h"
-//#include "SSkinMutiFrameImg.h"
-#include "simagemaskwnd.h"
-#include "SFreeMoveWindow.h"
-#include "SVscrollbar.h"
-#include "SSkinNewScrollBar.h"
-#include "gif/SSkinGif.h"
-#include "gif/SSkinAPNG.h"
-#include "gif/SGifPlayer.h"
-#include "SScrollText.h"
-#include "ExtendSkins.h"
-#include "ExtendCtrls.h"
-#include "SRatingBar.h"
-#include "SListCtrlEx.h"
-#include "SIPAddressCtrl.h"
-#include "STurn3DView.h"
-#include "SRadioBox2.h"
-#include "SMcListViewEx/SHeaderCtrlEx.h"
-#include <SGroupList.h>
-#include <SChromeTabCtrl.h>
-
-#include "SDemoSkin.h"
+#include "../ExtendCtrls/SCtrlsRegister.h"
 
 
 //从PE文件加载，注意从文件加载路径位置
@@ -105,13 +81,12 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		theApp->RegisterWindowClass<CDropWnd>();
 
 		theApp->RegisterWindowClass<SPropertyGrid>();//注册属性表控件
-		theApp->RegisterWindowClass<SScrollText>();
 		theApp->RegisterWindowClass<SRotateWindow>();
 		theApp->RegisterWindowClass<SImgCanvas>();
 
 
 		// 注册扩展控件
-		RegisterExtendControl(theApp);
+		SCtrlsRegister::RegisterCtrls(theApp);
 
         //从DLL加载系统资源
         HMODULE hModSysResource = LoadLibrary(SYS_NAMED_RESOURCE);
@@ -196,32 +171,4 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
     OleUninitialize();
     return nRet;
-}
-
-void RegisterExtendControl(SApplication *theApp)
-{
-	theApp->RegisterWindowClass<STabPage2>();//注册STabPage2
-	theApp->RegisterWindowClass<STabCtrl2>();//注册STabCtrl2
-	theApp->RegisterWindowClass<SHeaderCtrlEx>();//注册STabCtrl2
-	theApp->RegisterWindowClass<SChromeTabCtrl>();//注册ChromeTabCtrl
-	theApp->RegisterWindowClass<SImageMaskWnd>();//注册SImageMaskWnd
-	theApp->RegisterWindowClass<SButtonEx>();
-	theApp->RegisterWindowClass<SWindowEx>();
-	theApp->RegisterWindowClass<SGifPlayer>();//注册gif
-	theApp->RegisterWindowClass<SRatingBar>();
-	//theApp->RegisterWindowClass<SListCtrlEx>();
-	theApp->RegisterWindowClass<SIPAddressCtrl>();
-	theApp->RegisterWindowClass<STurn3dView>();
-	theApp->RegisterWindowClass<SRadioBox2>();
-    theApp->RegisterWindowClass<SGroupList>();
-
-	
-	//extened skins
-	theApp->RegisterSkinClass<SColorMask>();
-//	theApp->RegisterSkinClass<SSkinMutiFrameImg>();
-	theApp->RegisterSkinClass<SSkinVScrollbar>();
-	theApp->RegisterSkinClass<SSkinNewScrollbar>();
-	theApp->RegisterSkinClass<SSkinGif>();
-	theApp->RegisterSkinClass<SSkinAPNG>();
-	theApp->RegisterSkinClass<SDemoSkin>();
 }
