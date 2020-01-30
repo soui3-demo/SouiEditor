@@ -16,7 +16,7 @@ void myxml_writer_stream::write(const void* data, size_t size)
 	{
 		assert(!wide_stream);
 		char* buf = new char[size + 1];
-		strncpy(buf, reinterpret_cast<const char*>(data), static_cast<std::streamsize>(size));
+		strncpy(buf, reinterpret_cast<const char*>(data), size);
 		buf[size] = 0;
 		narrow_stream->Append(buf);
 		delete[] buf;
@@ -26,7 +26,7 @@ void myxml_writer_stream::write(const void* data, size_t size)
 		assert(wide_stream);
 		assert(size % sizeof(wchar_t) == 0);
 		wchar_t* buf = new wchar_t[size + 1];
-		wcsncpy(buf, reinterpret_cast<const wchar_t*>(data), static_cast<std::streamsize>(size / sizeof(wchar_t)));
+		wcsncpy(buf, reinterpret_cast<const wchar_t*>(data), size / sizeof(wchar_t));
 		buf[size / sizeof(wchar_t)] = 0;
 		wide_stream->Append(buf);
 		delete[] buf;

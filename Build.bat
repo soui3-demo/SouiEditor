@@ -4,16 +4,16 @@ SETLOCAL enabledelayedexpansion
 cls
 COLOR 1f
 
-If Defined SOUIPATH (
-Echo %SOUIPATH%
+If Defined SOUI3PATH (
+Echo %SOUI3PATH%
 ) Else (
-Echo can't find env variable SOUIPATH, clone soui core and install wizard first, please.
+Echo can't find env variable SOUI3PATH, clone soui core and install wizard first, please.
 goto final
 )
 
 SET cfg=
 
-set file=%SOUIPATH%\config\build.cfg
+set file=%SOUI3PATH%\config\build.cfg
 for /f "tokens=1,2* delims==" %%i in (%file%) do (
 if "%%i"=="UNICODE" set cfg_unicode=%%j
 if "%%i"=="WCHAR" set cfg_wchar=%%j
@@ -109,9 +109,9 @@ if %selected%==1 (
 :built
 
 if %specs%==win32-msvc2017 (	
-	%SOUIPATH%\tools\qmake2017 -tp vc -r -spec %SOUIPATH%\tools\mkspecs\%specs% "CONFIG += !cfg! "
+	%SOUI3PATH%\tools\qmake2017 -tp vc -r -spec %SOUI3PATH%\tools\mkspecs\%specs% "CONFIG += !cfg! "
 ) else (
-	%SOUIPATH%\tools\qmake -tp vc -r -spec %SOUIPATH%\tools\mkspecs\%specs% "CONFIG += !cfg! "
+	%SOUI3PATH%\tools\qmake -tp vc -r -spec %SOUI3PATH%\tools\mkspecs\%specs% "CONFIG += !cfg! "
 )
 
 rem call devenv souitest.%proj_ext%
