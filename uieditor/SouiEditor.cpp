@@ -9,6 +9,7 @@
 #include "SImgCanvas.h"
 #include "CmdLine.h"
 #include <helper/SAppDir.h>
+#include "Global.h"
 #include "../ExtendCtrls/SCtrlsRegister.h"
 
 
@@ -59,8 +60,8 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		Scintilla_RegisterClasses(hInstance);
 
         BOOL bLoaded=FALSE;
-        CAutoRefPtr<SOUI::IImgDecoderFactory> pImgDecoderFactory;
-        CAutoRefPtr<SOUI::IRenderFactory> pRenderFactory;
+        SAutoRefPtr<SOUI::IImgDecoderFactory> pImgDecoderFactory;
+        SAutoRefPtr<SOUI::IRenderFactory> pRenderFactory;
 
 		bLoaded = pComMgr->CreateRender_Skia((IObjRef**)&pRenderFactory);
         //bLoaded = pComMgr->CreateRender_GDI((IObjRef**)&pRenderFactory);
@@ -69,7 +70,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         SASSERT_FMT(bLoaded,_T("load interface [%s] failed!"),_T("imgdecoder"));
 
         pRenderFactory->SetImgDecoderFactory(pImgDecoderFactory);
-		SouiEditorApp *theApp = new SouiEditorApp(pRenderFactory, hInstance);
+		SouiEditorApp *theApp = new SouiEditorApp(pRenderFactory, hInstance,ksz_editor_cls);
 
 		theApp->RegisterWindowClass<SDesignerRoot>();
 		theApp->RegisterWindowClass<SUIWindow>();
@@ -92,7 +93,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         HMODULE hModSysResource = LoadLibrary(SYS_NAMED_RESOURCE);
         if (hModSysResource)
         {
-            CAutoRefPtr<IResProvider> sysResProvider;
+            SAutoRefPtr<IResProvider> sysResProvider;
             CreateResProvider(RES_PE, (IObjRef**)&sysResProvider);
             sysResProvider->Init((WPARAM)hModSysResource, 0);
             theApp->LoadSystemNamedResource(sysResProvider);
@@ -102,7 +103,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
             SASSERT(0);
         }
 
-        CAutoRefPtr<IResProvider>   pResProvider;
+        SAutoRefPtr<IResProvider>   pResProvider;
 #if (RES_TYPE == 0)
         CreateResProvider(RES_FILE, (IObjRef**)&pResProvider);
         if (!pResProvider->Init((LPARAM)_T("uires"), 0))
@@ -133,7 +134,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
 
         //加载多语言翻译模块。
-        CAutoRefPtr<ITranslatorMgr> trans;
+        SAutoRefPtr<ITranslatorMgr> trans;
         bLoaded=pComMgr->CreateTranslator((IObjRef**)&trans);
         SASSERT_FMT(bLoaded,_T("load interface [%s] failed!"),_T("translator"));
         if(trans)
@@ -156,6 +157,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 			if (cmdLine.GetParamCount() > 1)
 				dlgMain.m_cmdWorkspaceFile = cmdLine.GetParam(1);
             dlgMain.Create(GetActiveWindow(), WS_CLIPCHILDREN | WS_TABSTOP | WS_POPUP, (DWORD)0);
+			SetWindowText(dlgMain.m_hWnd,ksz_editor_wnd);
             dlgMain.SendMessage(WM_INITDIALOG);
             dlgMain.CenterWindow(dlgMain.m_hWnd);
             dlgMain.ShowWindow(SW_SHOWNORMAL);

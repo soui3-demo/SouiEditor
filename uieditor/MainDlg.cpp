@@ -15,6 +15,7 @@
 #include <helper/SMenuEx.h>
 #include "SImgCanvas.h"
 #include "DragDownMgr.h"
+#include "Global.h"
 
 #ifdef DWMBLUR	//win7毛玻璃开关
 #include <dwmapi.h>
@@ -1139,5 +1140,18 @@ void CMainDlg::RefreshStyleList()
 			m_UIResFileMgr.m_mapStyles.GetNext(pos);
 		}
 	}
+}
+
+BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
+{
+	if(pCopyDataStruct->dwData != kcds_id)
+	{
+		return FALSE;
+	}
+	int *pIndex = (int*)pCopyDataStruct->lpData;
+	int  nCount = pCopyDataStruct->cbData/sizeof(int);
+
+	SLOG_INFO("nCount:"<<nCount);
+	return TRUE;
 }
 

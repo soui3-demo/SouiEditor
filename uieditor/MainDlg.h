@@ -9,7 +9,6 @@
 #include "DesignerView.h"
 #include "SMoveWnd.h"
 #include "propgrid/SPropertyGrid.h"
-//#include "STabCtrl2.h"
 #include "SImageBtnEx.h"
 #include "SListBoxDrop.h"
 #include "ResManger.h"
@@ -131,6 +130,7 @@ protected:
 
 	EVENT_MAP_END()
 
+	BOOL OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct);
 	//HostWnd真实窗口消息处理
 	BEGIN_MSG_MAP_EX(CMainDlg)
 		MESSAGE_HANDLER(WM_MSG_SHOWBOX, OnShowMsgBox)
@@ -141,6 +141,7 @@ protected:
 		MSG_WM_TIMER(OnTimer)
 		MSG_WM_SHOWWINDOW(OnShowWindow)
 		MSG_WM_COMMAND(OnCommand)
+		MSG_WM_COPYDATA(OnCopyData)
 		CHAIN_MSG_MAP(SHostWnd)
 		REFLECT_NOTIFICATIONS_EX()
 	END_MSG_MAP()

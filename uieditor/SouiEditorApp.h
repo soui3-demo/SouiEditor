@@ -3,7 +3,7 @@
 class SouiEditorApp :public SApplication 
 {
 public:
-	SouiEditorApp::SouiEditorApp(IRenderFactory *pRendFactory, HINSTANCE hInst, LPCTSTR pszHostClassName = _T("SOUIHOST"));
+	SouiEditorApp::SouiEditorApp(IRenderFactory *pRendFactory, HINSTANCE hInst, LPCTSTR pszHostClassName);
 
 	virtual SWindow * CreateWindowByName(LPCWSTR pszWndClass) const;
 
