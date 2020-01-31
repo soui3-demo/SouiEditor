@@ -78,6 +78,7 @@ protected:
 	BEGIN_MSG_MAP_EX(CScintillaWnd)
 		MSG_OCM_NOTIFY(OnNotify)
 		MSG_WM_KEYDOWN(OnKeyDown)
+		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()
 
 	SStringT m_strFileName;
