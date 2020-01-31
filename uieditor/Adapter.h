@@ -20,7 +20,7 @@ public:
 
 	SStringW GetColumnName(int iCol) const;
 
-	void IniColNames(pugi::xml_node xmlTemplate);
+	void InitColNames(pugi::xml_node xmlTemplate);
 
 	virtual void InitByTemplate(pugi::xml_node xmlTemplate);
 };

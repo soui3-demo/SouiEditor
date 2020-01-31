@@ -26,7 +26,7 @@ SStringW CBaseMcAdapterFix::GetColumnName(int iCol) const {
 	return m_colNames[iCol];
 }
 
-void CBaseMcAdapterFix::IniColNames(pugi::xml_node xmlTemplate)
+void CBaseMcAdapterFix::InitColNames(pugi::xml_node xmlTemplate)
 {
 	for (xmlTemplate = xmlTemplate.first_child(); xmlTemplate; xmlTemplate = xmlTemplate.next_sibling())
 	{
@@ -48,7 +48,7 @@ void CBaseMcAdapterFix::IniColNames(pugi::xml_node xmlTemplate)
 
 void CBaseMcAdapterFix::InitByTemplate(pugi::xml_node xmlTemplate)
 {
-	IniColNames(xmlTemplate);
+	InitColNames(xmlTemplate);
 }
 
 
