@@ -5,7 +5,6 @@
 #include "MainDlg.h"
 #include "SImageBtnEx.h"
 #include "SouiRealWndHandler.h"
-#include "SRotateWindow.h"
 #include "SImgCanvas.h"
 #include "CmdLine.h"
 #include <helper/SAppDir.h>
@@ -82,7 +81,6 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		theApp->RegisterWindowClass<CDropWnd>();
 
 		theApp->RegisterWindowClass<SPropertyGrid>();//注册属性表控件
-		theApp->RegisterWindowClass<SRotateWindow>();
 		theApp->RegisterWindowClass<SImgCanvas>();
 
 
