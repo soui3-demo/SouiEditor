@@ -214,7 +214,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="Adapter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="colorpicker\ColourPopup.cpp"
+				>
+			</File>
+			<File
+				RelativePath="DesignerView.cpp"
 				>
 			</File>
 			<File
@@ -278,6 +286,10 @@
 				>
 			</File>
 			<File
+				RelativePath="SDesignerRoot.cpp"
+				>
+			</File>
+			<File
 				RelativePath="SImageBtnEx.cpp"
 				>
 			</File>
@@ -330,6 +342,10 @@
 				>
 			</File>
 			<File
+				RelativePath="stdafx.cpp"
+				>
+			</File>
+			<File
 				RelativePath="SysdataMgr.cpp"
 				>
 			</File>
@@ -340,6 +356,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="Adapter.h"
+				>
+			</File>
+			<File
 				RelativePath="CDebug.h"
 				>
 			</File>
@@ -349,6 +369,10 @@
 			</File>
 			<File
 				RelativePath="colorpicker\ColourPopup.h"
+				>
+			</File>
+			<File
+				RelativePath="DesignerView.h"
 				>
 			</File>
 			<File
@@ -429,6 +453,10 @@
 			</File>
 			<File
 				RelativePath="SDemoSkin.h"
+				>
+			</File>
+			<File
+				RelativePath="SDesignerRoot.h"
 				>
 			</File>
 			<File
