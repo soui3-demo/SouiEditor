@@ -33,6 +33,12 @@
     <ClCompile Include="uiviewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SUnkWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Adapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="maindlg.h">
@@ -44,6 +50,12 @@
     <CustomBuild Include="stdafx.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <ClInclude Include="SUnkWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Adapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.h.cpp">

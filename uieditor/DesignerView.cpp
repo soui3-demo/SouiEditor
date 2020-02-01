@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "DesignerView.h"
-#include "SMoveWnd.h"
 #include "helper\SplitString.h"
 #include "Dialog/DlgSkinSelect.h"
 #include "Dialog/DlgStyleManage.h"
@@ -2107,7 +2106,7 @@ void SDesignerView::Preview()
 {
 	//SMap<SWindow*, SMoveWnd*>::CPair *p = m_mapMoveRealWnd.GetNext();
 
-	SMoveWnd *wnd;
+	//SMoveWnd *wnd;
 
 /*
 	m_pMoveWndRoot->SetVisible(FALSE);

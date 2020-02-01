@@ -141,12 +141,16 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="maindlg.cpp" />
+    <ClCompile Include="SUnkWnd.cpp" />
     <ClCompile Include="uiviewer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Adapter.h" />
     <ClInclude Include="maindlg.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SUnkWnd.h" />
     <CustomBuild Include="stdafx.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">echo /*-------------------------------------------------------------------- &gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
