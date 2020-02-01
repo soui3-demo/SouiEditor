@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "DesignerView.h"
 #include "SMoveWnd.h"
-#include "CNewGuid.h"
 #include "helper\SplitString.h"
 #include "Dialog/DlgSkinSelect.h"
 #include "Dialog/DlgStyleManage.h"
@@ -47,12 +46,13 @@ SDesignerView::SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeC
 {
 	m_nSciCaretPos = 0;
 	m_nState = 0;
-	m_pMoveWndRoot = NULL;
+	//m_pMoveWndRoot = NULL;
 	m_pRealWndRoot = NULL;
 	m_pContainer = (SUIWindow*)pContainer;
 	m_pMainHost = pMainHost;
 	m_treeXmlStruct = pTreeXmlStruct;
 	m_ndata = 0;
+	m_CurSelCtrlIndex = -1;
 
 	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
 
@@ -73,9 +73,6 @@ SDesignerView::SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeC
 		m_lstContainerCtrl.AddTail(node.name());
 		node = node.next_sibling();
 	}
-
-	m_privateStylePool.Attach(new SStylePool);
-	m_privateSkinPool.Attach(new SSkinPool);
 
 	m_bXmlResLoadOK = true;
 }
@@ -98,8 +95,6 @@ BOOL SDesignerView::OpenProject(SStringT strFileName)
 		Debug(_T("CreateResProvider失败"));
 		return FALSE;
 	}
-	m_pWsResProvider = pResProvider;
-	SApplication::getSingletonPtr()->AddResProvider(m_pWsResProvider, NULL);//param2 = null时不自动加载uidef
 
 	SStringT strXMLInit;
 	pugi::xml_node xmlNode = m_xmlDocUiRes.child(_T("resource")).child(_T("UIDEF")).child(_T("file"));
@@ -114,11 +109,6 @@ BOOL SDesignerView::OpenProject(SStringT strFileName)
 		strXMLInit = _T("xml_init");
 	}
 
-	//将皮肤中的uidef保存起来.
-	m_pUiDef.Attach(SUiDef::getSingleton().CreateUiDefInfo(m_pWsResProvider, _T("uidef:") + strXMLInit));
-
-	m_pOldUiDef = SUiDef::getSingleton().GetUiDef();
-
 	return TRUE;
 }
 
@@ -132,30 +122,17 @@ BOOL SDesignerView::CloseProject()
 	m_textCtrlTypename->SetWindowText(L"");
 	((CMainDlg*)m_pMainHost)->m_textNodenum->SetWindowText(L"");
 
-	// 清空私有样式池
-	if (m_privateStylePool->GetCount())
-	{
-		m_privateStylePool->RemoveAll();
-		GETSTYLEPOOLMGR->PopStylePool(m_privateStylePool);
-	}
-	// 清空私有皮肤池
-	if (m_privateSkinPool->GetCount())
-	{
-		m_privateSkinPool->RemoveAll();
-		GETSKINPOOLMGR->PopSkinPool(m_privateSkinPool);
-	}
 	m_pContainer->SSendMessage(WM_DESTROY);
 	m_pContainer->Invalidate();
 	m_pScintillaWnd->SendEditor(SCI_CLEARALL);
 	//m_pPropertyContainer->SSendMessage(WM_DESTROY);
 	m_treeXmlStruct->RemoveAllItems();
 	m_pRealWndRoot = NULL;
-	m_pMoveWndRoot = NULL;
 	m_nState = 0;
 	m_ndata = 0;
 	m_nSciCaretPos = 0;
 
-	SApplication::getSingletonPtr()->RemoveResProvider(m_pWsResProvider);
+	//SApplication::getSingletonPtr()->RemoveResProvider(m_pWsResProvider);
 
 	ShowNoteInSciwnd();
 
@@ -184,72 +161,52 @@ BOOL SDesignerView::InsertLayoutToMap(SStringT strFileName)
 
 BOOL SDesignerView::LoadLayout(SStringT strFileName)
 {
-	m_CurSelCtrl = NULL;
-
-	m_ndata = 0;
 	m_nSciCaretPos = 0;
-
-	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
-
-	//设置uidef为当前皮肤的uidef
-	UseEditorUIDef(false);
-
+	m_CurSelCtrlIndex = 0;
+	
 	m_defFont = SFontPool::getSingleton().GetFont(FF_DEFAULTFONT, 100);
-
-	pugi::xml_node xmlroot;
-	pugi::xml_node xmlnode;
-
-	BOOL bIsInclude = FALSE;
-	if (m_strCurLayoutXmlFile != strFileName)
-		m_nSciCaretPos = 0;
-
 	m_strCurLayoutXmlFile = strFileName;
-
 	SMap<SStringT, pugi::xml_document*>::CPair *p = m_mapLayoutFile.Lookup(strFileName);
-	xmlroot = p->m_value->document_element();
-
+	pugi::xml_node xmlroot = p->m_value->document_element();
 	m_CurrentLayoutNode = xmlroot;
+	ReloadLayout(TRUE);
 
-	if (xmlroot == NULL)
+	m_nState = 0;
+	SelectCtrlByIndex(0);	
+	m_pScintillaWnd->ResetRedo();
+
+	return TRUE;
+}
+
+BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
+{
+	if (bClearSel)
 	{
-		return TRUE;
+		m_CurSelCtrlIndex = 0;
 	}
 
-	if (S_CW2T(xmlroot.name()) != _T("SOUI"))
+	pugi::xml_node xmlnode;
+	BOOL bIsInclude = FALSE;
+
+	m_ndata = 0;
+	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
+	
+	if (m_CurrentLayoutNode == NULL)
+		return TRUE;
+
+	if (S_CW2T(m_CurrentLayoutNode.name()) != _T("SOUI"))
 	{
 		//include文件
-		xmlnode = xmlroot;
+		xmlnode = m_CurrentLayoutNode;
 		bIsInclude = TRUE;
 	}
 	else
 	{
-		//加载私有皮肤
-		if (m_privateStylePool->GetCount())
-		{
-			m_privateStylePool->RemoveAll();
-			GETSTYLEPOOLMGR->PopStylePool(m_privateStylePool);
-		}
-		BOOL ret = m_privateStylePool->Init(xmlroot.child(L"style"));
-		if (ret)
-		{
-			GETSTYLEPOOLMGR->PushStylePool(m_privateStylePool);
-		}
-		if (m_privateSkinPool->GetCount())
-		{
-			m_privateSkinPool->RemoveAll();
-			GETSKINPOOLMGR->PopSkinPool(m_privateSkinPool);
-		}
-		int skincount = m_privateSkinPool->LoadSkins(xmlroot.child(L"skin"));//从xmlNode加加载私有skin
-		if (skincount)
-		{
-			GETSKINPOOLMGR->PushSkinPool(m_privateSkinPool);
-		}
-
-		xmlnode = xmlroot.child(L"root", false);
+		xmlnode = m_CurrentLayoutNode.child(L"root", false);
 	}
 	if (!xmlnode) return FALSE;
 
-	m_pContainer->SSendMessage(WM_DESTROY);
+	//m_pContainer->SSendMessage(WM_DESTROY);
 
 	SStringW s1, s2;
 	if (!bIsInclude)
@@ -305,7 +262,8 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName)
 		}
 
 		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, nWidth + MARGIN * 2, nHeight + MARGIN * 2);
+		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, nWidth + MARGIN * 2,
+		                   nHeight + MARGIN * 2);
 
 		s2 = L"<designerRoot pos=\"20, 20\" " + s2 + strAttrSize + L"></designerRoot>";
 
@@ -356,51 +314,50 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName)
 		}
 
 		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, 
-			(nWidth == -1) ? 800 : nWidth + MARGIN * 2,
-			(nHeight == -1) ? 500 : nHeight + MARGIN * 2);
+		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN,
+		                   (nWidth == -1) ? 800 : nWidth + MARGIN * 2,
+		                   (nHeight == -1) ? 500 : nHeight + MARGIN * 2);
 
 		s2 = L"<designerRoot pos=\"20,20\" " + strAttrSize + L" colorBkgnd=\"#d0d0d0\"/>";
 	}
 
 	//wchar_t *s = L"<window pos=\"20,20,@500,@500\" colorBkgnd=\"#d0d0d0\"></window>";
-	const wchar_t *s3 = L"<movewnd pos=\"20,20,@800,@500\"></movewnd>";
-
-	g_bHookCreateWnd = TRUE;
-
-	////创建布局窗口的根窗口
-	m_pRealWndRoot = (SDesignerRoot*)m_pContainer->CreateChildren(s2);
-	m_pRealWndRoot->SetRootFont(m_defFont);
-
-	m_pMoveWndRoot = (SMoveWnd *)m_pContainer->CreateChildren(s3);
-	m_pMoveWndRoot->m_pRealWnd = m_pRealWndRoot;
-	m_pMoveWndRoot->m_Desiner = this;
-
-	m_mapMoveRealWnd.RemoveAll();
-	m_mapMoveRealWnd[m_pMoveWndRoot->m_pRealWnd] = m_pMoveWndRoot;
-
-	if (!m_pRealWndRoot->CreateChildren(xmlnode))
-	{
-		g_bHookCreateWnd = FALSE;
-		return FALSE;
-	}
-
-	CreateAllChildWnd(m_pRealWndRoot, m_pMoveWndRoot);
-	g_bHookCreateWnd = FALSE;
-
-	m_nState = 0;
-	GetMoveWndRoot()->Click(0, CPoint(0, 0));
+	const wchar_t* s3 = L"<movewnd pos=\"20,20,@800,@500\"></movewnd>";
 
 	m_treeXmlStruct->RemoveAllItems();
 	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT);
 
-	m_pScintillaWnd->ResetRedo();
-
-	//恢复uidef为编辑器的uidef
-	UseEditorUIDef(true);
-	return TRUE;
+	return FALSE;
 }
 
+void SDesignerView::SelectCtrlByIndex(int index, bool bReCreatePropGrid)
+{
+	if (index != 0)
+	{
+		SStringT s;
+		//long data = m_pRealWnd->GetUserData();
+		s.Format(_T("%d"), index);
+		SetCurrentCtrl(FindNodeByAttr(m_CurrentLayoutNode, L"data", s), index);
+		if (bReCreatePropGrid)
+		{
+			CreatePropGrid(m_curSelXmlNode.name());
+			UpdatePropGrid(m_curSelXmlNode);
+		}
+	}
+	else
+	{
+		SetCurrentCtrl(m_CurrentLayoutNode, index);
+		if (bReCreatePropGrid)
+		{
+			CreatePropGrid(_T("hostwnd"));
+			UpdatePropGrid(m_curSelXmlNode);
+		}
+	}
+
+	AddCodeToEditor(NULL);
+}
+	
+/*
 void SDesignerView::CreateAllChildWnd(SUIWindow *pRealWnd, SMoveWnd *pMoveWnd)
 {
 	//view系列加上适配器
@@ -437,14 +394,11 @@ void SDesignerView::CreateAllChildWnd(SUIWindow *pRealWnd, SMoveWnd *pMoveWnd)
 
 		CreateAllChildWnd(pSibReal, pSibMove);
 	}
-}
+}*/
 
 SDesignerView::~SDesignerView()
 {
-	m_pMoveWndRoot->m_pRealWnd->DestroyWindow();
-	m_pMoveWndRoot->DestroyWindow();
-	GETSTYLEPOOLMGR->PopStylePool(m_privateStylePool);
-	GETSKINPOOLMGR->PopSkinPool(m_privateSkinPool);
+
 }
 
 BOOL SDesignerView::SaveAll()
@@ -543,6 +497,7 @@ BOOL SDesignerView::CloseLayoutFile()
 	return TRUE;
 }
 
+/*
 //创建窗口
 SMoveWnd* SDesignerView::CreateWnd(SUIWindow *pContainer, LPCWSTR pszXml)
 {
@@ -550,7 +505,7 @@ SMoveWnd* SDesignerView::CreateWnd(SUIWindow *pContainer, LPCWSTR pszXml)
 	((SMoveWnd*)pChild)->m_Desiner = this;
 	m_CurSelCtrl = (SMoveWnd*)pChild;
 	return (SMoveWnd*)pChild;
-}
+}*/
 
 void SDesignerView::RenameWnd(pugi::xml_node xmlNode, BOOL force)
 {
@@ -809,25 +764,24 @@ SStringT SDesignerView::NodeToStr(pugi::xml_node xmlNode)
 }
 
 // 响应各事件, 选中相应元素
-void SDesignerView::SetCurrentCtrl(pugi::xml_node xmlNode, SMoveWnd *pWnd)
+void SDesignerView::SetCurrentCtrl(pugi::xml_node xmlNode, long index)
 {
 	m_curSelXmlNode = xmlNode;
+	m_CurSelCtrlIndex = index;
+	//m_CurSelCtrl = pWnd;
 
-	m_CurSelCtrl = pWnd;
-
-	m_pContainer->Invalidate();
+	//m_pContainer->Invalidate();
 
 	m_treeXmlStruct->GetEventSet()->unsubscribeEvent(EVT_TC_SELCHANGED, Subscriber(&SDesignerView::OnTCSelChanged, this));
-	GoToXmlStructItem(GetWindowUserData(m_CurSelCtrl->m_pRealWnd), m_treeXmlStruct->GetRootItem());
+	GoToXmlStructItem(index, m_treeXmlStruct->GetRootItem());
 	m_treeXmlStruct->GetEventSet()->subscribeEvent(EVT_TC_SELCHANGED, Subscriber(&SDesignerView::OnTCSelChanged, this));
 }
-
+/*
 
 void SDesignerView::UpdatePosToXmlNode(SUIWindow *pRealWnd, SMoveWnd* pMoveWnd)
 {
 	if (m_CurSelCtrl == m_pMoveWndRoot)
 	{
-		//SwndLayout *pLayout = pRealWnd->GetLayout();
 		SouiLayoutParam *pSouiLayoutParam = pRealWnd->GetLayoutParamT<SouiLayoutParam>();
 
 		CRect r;
@@ -940,8 +894,8 @@ void SDesignerView::UpdatePosToXmlNode(SUIWindow *pRealWnd, SMoveWnd* pMoveWnd)
 		}	
 	}
 
-	SetCurrentCtrl(xmlNode, pMoveWnd);
-}
+	SetCurrentCtrl(xmlNode, 0);
+}*/
 
 SStringW SDesignerView::GetPosFromLayout(SouiLayoutParam *pLayoutParam, INT nPosIndex)
 {
@@ -1236,8 +1190,6 @@ void SDesignerView::InitCtrlProperty(pugi::xml_node NodeCom, pugi::xml_node Node
 
 void SDesignerView::CreatePropGrid(SStringT strCtrlType)
 {
-	//if (m_strCurrentCtrlType.CompareNoCase(strCtrlType) != 0)
-	//{
 	m_pPropgrid = (SPropertyGrid *)m_pPropertyContainer->GetWindow(GSW_FIRSTCHILD);
 	if (m_pPropgrid)
 	{
@@ -1255,7 +1207,6 @@ void SDesignerView::CreatePropGrid(SStringT strCtrlType)
 
 	if (strCtrlType.CompareNoCase(_T("hostwnd")) == 0 && strTemp.CompareNoCase(_T("SOUI")) != 0)
 	{   //include 文件
-
 		strCtrlType = _T("include");
 		//return;
 	}
@@ -1282,10 +1233,7 @@ void SDesignerView::CreatePropGrid(SStringT strCtrlType)
 	m_strCurrentCtrlType = strCtrlType;
 
 	((CMainDlg*)m_pMainHost)->m_edtDesc->SetWindowText(_T(""));
-
-	//}
 }
-
 
 void SDesignerView::UpdatePropGrid(pugi::xml_node xmlNode)
 {
@@ -1390,7 +1338,8 @@ bool SDesignerView::OnPropGridValueChanged(EventArgs *pEvt)
 	}
 
 	//如果当前选择的是布局根窗口，需要特殊处理
-	if (m_CurSelCtrl == m_pMoveWndRoot)
+	//if (m_CurSelCtrl == m_pMoveWndRoot)
+	if (m_CurSelCtrlIndex == 0)
 	{
 		SPOSITION pos = m_lstRootProperty.GetHeadPosition();
 		while (pos)
@@ -1464,55 +1413,12 @@ bool SDesignerView::OnPropGridValueChanged(EventArgs *pEvt)
 		}
 	}
 
-	/*SwndLayout *pLayout = pWnd->GetLayout();
-	pLayout->Clear();
-
-	pWnd->SetAttribute(s, s1);
-
-	if (m_xmlNode.attribute(L"pos"))
-	{
-		pLayout->InitPosFromString(m_xmlNode.attribute(L"pos").value());
-	}
-
-	if (m_xmlNode.attribute(L"pos2type"))
-	{
-		pLayout->InitOffsetFromPos2Type(m_xmlNode.attribute(L"pos2type").value());
-	}
-
-	if (m_xmlNode.attribute(L"offset"))
-	{
-		pLayout->InitOffsetFromString(m_xmlNode.attribute(L"offset").value());
-	}
-
-	if (m_xmlNode.attribute(L"size"))
-	{
-		pLayout->InitSizeFromString(m_xmlNode.attribute(L"size").value());
-	}*/
+	
 
 	// 先记下原来选的控件是第几个顺序的控件, 再进行重布局
-	int data = GetWindowUserData(m_CurSelCtrl);
-
-	ReLoadLayout();
-
-	if (bRoot)
-	{
-		m_CurSelCtrl = m_pMoveWndRoot;
-	}
-	else
-	{
-		SMoveWnd *pMoveWnd = (SMoveWnd*)FindChildByUserData(m_pMoveWndRoot, data);
-
-		if (pMoveWnd)
-		{
-			m_CurSelCtrl = pMoveWnd;
-			AddCodeToEditor(NULL);
-		}
-		else
-		{
-			m_pMoveWndRoot->Click(0, CPoint(0, 0));
-		}
-	}
-
+	int data = m_CurSelCtrlIndex;
+	ReloadLayout(FALSE);
+	SelectCtrlByIndex(data, false);
 	return true;
 }
 
@@ -1525,7 +1431,7 @@ void SDesignerView::RefreshRes()
 
 	//IResProvider* pResProvider = SApplication::getSingletonPtr()->GetMatchResProvider(_T("UIDEF"), _T("XML_INIT"));
 
-	SApplication::getSingletonPtr()->RemoveResProvider(m_pWsResProvider);
+	/*SApplication::getSingletonPtr()->RemoveResProvider(m_pWsResProvider);
 
 	CreateResProvider(RES_FILE, (IObjRef**)&pResProvider);
 	if (!pResProvider->Init((LPARAM)s, 0))
@@ -1534,7 +1440,7 @@ void SDesignerView::RefreshRes()
 		return;
 	}
 	m_pWsResProvider = pResProvider;
-	SApplication::getSingletonPtr()->AddResProvider(pResProvider, NULL);
+	SApplication::getSingletonPtr()->AddResProvider(pResProvider, NULL);*/
 
 	SStringT strXMLInit;
 	pugi::xml_node xmlNode = m_xmlDocUiRes.child(_T("resource")).child(_T("UIDEF")).child(_T("file"));
@@ -1550,7 +1456,7 @@ void SDesignerView::RefreshRes()
 	}
 
 	//将皮肤中的uidef保存起来.
-	m_pUiDef.Attach(SUiDef::getSingleton().CreateUiDefInfo(pResProvider, _T("uidef:") + strXMLInit));
+	//m_pUiDef.Attach(SUiDef::getSingleton().CreateUiDefInfo(pResProvider, _T("uidef:") + strXMLInit));
 }
 
 bool SDesignerView::OnPropGridItemClick(EventArgs *pEvt)
@@ -1595,196 +1501,6 @@ bool SDesignerView::OnPropGridItemClick(EventArgs *pEvt)
 
 	return true;
 }
-
-BOOL SDesignerView::ReLoadLayout(BOOL bClearSel)
-{
-	if (bClearSel)
-		m_CurSelCtrl = NULL;
-
-	m_ndata = 0;
-	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
-
-	//设置uidef为当前皮肤的uidef
-	UseEditorUIDef(false);
-
-	pugi::xml_node xmlnode;
-	BOOL bIsInclude = FALSE;
-
-	if (m_CurrentLayoutNode == NULL)
-	{
-		return TRUE;
-	}
-
-	if (S_CW2T(m_CurrentLayoutNode.name()) != _T("SOUI"))
-	{
-		xmlnode = m_CurrentLayoutNode;
-		bIsInclude = TRUE;
-	}
-	else
-	{
-		////加载私有皮肤
-		//if (m_privateStylePool->GetCount())
-		//{
-		//	m_privateStylePool->RemoveAll();
-		//	GETSTYLEPOOLMGR->PopStylePool(m_privateStylePool);
-		//}
-		//BOOL ret=m_privateStylePool->Init(m_CurrentLayoutNode.child(L"style"));
-		//if (ret)
-		//{
-		//	GETSTYLEPOOLMGR->PushStylePool(m_privateStylePool);
-		//}
-		//if (m_privateSkinPool->GetCount())
-		//{
-		//	m_privateSkinPool->RemoveAll();
-		//	GETSKINPOOLMGR->PopSkinPool(m_privateSkinPool);
-		//}
-		//int skincount=m_privateSkinPool->LoadSkins(m_CurrentLayoutNode.child(L"skin"));//从xmlNode加加载私有skin
-		//if (skincount)
-		//{
-		//	GETSKINPOOLMGR->PushSkinPool(m_privateSkinPool);
-		//}
-
-		xmlnode = m_CurrentLayoutNode.child(L"root", false);
-	}
-	if (!xmlnode) return FALSE;
-
-
-	SWindow *pChild = m_pContainer->GetWindow(GSW_FIRSTCHILD);
-	while (pChild)
-	{
-		SWindow *pNext = pChild->GetWindow(GSW_NEXTSIBLING);
-		pChild->DestroyWindow();
-		pChild = pNext;
-	}
-
-
-	SStringW s1, s2;
-	if (!bIsInclude)
-	{
-		int nWidth, nHeight;
-		SStringT strSize(_T("size"));
-		SStringT strWidth(_T("width"));
-		SStringT strHeight(_T("height"));
-		SStringT strMargin(_T("margin"));
-
-		pugi::xml_attribute attr = m_CurrentLayoutNode.first_attribute();
-		while (attr)
-		{
-			// width height单独处理，解决margin的问题
-			if (strSize.CompareNoCase(attr.name()) == 0)
-			{
-				//size属性
-				SStringT strVal = attr.value();
-				swscanf(strVal, L"%d,%d", &nWidth, &nHeight);
-			}
-			else if (strWidth.CompareNoCase(attr.name()) == 0)
-			{
-				//width属性
-				::StrToIntExW(attr.value(), STIF_SUPPORT_HEX, &nWidth);
-			}
-			else if (strHeight.CompareNoCase(attr.name()) == 0)
-			{
-				//height属性
-				::StrToIntExW(attr.value(), STIF_SUPPORT_HEX, &nHeight);
-			}
-			else if (strMargin.CompareNoCase(attr.name()) == 0)
-			{
-				//忽略margin属性
-
-			}
-			else
-			{
-				s1.Format(L" %s=\"%s\" ", attr.name(), attr.value());
-				s2 = s2 + s1;
-			}
-			attr = attr.next_attribute();
-		}
-
-		attr = xmlnode.first_attribute();
-		while (attr)
-		{
-			s1.Format(L" %s=\"%s\" ", attr.name(), attr.value());
-			s2 = s2 + s1;
-
-			attr = attr.next_attribute();
-		}
-
-		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, nWidth + MARGIN * 2, nHeight + MARGIN * 2);
-
-		s2 = L"<designerRoot pos=\"20,20\" " + s2 + strAttrSize + L"></designerRoot>";
-	}
-	else
-	{
-		int nWidth, nHeight;
-
-		pugi::xml_attribute attrWorH = m_CurrentLayoutNode.attribute(_T("width"));
-
-		if (attrWorH)
-		{
-			::StrToIntExW(attrWorH.value(), STIF_SUPPORT_HEX, &nWidth);
-		}
-		else
-		{
-			nWidth = 500;
-			m_CurrentLayoutNode.append_attribute(_T("width")).set_value(nWidth);
-		}
-
-		attrWorH = m_CurrentLayoutNode.attribute(_T("height"));
-
-		if (attrWorH)
-		{
-			::StrToIntExW(attrWorH.value(), STIF_SUPPORT_HEX, &nHeight);
-		}
-		else
-		{
-			nHeight = 500;
-			m_CurrentLayoutNode.append_attribute(_T("height")).set_value(nHeight);
-		}
-
-		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, nWidth + MARGIN * 2, nHeight + MARGIN * 2);
-
-
-		s2 = L"<designerRoot pos=\"20,20\" " + strAttrSize + L" colorBkgnd=\"#d0d0d0\"/>";
-
-		//s2 = L"<window pos=\"20,20,-20,-20\" colorBkgnd=\"#d0d0d0\"></window>";
-	}
-
-	//wchar_t *s = L"<window pos=\"20,20,@500,@500\" colorBkgnd=\"#d0d0d0\"></window>";
-	const wchar_t *s3 = L"<movewnd pos=\"20,20,@500,@500\" ></movewnd>";
-
-	g_bHookCreateWnd = TRUE;
-	////创建布局窗口的根窗口
-	m_pRealWndRoot = (SDesignerRoot*)m_pContainer->CreateChildren(s2);
-	m_pRealWndRoot->SetRootFont(m_defFont);
-
-	m_pMoveWndRoot = (SMoveWnd *)m_pContainer->CreateChildren(s3);
-	m_pMoveWndRoot->m_pRealWnd = m_pRealWndRoot;
-
-	m_mapMoveRealWnd.RemoveAll();
-	m_mapMoveRealWnd[m_pMoveWndRoot->m_pRealWnd] = m_pMoveWndRoot;
-
-	m_pMoveWndRoot->m_Desiner = this;
-
-	if (!m_pRealWndRoot->CreateChildren(xmlnode))
-	{
-		g_bHookCreateWnd = FALSE;
-		return FALSE;
-	}
-
-	CreateAllChildWnd(m_pRealWndRoot, m_pMoveWndRoot);
-	g_bHookCreateWnd = FALSE;
-
-	m_treeXmlStruct->RemoveAllItems();
-	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT);
-
-	//恢复uidef为编辑器的uidef
-	UseEditorUIDef(true);
-
-	return TRUE;
-}
-
 
 BOOL SDesignerView::bIsContainerCtrl(SStringT strCtrlName) //判断控件是否是容器控件
 {
@@ -1966,34 +1682,9 @@ void SDesignerView::GetCodeFromEditor()
 	BOOL bRoot = FALSE;
 
 	// 先记下原来选的控件是第几个顺序的控件, 再进行重布局
-	int data = GetWindowUserData(m_CurSelCtrl);
-	ReLoadLayout();
-
-	if (bRoot)
-	{
-		m_CurSelCtrl = m_pMoveWndRoot;
-	}
-	else
-	{
-		SMoveWnd *pMoveWnd = (SMoveWnd*)FindChildByUserData(m_pMoveWndRoot, data);
-
-		if (pMoveWnd)
-		{
-			m_CurSelCtrl = pMoveWnd;
-			//AddCodeToEditor(NULL);
-		}
-		else
-		{
-			m_pMoveWndRoot->Click(0, CPoint(0, 0));
-		}
-	}
-
-    if (m_CurSelCtrl)
-    {
-        // 更新m_curSelXmlNode可避免其他函数时使用时异常
-        // 其所引用的值在本函数中被释放，指向未知地址
-        m_CurSelCtrl->Click(MAGIC_CLICK_FLAG, CPoint(0, 0));
-    }
+	int data = m_CurSelCtrlIndex;
+	ReloadLayout();
+	SelectCtrlByIndex(data);
 }
 
 // 把代码编辑器修改的结果重新加载, 更新布局窗口
@@ -2125,7 +1816,7 @@ void SDesignerView::SetSelCtrlNode(pugi::xml_node xmlNode)
 }
 
 
-void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
+void SDesignerView::NewWnd(CPoint pt, void *pM)
 {
 	BOOL bIsInclude = FALSE;
 
@@ -2161,11 +1852,12 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 		RenameWnd(m_curSelXmlNode, TRUE);
 		RenameChildeWnd(m_curSelXmlNode);
 	}
-
+/*
 	UseEditorUIDef(false);
 
 	SWindow* pRealWnd;
 	SMoveWnd* pMoveWnd;
+
 
 	if (pM->m_pRealWnd == m_pRealWndRoot)
 	{
@@ -2205,7 +1897,7 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 		pMoveWnd->GetWindowRect(rect);
 
 		SStringT strPos;
-		/*strPos.Format(_T("%d,%d"), pt.x - rect.left, pt.y - rect.top);*/
+		//strPos.Format(_T("%d,%d"), pt.x - rect.left, pt.y - rect.top);
 
 		//8 对齐
 		int x, y;
@@ -2254,7 +1946,7 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 		{
 			firstNode = firstNode.child(_T("root"));
 		}
-		SetCurrentCtrl(firstNode.append_copy(m_curSelXmlNode), Wnd1);
+		SetCurrentCtrl(firstNode.append_copy(m_curSelXmlNode), 0);
 		//m_Desiner->m_xmlNode = firstNode.append_copy(m_Desiner->m_xmlNode);
 	}
 	else
@@ -2264,7 +1956,7 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 		s.Format(_T("%d"), pRealWnd->GetUserData());
 		pugi::xml_node xmlNodeRealWnd = FindNodeByAttr(m_CurrentLayoutNode, L"data", s);
 		//将新创建的控件写入父控件的xml节点
-		SetCurrentCtrl(xmlNodeRealWnd.append_copy(m_curSelXmlNode), Wnd1);
+		SetCurrentCtrl(xmlNodeRealWnd.append_copy(m_curSelXmlNode), 0);
 		//m_Desiner->m_xmlNode = xmlNodeRealWnd.append_copy(m_Desiner->m_xmlNode);
 	}
 
@@ -2273,6 +1965,8 @@ void SDesignerView::NewWnd(CPoint pt, SMoveWnd *pM)
 	pRealWnd->RequestRelayout();
 	pRealWnd->Invalidate();
 	m_nState = 0;
+
+	*/
 }
 
 int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item)
@@ -2372,7 +2066,9 @@ bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 		return true;
 	}
 
-	SWindow *wnd = FindChildByUserData(m_pRealWndRoot, data);
+	SelectCtrlByIndex(data);
+	return true;
+	/*SWindow *wnd = FindChildByUserData(m_pRealWndRoot, data);
 	if (wnd)
 	{
 		SMap<SWindow*, SMoveWnd*>::CPair *p = m_mapMoveRealWnd.Lookup(wnd);
@@ -2385,7 +2081,7 @@ bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 		}
 	}
 
-	return true;
+	return true;*/
 }
 
 
@@ -2400,8 +2096,8 @@ void SDesignerView::DeleteCtrl()
 		m_curSelXmlNode.parent().remove_child(m_curSelXmlNode);
 
 		//Debug(m_CurrentLayoutNode);
-		GetMoveWndRoot()->Click(0, CPoint(0, 0));
-		ReLoadLayout();
+		//GetMoveWndRoot()->Click(0, CPoint(0, 0));
+		ReloadLayout();
 		m_nState = 0;
 
 	}
@@ -2413,9 +2109,10 @@ void SDesignerView::Preview()
 
 	SMoveWnd *wnd;
 
+/*
 	m_pMoveWndRoot->SetVisible(FALSE);
 
-	m_pMoveWndRoot->GetParent()->Invalidate();
+	m_pMoveWndRoot->GetParent()->Invalidate();*/
 
 	//SPOSITION pos = m_mapMoveRealWnd.GetStartPosition();
 	//while (pos)
@@ -2429,10 +2126,11 @@ void SDesignerView::Preview()
 
 void SDesignerView::unPreview()
 {
-	ReLoadLayout();
+	ReloadLayout();
 	m_nState = 0;
+/*
 	GetMoveWndRoot()->Click(0, CPoint(0, 0));
-	m_pMoveWndRoot->GetParent()->Invalidate();
+	m_pMoveWndRoot->GetParent()->Invalidate();*/
 }
 
 void SDesignerView::ShowZYGLDlg()
@@ -2464,6 +2162,7 @@ void SDesignerView::ShowYSGLDlg()
 		RefreshRes();
 	}
 }
+/*
 
 void SDesignerView::ShowMovWndChild(BOOL bShow, SMoveWnd* pMovWnd)
 {
@@ -2484,7 +2183,7 @@ void SDesignerView::ShowMovWndChild(BOOL bShow, SMoveWnd* pMovWnd)
 			ShowMovWndChild(bShow, (SMoveWnd*)pMovWnd->GetWindow(GSW_FIRSTCHILD));
 		}
 	}
-}
+}*/
 
 int SDesignerView::GetIndexData()
 {
@@ -2568,11 +2267,11 @@ void SDesignerView::UseEditorUIDef(bool bYes) //使用编辑器自身的UIDef还
 {
 	if (bYes)
 	{
-		SUiDef::getSingleton().SetUiDef(m_pOldUiDef, true);
+		//SUiDef::getSingleton().SetUiDef(m_pOldUiDef, true);
 	}
 	else
 	{
-		SUiDef::getSingleton().SetUiDef(m_pUiDef, true);
+		//SUiDef::getSingleton().SetUiDef(m_pUiDef, true);
 	}
 }
 

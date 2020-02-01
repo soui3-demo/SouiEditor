@@ -799,11 +799,12 @@ void CMainDlg::OnBtnNewInclude()
 
 void CMainDlg::OnBtnWndLayout()
 {
+/*
 	if (m_pDesignerView->GetMoveWndRoot())
 	{
 		m_pDesignerView->m_nState = 0;
 		m_pDesignerView->GetMoveWndRoot()->Click(0, CPoint(0, 0));
-	}
+	}*/
 }
 
 void CMainDlg::OnBtnZYGL()
@@ -824,7 +825,7 @@ void CMainDlg::OnBtnAbout()
 
 void CMainDlg::OnbtnPreview()
 {
-	if (m_pDesignerView->GetMoveWndRoot())
+	/*if (m_pDesignerView->GetMoveWndRoot())
 	{
 		if (m_pDesignerView->GetMoveWndRoot()->IsVisible())
 		{
@@ -834,7 +835,7 @@ void CMainDlg::OnbtnPreview()
 		{
 			m_pDesignerView->unPreview();
 		}
-	}
+	}*/
 }
 
 void CMainDlg::OnBtnRecentFile()
@@ -868,7 +869,10 @@ bool CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 
 	SStringT *s = (SStringT*)tree->GetItemData(pEvt->hItem);
 
-	if (m_tabDesigner->GetCurSel() == 0)
+	m_pDesignerView->LoadLayout(*s);
+	m_tabDesigner->SetCurSel(0);
+	
+	/*if (m_tabDesigner->GetCurSel() == 0)
 	{
 		m_pDesignerView->LoadLayout(*s);
 	}
@@ -883,7 +887,7 @@ bool CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 				m_textCurXmlFile->SetWindowText(filename);
 			}
 		}
-	}
+	}*/
 
 	return true;
 }

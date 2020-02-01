@@ -84,9 +84,6 @@
     <ClCompile Include="SImgCanvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SMoveWnd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="propgrid\SPropertyGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -210,9 +207,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SListBoxDrop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SMoveWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="propgrid\SPropertyEmbedWndHelper.hpp">

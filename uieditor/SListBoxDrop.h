@@ -191,7 +191,7 @@ public:
 		{
 			m_pCDropWnd->SetVisible(FALSE, TRUE);
 			m_pDesignerView->SetSelCtrlNode(ctrlNode);
-			SWND pChild = m_pDesignerView->m_pMoveWndRoot->SwndFromPoint(pt);			
+			/*SWND pChild = m_pDesignerView->m_pMoveWndRoot->SwndFromPoint(pt);			
 			SWindow *pSChild = SWindowMgr::GetWindow(pChild);
 			if (pSChild == 0)
 			{
@@ -201,7 +201,7 @@ public:
 
 			m_pDesignerView->NewWnd(pt,(SMoveWnd*)pSChild);
 			((SMoveWnd*)pSChild)->m_pRealWnd->RequestRelayout();
-			((SMoveWnd*)pSChild)->m_pRealWnd->UpdateLayout();
+			((SMoveWnd*)pSChild)->m_pRealWnd->UpdateLayout();*/
 			m_pDesignerView->AddCodeToEditor(NULL);
 
 			m_pDesignerView->CreatePropGrid(m_pDesignerView->m_curSelXmlNode.name());

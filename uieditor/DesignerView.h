@@ -10,14 +10,11 @@ extern CSysDataMgr g_SysDataMgr;
 
 namespace SOUI
 {
-	class SMoveWnd;
+	//class SMoveWnd;
 	class SPropertyGrid;
 
 	class SDesignerView
 	{
-	private:
-		CAutoRefPtr<SStylePool> m_privateStylePool; /**<局部style pool*/
-		CAutoRefPtr<SSkinPool>  m_privateSkinPool;  /**<局部skin pool*/
 	public:
 		static BOOL LoadConfig(pugi::xml_document &doc,const SStringT & cfgFile);
 
@@ -26,7 +23,7 @@ namespace SOUI
 
 		long GetWindowUserData(SWindow *pWnd);
 
-		SMoveWnd* m_CurSelCtrl;  //用户当前选择的控件
+		//SMoveWnd* m_CurSelCtrl;  //用户当前选择的控件
 		SList<SWindow*> m_CopyList;
 
 		//保存当前打开的布局文件
@@ -47,9 +44,13 @@ namespace SOUI
 
 		BOOL LoadLayout(SStringT strFileName);   //加载布局
 
+		BOOL ReloadLayout(BOOL bClearSel = FALSE);
+
+		void SelectCtrlByIndex(int index, bool bReCreatePropGrid = true);
+
 		//创建Root窗口
-		SMoveWnd* CreateWnd(SUIWindow *pContainer, LPCWSTR pszXml);
-		void CreateAllChildWnd(SUIWindow *pRealWnd, SMoveWnd *pMoveWnd);
+// 		SMoveWnd* CreateWnd(SUIWindow *pContainer, LPCWSTR pszXml);
+// 		void CreateAllChildWnd(SUIWindow *pRealWnd, SMoveWnd *pMoveWnd);
 
 		//重命名每一个控件的名字
 		void RenameChildeWnd(pugi::xml_node xmlNode);
@@ -57,7 +58,7 @@ namespace SOUI
 		void RenameAllLayoutWnd();
 		void RemoveWndName(pugi::xml_node xmlNode, BOOL bClear, SStringT strFileName = _T(""));
 
-		void UpdatePosToXmlNode(SUIWindow *pRealWnd, SMoveWnd* pMoveWnd);//移动控件的同时将控件位置写入xml节点
+		//void UpdatePosToXmlNode(SUIWindow *pRealWnd, SMoveWnd* pMoveWnd);//移动控件的同时将控件位置写入xml节点
 
 		//调试用
 		void Debug(pugi::xml_node);
@@ -66,7 +67,7 @@ namespace SOUI
 
 		SStringT NodeToStr(pugi::xml_node xmlNode);
 
-		void SetCurrentCtrl(pugi::xml_node xmlNode, SMoveWnd *pWnd); //设置当前选中的控件
+		void SetCurrentCtrl(pugi::xml_node xmlNode, long index); //设置当前选中的控件
 
 		SStringW GetPosFromLayout(SouiLayoutParam *pLayoutParam, INT nPosIndex);
 
@@ -88,7 +89,6 @@ namespace SOUI
 		bool OnPropGridItemActive(EventArgs *pEvt);
 		bool OnTCSelChanged(EventArgs *pEvt);
 
-		BOOL ReLoadLayout(BOOL bClearSel=FALSE);
 		BOOL bIsContainerCtrl(SStringT strCtrlName); //判断控件是否是容器控件
 
 		void SaveEditorCaretPos();
@@ -97,7 +97,7 @@ namespace SOUI
 
 		void LocateControlXML();
 
-		SMoveWnd* GetMoveWndRoot() { return m_pMoveWndRoot; };
+		//SMoveWnd* GetMoveWndRoot() { return m_pMoveWndRoot; };
 		SWindow* GetRealWndRoot() { return m_pRealWndRoot; };
 
 		void AddCodeToEditor(CScintillaWnd* pSciWnd);  //复制xml代码到代码编辑器
@@ -106,7 +106,7 @@ namespace SOUI
 
 		void SetSelCtrlNode(pugi::xml_node xmlNode);
 
-		void NewWnd(CPoint pt, SMoveWnd *pM);
+		void NewWnd(CPoint pt, void *pM);
 
 		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item);
 		BOOL GoToXmlStructItem(int data, HSTREEITEM item);
@@ -119,7 +119,7 @@ namespace SOUI
 		void ShowZYGLDlg();
 		void ShowYSGLDlg();
 
-		void ShowMovWndChild(BOOL bShow, SMoveWnd* pMovWnd);
+		void ShowMovWndChild(BOOL bShow, void* pMovWnd);
 
 		int GetIndexData();
 
@@ -134,9 +134,7 @@ namespace SOUI
 		CAutoRefPtr<IFont> m_defFont;
 
 		SDesignerRoot *m_pRealWndRoot;       //布局容器窗口;
-
-		SMoveWnd  *m_pMoveWndRoot; //布局窗口的根窗口
-		
+	
 		bool	 m_bXmlResLoadOK;
 		int		 m_nSciCaretPos;		//代码编辑窗口光标位置
 
@@ -153,15 +151,12 @@ namespace SOUI
 		SMap<SStringT, pugi::xml_document *> m_mapLayoutFile;
 		SMap<SStringT, SMap<int, SStringT>* > m_mapIncludeReplace;    //保存每一个布局文件对应的include map;
 
-		SMap<SWindow*, SMoveWnd*> m_mapMoveRealWnd;
-
 		SStringT m_strUIResFile;   //C:\demos\MyTest\uires\uires.idx
 		SStringT m_strProPath;     //C:\demos\MyTest\uires\
 
 		SStringT m_strCurLayoutXmlFile; //当前打开的窗体文件名  xml\main.xml
 		SStringT m_strCurFileEditor; //当前代码编辑器打开代码对应的文件  xml\main.xml
 
-		//CAutoRefPtr<IResProvider>   pResProvider;
 		SUIWindow *m_pContainer;  //所有布局窗口根的容器 
 		pugi::xml_node m_CurrentLayoutNode;		//当前正在编辑布局的XML文档结点
 
@@ -184,12 +179,7 @@ namespace SOUI
 
 		STreeCtrl *m_treeXmlStruct; //显示xml文档结构的tree控件
 
+		int m_CurSelCtrlIndex;
 		int m_ndata; //这个值用来标识xmlnode的每一个节点，节点属性为data,xmlnode的这个属性值是唯一的;
-
-		CAutoRefPtr<IResProvider> m_pWsResProvider;		//工程的UI提供者
-
-		CAutoRefPtr<IUiDefInfo> m_pUiDef;  //加载工程的UIdef
-
-		CAutoRefPtr<IUiDefInfo>  m_pOldUiDef;//编辑器自身的UiDef
 	};
 }

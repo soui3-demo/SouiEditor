@@ -7,7 +7,7 @@
 #include <control/SCmnCtrl.h>
 #include "Dialog/DlgCreatePro.h"
 #include "DesignerView.h"
-#include "SMoveWnd.h"
+//#include "SMoveWnd.h"
 #include "propgrid/SPropertyGrid.h"
 #include "SImageBtnEx.h"
 #include "SListBoxDrop.h"

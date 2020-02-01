@@ -74,7 +74,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		theApp->RegisterWindowClass<SDesignerRoot>();
 		theApp->RegisterWindowClass<SUIWindow>();
 
-		theApp->RegisterWindowClass<SMoveWnd>();
+		//theApp->RegisterWindowClass<SMoveWnd>();
 		theApp->RegisterWindowClass<SImageBtnEx>();
 
 		theApp->RegisterWindowClass<SListBoxDrop>();
