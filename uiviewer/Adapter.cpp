@@ -4,18 +4,11 @@
 #include "Adapter.h"
 #include "MainDlg.h"
 
-extern BOOL g_bHookCreateWnd;
-extern CMainDlg* g_pMainDlg;
-
 void CBaseMcAdapterFix::getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
 {
 	if (pItem->GetChildrenCount() == 0)
 	{
-		g_pMainDlg->m_pDesignerView->UseEditorUIDef(false);
-		g_bHookCreateWnd = TRUE;
 		pItem->InitFromXml(xmlTemplate);
-		g_bHookCreateWnd = FALSE;
-		g_pMainDlg->m_pDesignerView->UseEditorUIDef(true);
 	}
 }
 
@@ -114,8 +107,6 @@ void CBaseAdapterFix::getView(int position, SWindow * pItem, pugi::xml_node xmlT
 {
 	if (pItem->GetChildrenCount() == 0)
 	{
-		g_pMainDlg->m_pDesignerView->UseEditorUIDef(false);
-		g_bHookCreateWnd = TRUE;
 		if (m_TemplateNames.GetCount() == 0)
 			pItem->InitFromXml(xmlTemplate);
 		else
@@ -123,8 +114,6 @@ void CBaseAdapterFix::getView(int position, SWindow * pItem, pugi::xml_node xmlT
 			int nViewType = getItemViewType(position, pItem->GetState());
 			pItem->InitFromXml(xmlTemplate.child(m_TemplateNames[nViewType < m_TemplateNames.GetCount() - 1 ? nViewType : m_TemplateNames.GetCount() - 1]));
 		}
-		g_bHookCreateWnd = FALSE;
-		g_pMainDlg->m_pDesignerView->UseEditorUIDef(true);
 	}
 }
 
