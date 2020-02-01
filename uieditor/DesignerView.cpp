@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "pugixml_write.h"
 #include "SysdataMgr.h"
+#include <helper/SAppDir.h>
 
 //编辑界面时XML窗口只显示选择控件的XML文本
 //#define  ONLYSHOWSELXML
@@ -87,13 +88,14 @@ BOOL SDesignerView::OpenProject(SStringT strFileName)
 	SStringT strTemp(s);
 	m_strProPath = strTemp;
 
+/*
 	CAutoRefPtr<IResProvider> pResProvider;
 	CreateResProvider(RES_FILE, (IObjRef**)&pResProvider);
 	if (!pResProvider->Init((LPARAM)s, 0))
 	{
 		Debug(_T("CreateResProvider失败"));
 		return FALSE;
-	}
+	}*/
 
 	SStringT strXMLInit;
 	pugi::xml_node xmlNode = m_xmlDocUiRes.child(_T("resource")).child(_T("UIDEF")).child(_T("file"));
@@ -158,13 +160,48 @@ BOOL SDesignerView::InsertLayoutToMap(SStringT strFileName)
 	return TRUE;
 }
 
-BOOL SDesignerView::LoadLayout(SStringT strFileName)
+void SDesignerView::StartPreviewProcess()
+{
+	SAppDir appdir(NULL);
+	SStringT binDir = appdir.AppDir();
+#ifdef _DEBUG
+	SStringT strPreviewExePath = binDir + _T("\\uiviewerd.exe");
+#else
+	SStringT strPreviewExePath = binDir + _T("\\uiviewer.exe");
+#endif
+
+	SStringT strCommandLine = strPreviewExePath + _T(" ");
+	strCommandLine += _T("\"");
+	strCommandLine += m_strProPath;
+	strCommandLine += _T("\" LAYOUT:");
+	strCommandLine += m_strCurLayoutName;
+	
+	PROCESS_INFORMATION pi;
+	STARTUPINFO si;
+	::ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(STARTUPINFO);
+	si.wShowWindow = SW_SHOWNORMAL;
+	si.dwFlags = STARTF_USESHOWWINDOW;
+
+	if (!CreateProcess(NULL, (LPTSTR)strCommandLine.c_str(), 
+		NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi))
+	{
+		int err = GetLastError();
+		return;
+	}
+
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+}
+	
+BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 {
 	m_nSciCaretPos = 0;
 	m_CurSelCtrlIndex = 0;
 	
 	m_defFont = SFontPool::getSingleton().GetFont(FF_DEFAULTFONT, 100);
 	m_strCurLayoutXmlFile = strFileName;
+	m_strCurLayoutName = layoutName;
 	SMap<SStringT, pugi::xml_document*>::CPair *p = m_mapLayoutFile.Lookup(strFileName);
 	pugi::xml_node xmlroot = p->m_value->document_element();
 	m_CurrentLayoutNode = xmlroot;
@@ -173,6 +210,8 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName)
 	m_nState = 0;
 	SelectCtrlByIndex(0);	
 	m_pScintillaWnd->ResetRedo();
+
+	StartPreviewProcess();
 
 	return TRUE;
 }

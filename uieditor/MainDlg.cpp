@@ -858,7 +858,7 @@ void CMainDlg::LoadWorkSpace()
 	m_bIsOpen = TRUE;
 
 	if (!strOpenLayoutFile.IsEmpty())
-		m_pDesignerView->LoadLayout(strOpenLayoutFile);
+		m_pDesignerView->LoadLayout(strOpenLayoutFile, L"");
 }
 
 bool CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
@@ -868,8 +868,10 @@ bool CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 	STreeCtrl *tree = (STreeCtrl*)pEvt->sender;
 
 	SStringT *s = (SStringT*)tree->GetItemData(pEvt->hItem);
+	SStringT strLayoutName;
+	tree->GetItemText(pEvt->hItem, strLayoutName);
 
-	m_pDesignerView->LoadLayout(*s);
+	m_pDesignerView->LoadLayout(*s, strLayoutName);
 	m_tabDesigner->SetCurSel(0);
 	
 	/*if (m_tabDesigner->GetCurSel() == 0)

@@ -39,10 +39,11 @@ namespace SOUI
 		
 
 		BOOL InsertLayoutToMap(SStringT);
+		void StartPreviewProcess();
 
 		BOOL NewLayout(SStringT strResName, SStringT strPath);  //新建dialog 或include布局
 
-		BOOL LoadLayout(SStringT strFileName);   //加载布局
+		BOOL LoadLayout(SStringT strFileName, SStringT layoutName);   //加载布局
 
 		BOOL ReloadLayout(BOOL bClearSel = FALSE);
 
@@ -154,6 +155,7 @@ namespace SOUI
 		SStringT m_strUIResFile;   //C:\demos\MyTest\uires\uires.idx
 		SStringT m_strProPath;     //C:\demos\MyTest\uires\
 
+		SStringT m_strCurLayoutName; //当前打开的窗体名  XML_MAINDLG
 		SStringT m_strCurLayoutXmlFile; //当前打开的窗体文件名  xml\main.xml
 		SStringT m_strCurFileEditor; //当前代码编辑器打开代码对应的文件  xml\main.xml
 
