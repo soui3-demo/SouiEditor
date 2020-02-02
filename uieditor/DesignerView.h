@@ -4,6 +4,7 @@
 #include "layout/SouiLayout.h"
 #include "layout/SLinearLayout.h"
 #include "SDesignerRoot.h"
+#include <map>
 
 class CSysDataMgr;
 extern CSysDataMgr g_SysDataMgr;
@@ -46,6 +47,7 @@ namespace SOUI
 		BOOL LoadLayout(SStringT strFileName, SStringT layoutName);   //加载布局
 
 		BOOL ReloadLayout(BOOL bClearSel = FALSE);
+		void SelectCtrlByTag(SStringT tag);
 
 		void SelectCtrlByIndex(int index, bool bReCreatePropGrid = true);
 
@@ -109,7 +111,7 @@ namespace SOUI
 
 		void NewWnd(CPoint pt, void *pM);
 
-		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item);
+		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level, SStringT& str_nodetag);
 		BOOL GoToXmlStructItem(int data, HSTREEITEM item);
 
 		void DeleteCtrl();
@@ -180,6 +182,8 @@ namespace SOUI
 		SList<SStringT> m_lstContainerCtrl;  //容器控件列表，非容器控件，上面不能摆放控件 在Ctrl.xml中定义
 
 		STreeCtrl *m_treeXmlStruct; //显示xml文档结构的tree控件
+		SMap<SStringT, int> m_mapXmlStructNode;
+		std::map<int, int> m_mapLevelCount;
 
 		int m_CurSelCtrlIndex;
 		int m_ndata; //这个值用来标识xmlnode的每一个节点，节点属性为data,xmlnode的这个属性值是唯一的;

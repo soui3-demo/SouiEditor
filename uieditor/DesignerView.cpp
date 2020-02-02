@@ -232,6 +232,8 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	if (m_CurrentLayoutNode == NULL)
 		return TRUE;
 
+	m_mapXmlStructNode.RemoveAll();
+	m_mapLevelCount.clear();
 	if (S_CW2T(m_CurrentLayoutNode.name()) != _T("SOUI"))
 	{
 		//include文件
@@ -362,12 +364,23 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	//wchar_t *s = L"<window pos=\"20,20,@500,@500\" colorBkgnd=\"#d0d0d0\"></window>";
 	const wchar_t* s3 = L"<movewnd pos=\"20,20,@800,@500\"></movewnd>";
 
+	int level = 0;
+	SStringT strXmlNodeTag;
 	m_treeXmlStruct->RemoveAllItems();
-	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT);
+	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT, level, strXmlNodeTag);
 
 	return FALSE;
 }
 
+void SDesignerView::SelectCtrlByTag(SStringT tag)
+{
+	const SMap<SStringT, int>::CPair * pNodePair = m_mapXmlStructNode.Lookup(tag);
+	if (pNodePair == NULL)
+		return;
+	
+	SelectCtrlByIndex(pNodePair->m_value, true);
+}
+	
 void SDesignerView::SelectCtrlByIndex(int index, bool bReCreatePropGrid)
 {
 	if (index != 0)
@@ -1857,7 +1870,7 @@ void SDesignerView::SetSelCtrlNode(pugi::xml_node xmlNode)
 void SDesignerView::NewWnd(CPoint pt, void *pM)
 {
 	BOOL bIsInclude = FALSE;
-
+	/*
 	m_curSelXmlNode = m_xmlSelCtrlNode.first_child();
 
 	//替换Include
@@ -1890,7 +1903,7 @@ void SDesignerView::NewWnd(CPoint pt, void *pM)
 		RenameWnd(m_curSelXmlNode, TRUE);
 		RenameChildeWnd(m_curSelXmlNode);
 	}
-/*
+
 	UseEditorUIDef(false);
 
 	SWindow* pRealWnd;
@@ -2007,14 +2020,15 @@ void SDesignerView::NewWnd(CPoint pt, void *pM)
 	*/
 }
 
-int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item)
+int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level, SStringT& str_nodetag)
 {
 	if (!xmlNode)
 	{
 		return 0;
 	}
-
 	int count = 0;
+	SStringT curTag = str_nodetag;
+	int CurLevel = level;
 	pugi::xml_node NodeSib = xmlNode;
 	while (NodeSib)
 	{
@@ -2036,12 +2050,18 @@ int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item)
 			NodeSib = NodeSib.next_sibling();
 			continue;
 		}
-
+		if (m_mapLevelCount.find(CurLevel) == m_mapLevelCount.end())
+			m_mapLevelCount[CurLevel] = 0;
+		str_nodetag = curTag + SStringT(_T("")).Format(_T("%d"), m_mapLevelCount[CurLevel]++);
+		m_mapXmlStructNode[str_nodetag] = data;
+		
 		count++;
+		level++;
 		HSTREEITEM itemChild = m_treeXmlStruct->InsertItem(strNodeName, item);
 		m_treeXmlStruct->SetItemData(itemChild, data);
-
-		count += InitXMLStruct(NodeSib.first_child(), itemChild);
+		
+		str_nodetag += _T(",");
+		count += InitXMLStruct(NodeSib.first_child(), itemChild, level, str_nodetag);
 		NodeSib = NodeSib.next_sibling();
 	}
 	if (item == STVI_ROOT)

@@ -1150,14 +1150,24 @@ void CMainDlg::RefreshStyleList()
 
 BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 {
-	if(pCopyDataStruct->dwData != kcds_id)
+	if (pCopyDataStruct->dwData == kcds_id)
 	{
-		return FALSE;
-	}
-	int *pIndex = (int*)pCopyDataStruct->lpData;
-	int  nCount = pCopyDataStruct->cbData/sizeof(int);
+		int *pIndex = (int*)pCopyDataStruct->lpData;
+		int  nCount = pCopyDataStruct->cbData / sizeof(int);
 
-	SLOG_INFO("nCount:"<<nCount);
+		int i = 0;
+		SStringT strXmlNodeTag;
+		while (i < nCount)
+		{
+			strXmlNodeTag += SStringT(_T("")).Format(_T("%d,"), pIndex[i]);
+			i++;
+		}
+		strXmlNodeTag.TrimRight(',');
+		if (m_pDesignerView)
+			m_pDesignerView->SelectCtrlByTag(strXmlNodeTag);
+		SLOG_INFO("nCount:" << nCount << "Tag:" << strXmlNodeTag.c_str());
+	}
+	
 	return TRUE;
 }
 
