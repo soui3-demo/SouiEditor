@@ -218,6 +218,7 @@ protected:
 CMainDlg::CMainDlg() : SHostWnd(_T("LAYOUT:XML_MAINWND"))
 {
 	m_bLayoutInited = FALSE;
+	m_hViewer = NULL;
 }
 
 CMainDlg::~CMainDlg()
@@ -1145,6 +1146,21 @@ void CMainDlg::RefreshStyleList()
 			pListbox->AddString(item->m_value.name);
 			m_UIResFileMgr.m_mapStyles.GetNext(pos);
 		}
+	}
+}
+
+void CMainDlg::SendMsgToViewer(int msgid, void* pMsgData, int msglen)
+{
+	if (m_hViewer)
+	{
+		COPYDATASTRUCT cds;
+		cds.dwData = msgid;
+		cds.cbData = msglen;
+		char* pData = new char[msglen];
+		memcpy(pData, pMsgData, msglen);
+		cds.lpData = pData;
+		::SendMessage(m_hViewer, WM_COPYDATA, (WPARAM)m_hWnd, (LPARAM)&cds);
+		delete[]pData;
 	}
 }
 

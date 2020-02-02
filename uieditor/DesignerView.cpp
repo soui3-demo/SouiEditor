@@ -1718,6 +1718,8 @@ void SDesignerView::GetCodeFromEditor()
 		return;
 	}
 
+	g_pMainDlg->SendMsgToViewer(kcds_id, (void*)s.c_str(), s.GetLength());
+	
 	SaveEditorCaretPos();
 
 	RenameChildeWnd(doc.root());
@@ -2126,20 +2128,6 @@ bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 
 	SelectCtrlByIndex(data);
 	return true;
-	/*SWindow *wnd = FindChildByUserData(m_pRealWndRoot, data);
-	if (wnd)
-	{
-		SMap<SWindow*, SMoveWnd*>::CPair *p = m_mapMoveRealWnd.Lookup(wnd);
-		if (p)
-		{
-			m_curSelXmlNode = xmlNode;
-			m_CurSelCtrl = p->m_value;
-
-			m_CurSelCtrl->Click(0, CPoint(0, 0));
-		}
-	}
-
-	return true;*/
 }
 
 

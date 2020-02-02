@@ -86,6 +86,7 @@ public:
 	void RefreshStringList();
 
 	void RefreshStyleList();
+	void SendMsgToViewer(int msgid, void* pMsgData, int msglen);
 
 protected:
 	void OnLanguage(int nID);
@@ -211,6 +212,8 @@ public:
 	SMCListView *m_mcAllSkin;
 	SMCListView *m_mcAllColor;
 
+	HWND m_hWndViewer;	//预览窗口的窗口句柄
+	
 	SImageBtnEx *m_btnPreview;
 	SScrollView *m_scrView;
 

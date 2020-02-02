@@ -14,7 +14,7 @@
 
 //从PE文件加载，注意从文件加载路径位置
 #ifdef _DEBUG
-	#define RES_TYPE 0   //从文件中加载资源
+	#define RES_TYPE 1   //从文件中加载资源
 #else
 	#define RES_TYPE 1  //从PE资源中加载UI资源
 #endif
