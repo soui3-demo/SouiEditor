@@ -14,7 +14,7 @@
 #include "ResManger.h"
 #include <helper/SMenuEx.h>
 #include <vector>
-
+#include "Global.h"
 
 extern SStringT g_CurDir;
 
@@ -131,6 +131,7 @@ protected:
 	EVENT_MAP_END()
 
 	BOOL OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct);
+	LRESULT OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp);
 	//HostWnd真实窗口消息处理
 	BEGIN_MSG_MAP_EX(CMainDlg)
 		MESSAGE_HANDLER(WM_MSG_SHOWBOX, OnShowMsgBox)
@@ -142,6 +143,7 @@ protected:
 		MSG_WM_SHOWWINDOW(OnShowWindow)
 		MSG_WM_COMMAND(OnCommand)
 		MSG_WM_COPYDATA(OnCopyData)
+		MESSAGE_HANDLER_EX(kmsg_viewer,OnCreateViewer)
 		CHAIN_MSG_MAP(SHostWnd)
 		REFLECT_NOTIFICATIONS_EX()
 	END_MSG_MAP()
@@ -211,5 +213,7 @@ public:
 
 	SImageBtnEx *m_btnPreview;
 	SScrollView *m_scrView;
+
+	HWND		m_hViewer;
 	BOOL m_bIsOpen;  //工程是否打开
 };

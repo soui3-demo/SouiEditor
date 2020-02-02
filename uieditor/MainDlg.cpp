@@ -1171,3 +1171,9 @@ BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 	return TRUE;
 }
 
+LRESULT CMainDlg::OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp)
+{
+	m_hViewer = (HWND)wp;
+	return 0;
+}
+
