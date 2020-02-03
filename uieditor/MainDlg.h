@@ -88,6 +88,8 @@ public:
 	void RefreshStyleList();
 	void SendMsgToViewer(int msgid, void* pMsgData, int msglen);
 
+	bool Desiner_TabSelChanged(EventTabSelChanged * evt_sel);
+
 protected:
 	void OnLanguage(int nID);
 	void OnLanguageBtnCN();
@@ -98,7 +100,6 @@ protected:
 	
 	void OnTimer(UINT_PTR timeID);
 
-	bool Desiner_TabSelChanged(EventTabSelChanged * evt_sel);
 
 	void OnCommand(UINT uNotifyCode, int nID, HWND wndCtl);
 
