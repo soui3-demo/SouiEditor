@@ -1,6 +1,7 @@
 ﻿#include "StdAfx.h"
 #include "SouiRealWndHandler.h"
 #include "ScintillaWnd.h"
+#include "DesignWnd.h"
 
 namespace SOUI
 {
@@ -27,7 +28,20 @@ namespace SOUI
 			pRealWnd->SetUserData((ULONG_PTR)pWnd);
 			return pWnd->m_hWnd;
 		}
-		else
+		else if (pRealWnd->GetRealWndParam().m_strClassName == _T("designer_wnd"))
+		{
+			CDesignWnd *pWnd = new CDesignWnd;
+			BOOL bOK = pWnd->CreateWnd(pRealWnd->GetRealWndParam().m_strWindowName, WS_CHILD, CRect(0, 0, 0, 0), 
+				pRealWnd->GetContainer()->GetHostHwnd(), pRealWnd->GetID(), SApplication::getSingleton().GetInstance());
+			if (!bOK)
+			{
+				SASSERT(FALSE);
+				delete pWnd;
+				return 0;
+			}
+			pRealWnd->SetUserData((ULONG_PTR)pWnd);
+			return pWnd->m_hWnd;
+		}else
 		{
 			return 0;
 		}

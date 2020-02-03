@@ -129,6 +129,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DesignWnd.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h">
@@ -271,6 +274,9 @@
     </CustomBuild>
     <ClInclude Include="xpm_icons.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignWnd.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

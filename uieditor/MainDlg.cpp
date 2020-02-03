@@ -249,12 +249,12 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	m_staticAppTitle = FindChildByName2<SStatic>(L"apptitle");
 	m_btn_recentFile = FindChildByName2<SButton>(L"toolbar_btn_recent");
 
-	m_pLayoutContainer = FindChildByName2<SWindow>(L"uidesigner_wnd_layout");
 	m_treeXmlStruct = FindChildByName2<STreeCtrl>(L"uidesigner_wnd_xmltree");
 	m_textNodenum = FindChildByName2<SStatic>(L"uidesigner_nodenum");
 	m_textCurXmlFile = FindChildByName2<SStatic>(L"uidesigner_curfile");
 	m_textCtrlTypename = FindChildByName2<SStatic>(L"uidesigner_CtrlTypename");
 	
+	m_pLayoutContainer = FindChildByName2<SRealWnd>(L"uidesigner_wnd_layout");
 	m_RealWndLayoutEdit = FindChildByName2<SRealWnd>(L"uidesigner_scintilla");
 	m_RealWndXmlFile = FindChildByName2<SRealWnd>(L"uidesigner_xml_scintilla");
 	// 控件列表
@@ -276,7 +276,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	//======================================================================
 	m_pDesignerView = new SDesignerView((SHostDialog*)this, m_pLayoutContainer, m_treeXmlStruct);
 	m_RealWndXmlFile->GetRealHwnd();	//触发建立真窗口
-	
+		
 	m_textCurXmlFile->SetWindowText(_T(" 在编辑窗口按Ctrl+S保存文件"));
 
 	m_treePro->GetEventSet()->subscribeEvent(EVT_TC_DBCLICK, Subscriber(&CMainDlg::OnTreeItemDbClick, this));
@@ -470,6 +470,7 @@ void CMainDlg::OnClose()
 		CloseProject();
 	}
 
+	SendMsgToViewer(exitviewer_id, nullptr, 0);
 	SNativeWnd::DestroyWindow();
 }
 
@@ -1153,14 +1154,20 @@ void CMainDlg::SendMsgToViewer(int msgid, void* pMsgData, int msglen)
 {
 	if (m_hViewer)
 	{
+		char* pData = NULL;
 		COPYDATASTRUCT cds;
 		cds.dwData = msgid;
 		cds.cbData = msglen;
-		char* pData = new char[msglen];
-		memcpy(pData, pMsgData, msglen);
 		cds.lpData = pData;
+		if (msglen > 0)
+		{
+			char* pData = new char[msglen];
+			memcpy(pData, pMsgData, msglen);
+			cds.lpData = pData;
+		}
 		::SendMessage(m_hViewer, WM_COPYDATA, (WPARAM)m_hWnd, (LPARAM)&cds);
-		delete[]pData;
+		if (pData)
+			delete[] pData;
 	}
 }
 
@@ -1190,6 +1197,9 @@ BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 LRESULT CMainDlg::OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp)
 {
 	m_hViewer = (HWND)wp;
+// 	::SetWindowLongPtr(m_hViewer, GWL_STYLE, WS_CHILDWINDOW | WS_VISIBLE);
+// 	::SetWindowLongPtr(m_hViewer, GWL_EXSTYLE, 0);
+// 	::SetWindowLongPtr(m_hViewer, GWL_HWNDPARENT, (LONG)m_pLayoutContainer->GetRealHwnd());
 	return 0;
 }
 

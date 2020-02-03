@@ -148,6 +148,7 @@
     <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="colorpicker\ColourPopup.cpp" />
     <ClCompile Include="DesignerView.cpp" />
+    <ClCompile Include="DesignWnd.cpp" />
     <ClCompile Include="Dialog\DlgAbout.cpp" />
     <ClCompile Include="Dialog\DlgCreatePro.cpp" />
     <ClCompile Include="Dialog\DlgFontSelect.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="CmdLine.h" />
     <ClInclude Include="colorpicker\ColourPopup.h" />
     <ClInclude Include="DesignerView.h" />
+    <ClInclude Include="DesignWnd.h" />
     <ClInclude Include="Dialog\DlgAbout.h" />
     <ClInclude Include="Dialog\DlgCreatePro.h" />
     <ClInclude Include="Dialog\DlgFontSelect.h" />

@@ -170,11 +170,16 @@ void SDesignerView::StartPreviewProcess()
 	SStringT strPreviewExePath = binDir + _T("\\uiviewer.exe");
 #endif
 
+	TCHAR buffer[32] = { 0 };
 	SStringT strCommandLine = strPreviewExePath + _T(" ");
 	strCommandLine += _T("\"");
 	strCommandLine += m_strProPath;
 	strCommandLine += _T("\" LAYOUT:");
 	strCommandLine += m_strCurLayoutName;
+	strCommandLine += _T(" ");
+	strCommandLine += _ltot((long)g_pMainDlg->m_hWnd, buffer, 10);
+	strCommandLine += _T(" ");
+	strCommandLine += _ltot((long)g_pMainDlg->m_pLayoutContainer->GetRealHwnd(), buffer, 10);
 	
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;

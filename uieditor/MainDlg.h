@@ -173,7 +173,7 @@ public:
 	//SList<SDesignerView*> m_ViewList;
 	SDesignerView *m_pDesignerView;
 
-	SWindow *m_pLayoutContainer;
+	SRealWnd *m_pLayoutContainer;
 
 	//加载控件列表
 	pugi::xml_document xmlDocCtrl;
