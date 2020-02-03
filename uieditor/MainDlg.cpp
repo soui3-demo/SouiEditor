@@ -470,7 +470,7 @@ void CMainDlg::OnClose()
 		CloseProject();
 	}
 
-	SendMsgToViewer(exitviewer_id, nullptr, 0);
+	SendMsgToViewer(exitviewer_id, NULL, 0);
 	SNativeWnd::DestroyWindow();
 }
 
