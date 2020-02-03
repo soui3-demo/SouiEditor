@@ -1197,9 +1197,7 @@ BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 LRESULT CMainDlg::OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp)
 {
 	m_hViewer = (HWND)wp;
-// 	::SetWindowLongPtr(m_hViewer, GWL_STYLE, WS_CHILDWINDOW | WS_VISIBLE);
-// 	::SetWindowLongPtr(m_hViewer, GWL_EXSTYLE, 0);
-// 	::SetWindowLongPtr(m_hViewer, GWL_HWNDPARENT, (LONG)m_pLayoutContainer->GetRealHwnd());
+
 	return 0;
 }
 

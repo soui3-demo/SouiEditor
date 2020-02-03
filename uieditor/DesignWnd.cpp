@@ -94,3 +94,22 @@ void CDesignWnd::OnPaint(HDC dc)
 	::DeleteObject(hPenNone);
 	::EndPaint(m_hWnd, &ps);
 }
+
+void CDesignWnd::RefreshDesignLayout()
+{
+	Invalidate();
+	if (g_pMainDlg && g_pMainDlg->m_hViewer)
+	{
+		g_pMainDlg->Desiner_TabSelChanged(NULL);
+	}
+}
+void CDesignWnd::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	if (bShow)
+		RefreshDesignLayout();
+}
+
+void CDesignWnd::OnSize(UINT nType, CSize size)
+{
+	RefreshDesignLayout();
+}

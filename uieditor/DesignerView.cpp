@@ -203,6 +203,7 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 {
 	m_nSciCaretPos = 0;
 	m_CurSelCtrlIndex = 0;
+	g_pMainDlg->SendMsgToViewer(exitviewer_id, nullptr, 0);
 	
 	m_defFont = SFontPool::getSingleton().GetFont(FF_DEFAULTFONT, 100);
 	m_strCurLayoutXmlFile = strFileName;
