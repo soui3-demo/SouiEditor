@@ -203,7 +203,7 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 {
 	m_nSciCaretPos = 0;
 	m_CurSelCtrlIndex = 0;
-	g_pMainDlg->SendMsgToViewer(exitviewer_id, nullptr, 0);
+	g_pMainDlg->SendMsgToViewer(exitviewer_id, NULL, 0);
 	
 	m_defFont = SFontPool::getSingleton().GetFont(FF_DEFAULTFONT, 100);
 	m_strCurLayoutXmlFile = strFileName;
@@ -238,7 +238,6 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	if (m_CurrentLayoutNode == NULL)
 		return TRUE;
 
-	m_mapXmlStructNode.RemoveAll();
 	m_mapLevelCount.clear();
 	if (S_CW2T(m_CurrentLayoutNode.name()) != _T("SOUI"))
 	{
@@ -367,24 +366,15 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 		s2 = L"<designerRoot pos=\"20,20\" " + strAttrSize + L" colorBkgnd=\"#d0d0d0\"/>";
 	}
 
-	//wchar_t *s = L"<window pos=\"20,20,@500,@500\" colorBkgnd=\"#d0d0d0\"></window>";
-	const wchar_t* s3 = L"<movewnd pos=\"20,20,@800,@500\"></movewnd>";
-
 	int level = 0;
-	SStringT strXmlNodeTag;
 	m_treeXmlStruct->RemoveAllItems();
-	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT, level, strXmlNodeTag);
-
+	m_rootItem = NULL;
+	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT, level);
+	if(m_rootItem==NULL)
+	{
+		m_rootItem = m_treeXmlStruct->GetRootItem();
+	}
 	return FALSE;
-}
-
-void SDesignerView::SelectCtrlByTag(SStringT tag)
-{
-	const SMap<SStringT, int>::CPair * pNodePair = m_mapXmlStructNode.Lookup(tag);
-	if (pNodePair == NULL)
-		return;
-	
-	SelectCtrlByIndex(pNodePair->m_value, true);
 }
 	
 void SDesignerView::SelectCtrlByIndex(int index, bool bReCreatePropGrid)
@@ -2028,14 +2018,13 @@ void SDesignerView::NewWnd(CPoint pt, void *pM)
 	*/
 }
 
-int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level, SStringT& str_nodetag)
+int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level)
 {
 	if (!xmlNode)
 	{
 		return 0;
 	}
 	int count = 0;
-	SStringT curTag = str_nodetag;
 	int CurLevel = level;
 	pugi::xml_node NodeSib = xmlNode;
 	while (NodeSib)
@@ -2060,16 +2049,17 @@ int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &l
 		}
 		if (m_mapLevelCount.find(CurLevel) == m_mapLevelCount.end())
 			m_mapLevelCount[CurLevel] = 0;
-		str_nodetag = curTag + SStringT(_T("")).Format(_T("%d"), m_mapLevelCount[CurLevel]++);
-		m_mapXmlStructNode[str_nodetag] = data;
 		
 		count++;
 		level++;
 		HSTREEITEM itemChild = m_treeXmlStruct->InsertItem(strNodeName, item);
+		if(strNodeName.CompareNoCase(_T("root"))==0)
+		{
+			m_rootItem = itemChild;//save root item.
+		}
 		m_treeXmlStruct->SetItemData(itemChild, data);
 		
-		str_nodetag += _T(",");
-		count += InitXMLStruct(NodeSib.first_child(), itemChild, level, str_nodetag);
+		count += InitXMLStruct(NodeSib.first_child(), itemChild, level);
 		NodeSib = NodeSib.next_sibling();
 	}
 	if (item == STVI_ROOT)
@@ -2370,6 +2360,36 @@ BOOL SDesignerView::LoadConfig(pugi::xml_document &doc,const SStringT & cfgFile)
 long SDesignerView::GetWindowUserData(SWindow *pWnd)
 {
 	return ((SouiEditorApp*)SApplication::getSingletonPtr())->GetWindowIndex(pWnd);
+}
+
+void SDesignerView::SelectCtrlByOrder(int *pOrder,int nLen,HSTREEITEM hFrom)
+{
+	SASSERT(nLen>0);
+	SASSERT(m_rootItem);
+	int iItem = pOrder[0];
+	if(hFrom == 0)
+	{
+		hFrom = m_rootItem;
+		if(nLen>1)
+			SelectCtrlByOrder(pOrder+1,nLen-1,hFrom);
+		return;
+	}
+	HSTREEITEM hChild = m_treeXmlStruct->GetChildItem(hFrom);
+	for(int i=0;i<iItem && hChild;i++)
+	{
+		hChild=m_treeXmlStruct->GetNextSiblingItem(hChild);
+	}
+	if(hChild)
+	{
+		if(nLen>1)
+		{
+			SelectCtrlByOrder(pOrder+1,nLen-1,hChild);
+		}else
+		{
+			int iIndex = (int)m_treeXmlStruct->GetItemData(hChild);
+			SelectCtrlByIndex(iIndex,false);
+		}
+	}
 }
 
 }

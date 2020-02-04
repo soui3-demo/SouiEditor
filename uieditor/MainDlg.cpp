@@ -1230,7 +1230,10 @@ BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 		}
 		strXmlNodeTag.TrimRight(',');
 		if (m_pDesignerView)
-			m_pDesignerView->SelectCtrlByTag(strXmlNodeTag);
+		{
+			m_pDesignerView->SelectCtrlByOrder(pIndex,nCount);
+		}
+		//	m_pDesignerView->SelectCtrlByTag(strXmlNodeTag);
 		SLOG_INFO("nCount:" << nCount << "Tag:" << strXmlNodeTag.c_str());
 	}
 	
