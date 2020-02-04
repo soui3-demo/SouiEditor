@@ -417,13 +417,14 @@ bool CScintillaWnd::doMatch()           //匹配括号并加亮缩进向导
 	return (braceAtCaret != -1);
 }
 
-SStringT CScintillaWnd::GetHtmlTagname()
+SStringT CScintillaWnd::GetHtmlTagname(int &tagStartPos)
 {
 	int caretPos = int(SendEditor(SCI_GETCURRENTPOS));
 	TCHAR charBefore = '\0';
 	SStringT tagname;
 	int lengthDoc = int(SendEditor(SCI_GETLENGTH));
-
+	tagStartPos = -1;
+	
 	if ((lengthDoc > 0) && (caretPos > 0))
 	{
 		int namestart = caretPos;
@@ -435,6 +436,7 @@ SStringT CScintillaWnd::GetHtmlTagname()
 
 		if (namestart >= 0)
 		{
+			tagStartPos = namestart;
 			nameend = namestart + 1;
 			while (nameend <= caretPos)
 			{
@@ -530,7 +532,8 @@ void CScintillaWnd::ShowAutoComplete(const char ch)
 	}
 	else if (ch >= 'a' && ch <= 'z')
 	{
-		SStringT tagname = GetHtmlTagname();
+		int tagpos = -1;
+		SStringT tagname = GetHtmlTagname(tagpos);
 		if (!tagname.IsEmpty())
 		{
 			SStringA str = g_SysDataMgr.GetCtrlAttrAutos(tagname);
@@ -660,6 +663,11 @@ void CScintillaWnd::GotoFoundLine()
 
 	displaySectionCentered(start, end);
 	displaySectionCentered(start, end);
+}
+
+void CScintillaWnd::InsertText(int pos, LPCSTR text)
+{
+	SendEditor(SCI_INSERTTEXT, pos, (LPARAM)text);
 }
 
 void CScintillaWnd::displaySectionCentered(int posStart, int posEnd, bool isDownwards)

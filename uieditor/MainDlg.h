@@ -70,6 +70,7 @@ public:
 
 	bool OnTreeItemDbClick(EventArgs *pEvtBase);
 	bool OnLbControlSelChanged(EventArgs *pEvtBase);
+	bool OnLbControlDbClick(EventArgs *pEvtBase);
 
 	bool OnDesinerTabSelChanged(EventArgs *pEvtBase);
 	bool OnWorkspaceTabSelChanged(EventArgs *pEvtBase);

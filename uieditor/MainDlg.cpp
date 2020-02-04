@@ -16,6 +16,7 @@
 #include "SImgCanvas.h"
 #include "DragDownMgr.h"
 #include "Global.h"
+#include "pugixml_write.h"
 
 #ifdef DWMBLUR	//win7毛玻璃开关
 #include <dwmapi.h>
@@ -297,7 +298,8 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 		{
 			//注册控件面板选择事件
 			m_lbControl->init(&m_mapCtrlList, m_pDesignerView);
-			m_lbControl->GetEventSet()->subscribeEvent(EVT_LB_SELCHANGED, Subscriber(&CMainDlg::OnLbControlSelChanged, this));
+			//m_lbControl->GetEventSet()->subscribeEvent(EVT_LB_SELCHANGED, Subscriber(&CMainDlg::OnLbControlSelChanged, this));
+			m_lbControl->GetEventSet()->subscribeEvent(EVT_LB_DBCLICK, Subscriber(&CMainDlg::OnLbControlDbClick, this));
 			m_lbControl->AddString(_T("指针"));
 
 			pugi::xml_node xmlNode = xmlDocCtrl.child(L"root", false).child(L"控件列表").first_child();
@@ -920,6 +922,47 @@ bool CMainDlg::OnLbControlSelChanged(EventArgs *pEvtBase)
 	{
 		m_pDesignerView->m_nState = 0;
 	}
+
+	return true;
+}
+
+bool CMainDlg::OnLbControlDbClick(EventArgs* pEvtBase)
+{
+	EventLBDbClick *pEvt = (EventLBDbClick*)pEvtBase;
+	SListBox *listbox = (SListBox*)pEvt->sender;
+	if (pEvt->nCurSel > 0)
+	{
+		SStringT strText;
+		strText = listbox->GetText(pEvt->nCurSel);
+
+		//查找该类型的xml数据
+		SMap<SStringT, pugi::xml_node>::CPair *p = m_mapCtrlList.Lookup(strText);  //查找
+		if (p == NULL)
+		{
+			return false;
+		}
+
+		SStringW writer_buf;
+		myxml_writer_stream writer(writer_buf);
+		p->m_value.print(writer, L"\t", pugi::format_default, pugi::encoding_utf16);
+		pugi::xml_document tmpdoc;
+		if (tmpdoc.load_buffer(writer_buf, wcslen(writer_buf) * sizeof(wchar_t), pugi::parse_default, pugi::encoding_utf16))
+		{
+			SStringA ctrl_xml;
+			myxml_writer_stream writer_ctrlxml(ctrl_xml);
+			pugi::xml_node ctrlnode = tmpdoc.first_child().first_child();
+			ctrlnode.print(writer_ctrlxml, L"\t", pugi::format_default, pugi::encoding_utf8);
+
+			CScintillaWnd *pSciWnd = m_pDesignerView->m_pScintillaWnd;
+			int tagStartpos = -1;
+			pSciWnd->GetHtmlTagname(tagStartpos);
+			if (tagStartpos != -1)
+			{
+				pSciWnd->InsertText(tagStartpos, ctrl_xml.c_str());
+				m_pDesignerView->GetCodeFromEditor(NULL);
+			}
+		}
+	}	
 
 	return true;
 }
