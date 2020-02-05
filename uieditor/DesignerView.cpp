@@ -379,6 +379,7 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	
 void SDesignerView::SelectCtrlByIndex(int index, bool bReCreatePropGrid)
 {
+	SLOG_INFO("SelectCtrlByIndex,index="<<index);
 	if (index != 0)
 	{
 		SStringT s;
@@ -2389,6 +2390,10 @@ void SDesignerView::SelectCtrlByOrder(int *pOrder,int nLen,HSTREEITEM hFrom)
 			int iIndex = (int)m_treeXmlStruct->GetItemData(hChild);
 			SelectCtrlByIndex(iIndex,false);
 		}
+	}else
+	{//指定的窗口没有找到，选中父窗口
+		int iIndex = (int)m_treeXmlStruct->GetItemData(hFrom);
+		SelectCtrlByIndex(iIndex,false);
 	}
 }
 
