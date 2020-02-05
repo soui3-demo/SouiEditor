@@ -111,7 +111,7 @@ namespace SOUI
 
 		void NewWnd(CPoint pt, void *pM);
 
-		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level);
+		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level, SStringA& str_nodetag);
 		BOOL GoToXmlStructItem(int data, HSTREEITEM item);
 
 		void DeleteCtrl();
@@ -183,6 +183,7 @@ namespace SOUI
 
 		STreeCtrl *m_treeXmlStruct; //显示xml文档结构的tree控件
 		std::map<int, int> m_mapLevelCount;
+		std::map<int, SStringA> m_mapData2CtrlTag;
 
 		int m_CurSelCtrlIndex;
 		int m_ndata; //这个值用来标识xmlnode的每一个节点，节点属性为data,xmlnode的这个属性值是唯一的;
