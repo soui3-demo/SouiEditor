@@ -111,8 +111,9 @@ namespace SOUI
 
 		void NewWnd(CPoint pt, void *pM);
 
-		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level, SStringA& str_nodetag);
+		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item);
 		BOOL GoToXmlStructItem(int data, HSTREEITEM item);
+		BOOL SDesignerView::GetTC_CtrlNodeTag(HSTREEITEM fromItem, HSTREEITEM item, SStringA& strTag);
 
 		void DeleteCtrl();
 		void Preview();
@@ -182,11 +183,10 @@ namespace SOUI
 		SList<SStringT> m_lstContainerCtrl;  //容器控件列表，非容器控件，上面不能摆放控件 在Ctrl.xml中定义
 
 		STreeCtrl *m_treeXmlStruct; //显示xml文档结构的tree控件
-		std::map<int, int> m_mapLevelCount;
-		std::map<int, SStringA> m_mapData2CtrlTag;
 
-		int m_CurSelCtrlIndex;
-		int m_ndata; //这个值用来标识xmlnode的每一个节点，节点属性为data,xmlnode的这个属性值是唯一的;
-		HSTREEITEM		m_rootItem;// root window item.
+		int			m_CurSelCtrlIndex;
+		HSTREEITEM	m_CurSelCtrlItem;
+		int			m_ndata;	//这个值用来标识xmlnode的每一个节点，节点属性为data,xmlnode的这个属性值是唯一的;
+		HSTREEITEM	m_rootItem;// root window item.
 	};
 }

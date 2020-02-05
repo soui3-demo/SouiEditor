@@ -53,6 +53,7 @@ SDesignerView::SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeC
 	m_treeXmlStruct = pTreeXmlStruct;
 	m_ndata = 0;
 	m_CurSelCtrlIndex = -1;
+	m_CurSelCtrlItem = NULL;
 
 	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
 
@@ -233,13 +234,13 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	BOOL bIsInclude = FALSE;
 
 	m_ndata = 0;
+	m_CurSelCtrlItem = NULL;
+
 	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
 	
 	if (m_CurrentLayoutNode == NULL)
 		return TRUE;
 
-	m_mapData2CtrlTag.clear();
-	m_mapLevelCount.clear();
 	if (S_CW2T(m_CurrentLayoutNode.name()) != _T("SOUI"))
 	{
 		//include文件
@@ -371,7 +372,7 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	SStringA strNoteTag;
 	m_treeXmlStruct->RemoveAllItems();
 	m_rootItem = NULL;
-	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT, level, strNoteTag);
+	InitXMLStruct(m_CurrentLayoutNode, STVI_ROOT);
 	if(m_rootItem==NULL)
 	{
 		m_rootItem = m_treeXmlStruct->GetRootItem();
@@ -1722,11 +1723,14 @@ void SDesignerView::GetCodeFromEditor()
 	}
 
 	g_pMainDlg->SendMsgToViewer(kcds_id, (void*)s.c_str(), s.GetLength());
-	if (m_mapData2CtrlTag.find(m_CurSelCtrlIndex) != m_mapData2CtrlTag.end())
+	HSTREEITEM rootitem = m_treeXmlStruct->GetRootItem();
+	if (rootitem && m_CurSelCtrlItem)
 	{
-		SStringA strTag = m_mapData2CtrlTag[m_CurSelCtrlIndex];
+		SStringA strTag = "0,";
+		GetTC_CtrlNodeTag(rootitem, m_CurSelCtrlItem, strTag);
 		g_pMainDlg->SendMsgToViewer(selctrl_id, (void*)strTag.c_str(), strTag.GetLength());
 	}
+
 	SaveEditorCaretPos();
 
 	RenameChildeWnd(doc.root());
@@ -2029,15 +2033,14 @@ void SDesignerView::NewWnd(CPoint pt, void *pM)
 	*/
 }
 
-int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &level, SStringA& str_nodetag)
+int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item)
 {
 	if (!xmlNode)
 	{
 		return 0;
 	}
 	int count = 0;
-	SStringA curTag = str_nodetag;
-	int CurLevel = level;
+
 	pugi::xml_node NodeSib = xmlNode;
 	while (NodeSib)
 	{
@@ -2059,22 +2062,17 @@ int SDesignerView::InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item, int &l
 			NodeSib = NodeSib.next_sibling();
 			continue;
 		}
-		if (m_mapLevelCount.find(CurLevel) == m_mapLevelCount.end())
-			m_mapLevelCount[CurLevel] = 0;
 
-		str_nodetag = curTag + SStringA(("")).Format(("%d"), m_mapLevelCount[CurLevel]++);
-		m_mapData2CtrlTag[data] = str_nodetag;
 		count++;
-		level++;
-		HSTREEITEM itemChild = m_treeXmlStruct->InsertItem(strNodeName/* + S_CA2T(str_nodetag)*/, item);
+
+		HSTREEITEM itemChild = m_treeXmlStruct->InsertItem(strNodeName, item);
 		if(strNodeName.CompareNoCase(_T("root"))==0)
 		{
 			m_rootItem = itemChild;//save root item.
 		}
 		m_treeXmlStruct->SetItemData(itemChild, data);
-		str_nodetag += (",");
 		
-		count += InitXMLStruct(NodeSib.first_child(), itemChild, level, str_nodetag);
+		count += InitXMLStruct(NodeSib.first_child(), itemChild);
 		NodeSib = NodeSib.next_sibling();
 	}
 	if (item == STVI_ROOT)
@@ -2097,6 +2095,7 @@ BOOL SDesignerView::GoToXmlStructItem(int data, HSTREEITEM item)
 
 		if (data1 == data)
 		{
+			m_CurSelCtrlItem = SibItem;
 			m_treeXmlStruct->SelectItem(SibItem);
 			m_treeXmlStruct->Invalidate();
 			return TRUE;
@@ -2115,6 +2114,33 @@ BOOL SDesignerView::GoToXmlStructItem(int data, HSTREEITEM item)
 	return FALSE;
 }
 
+BOOL SDesignerView::GetTC_CtrlNodeTag(HSTREEITEM fromItem, HSTREEITEM findItem, SStringA& strTag)
+{
+	int idx = 0;
+	SStringA curTag = strTag, backupTag;
+
+	HSTREEITEM hChild = m_treeXmlStruct->GetChildItem(fromItem);
+	while (hChild)
+	{
+		strTag = curTag + SStringA(("")).Format(("%d"), idx);
+		if (hChild == findItem)
+		{
+			return TRUE;
+		}
+		idx++;
+
+		backupTag = strTag;
+		strTag += ",";
+		if (GetTC_CtrlNodeTag(hChild, findItem, strTag))
+			return TRUE;
+		
+		strTag = backupTag;
+		hChild = m_treeXmlStruct->GetNextSiblingItem(hChild);
+	}
+	
+	return FALSE;
+}
+	
 // 响应窗口结构中点击选中界面元素
 bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 {
@@ -2125,7 +2151,8 @@ bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 
 	EventTCSelChanged *evt = (EventTCSelChanged*)pEvt;
 	HSTREEITEM item = m_treeXmlStruct->GetSelectedItem();
-
+	m_CurSelCtrlItem = item;
+	
 	int data = m_treeXmlStruct->GetItemData(item);
 
 	SStringT s;
@@ -2138,12 +2165,14 @@ bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 	}
 
 	SelectCtrlByIndex(data);
-	if (m_mapData2CtrlTag.find(data) != m_mapData2CtrlTag.end())
+	HSTREEITEM rootitem = m_treeXmlStruct->GetRootItem();
+	if (rootitem)
 	{
-		SStringA strTag = m_mapData2CtrlTag[data];
-		SLOG_INFO("select item: "<<strTag);
-		g_pMainDlg->SendMsgToViewer(selctrl_id, (void*)strTag.c_str(), strTag.GetLength());
+		SStringA strTag = "0,";
+		GetTC_CtrlNodeTag(rootitem, item, strTag);
+		g_pMainDlg->SendMsgToViewer(selctrl_id, (void*)strTag.c_str(), strTag.GetLength());		
 	}
+	
 	return true;
 }
 
