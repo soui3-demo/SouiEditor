@@ -33,6 +33,9 @@
     <ClCompile Include="colorpicker\ColourPopup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DesignWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="DesignerView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,12 +129,6 @@
     <ClCompile Include="pugixml_write.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DesignWnd.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h">
@@ -140,13 +137,13 @@
     <ClInclude Include="CDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CNewGuid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CmdLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="colorpicker\ColourPopup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DesignWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DesignerView.h">
@@ -194,6 +191,9 @@
     <ClInclude Include="colorpicker\SColorPicker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ExtendCtrls\SCtrlsRegister.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SDemoSkin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -236,9 +236,6 @@
     <ClInclude Include="propgrid\SPropertyItemBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRotateWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SSwitch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -274,9 +271,6 @@
     </CustomBuild>
     <ClInclude Include="xpm_icons.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DesignWnd.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

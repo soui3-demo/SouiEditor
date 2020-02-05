@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "helper/SAdapterBase.h"
 #include "Adapter.h"
-#include "MainDlg.h"
+#include "PreviewHost.h"
 
 void CBaseMcAdapterFix::getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
 {

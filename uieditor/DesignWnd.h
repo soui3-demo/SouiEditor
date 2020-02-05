@@ -18,13 +18,11 @@ protected:
 	LRESULT OnNotify(int idCtrl, LPNMHDR pnmh);
 	void OnPaint(HDC dc);
 	void RefreshDesignLayout();
-	void OnShowWindow(BOOL bShow, UINT nStatus);
 	void OnSize(UINT nType, CSize size);
 	
 	BEGIN_MSG_MAP_EX(CDesignWnd)
 		MSG_OCM_NOTIFY(OnNotify)
 		MSG_WM_PAINT(OnPaint)
-		MSG_WM_SHOWWINDOW(OnShowWindow)
 		MSG_WM_SIZE(OnSize)
 		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()

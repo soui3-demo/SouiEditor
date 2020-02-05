@@ -2141,6 +2141,7 @@ bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 	if (m_mapData2CtrlTag.find(data) != m_mapData2CtrlTag.end())
 	{
 		SStringA strTag = m_mapData2CtrlTag[data];
+		SLOG_INFO("select item: "<<strTag);
 		g_pMainDlg->SendMsgToViewer(selctrl_id, (void*)strTag.c_str(), strTag.GetLength());
 	}
 	return true;
