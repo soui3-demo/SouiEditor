@@ -51,9 +51,6 @@ namespace SOUI
 		void SelectCtrlByIndex(int index, bool bReCreatePropGrid = true);
 		void SelectCtrlByOrder(int *pOrder,int nLen,HSTREEITEM hFrom = 0);
 
-		//创建Root窗口
-// 		SMoveWnd* CreateWnd(SUIWindow *pContainer, LPCWSTR pszXml);
-// 		void CreateAllChildWnd(SUIWindow *pRealWnd, SMoveWnd *pMoveWnd);
 
 		//重命名每一个控件的名字
 		void RenameChildeWnd(pugi::xml_node xmlNode);

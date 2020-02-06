@@ -631,7 +631,7 @@ void CMainDlg::CloseProject()
 		pScintillaWnd->SendEditor(SCI_CLEARALL);
 		pScintillaWnd->SetDirty(false);
 	}
-
+	SendMsgToViewer(exitviewer_id, NULL, 0);
 	m_bIsOpen = FALSE;
 	m_staticAppTitle->SetWindowText(m_strOrigTitle);
 }
@@ -825,21 +825,6 @@ void CMainDlg::OnBtnAbout()
 {
 	SDlgAbout dlg;
 	dlg.DoModal(m_hWnd);
-}
-
-void CMainDlg::OnbtnPreview()
-{
-	/*if (m_pDesignerView->GetMoveWndRoot())
-	{
-		if (m_pDesignerView->GetMoveWndRoot()->IsVisible())
-		{
-			m_pDesignerView->Preview();
-		}
-		else
-		{
-			m_pDesignerView->unPreview();
-		}
-	}*/
 }
 
 void CMainDlg::OnBtnRecentFile()

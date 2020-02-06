@@ -46,7 +46,6 @@ SDesignerView::SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeC
 {
 	m_nSciCaretPos = 0;
 	m_nState = 0;
-	//m_pMoveWndRoot = NULL;
 	m_pRealWndRoot = NULL;
 	m_pContainer = (SUIWindow*)pContainer;
 	m_pMainHost = pMainHost;
@@ -54,6 +53,7 @@ SDesignerView::SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeC
 	m_ndata = 0;
 	m_CurSelCtrlIndex = -1;
 	m_CurSelCtrlItem = NULL;
+	m_pPropgrid = NULL;
 
 	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
 
@@ -127,14 +127,19 @@ BOOL SDesignerView::CloseProject()
 	m_pContainer->SSendMessage(WM_DESTROY);
 	m_pContainer->Invalidate();
 	m_pScintillaWnd->SendEditor(SCI_CLEARALL);
-	//m_pPropertyContainer->SSendMessage(WM_DESTROY);
 	m_treeXmlStruct->RemoveAllItems();
+
+	if(m_pPropgrid)
+	{
+		m_pPropertyContainer->DestroyChild(m_pPropgrid);
+		m_pPropgrid = NULL;
+	}
+
 	m_pRealWndRoot = NULL;
 	m_nState = 0;
 	m_ndata = 0;
 	m_nSciCaretPos = 0;
 
-	//SApplication::getSingletonPtr()->RemoveResProvider(m_pWsResProvider);
 
 	ShowNoteInSciwnd();
 

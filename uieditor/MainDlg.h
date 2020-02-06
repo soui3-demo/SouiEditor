@@ -7,7 +7,6 @@
 #include <control/SCmnCtrl.h>
 #include "Dialog/DlgCreatePro.h"
 #include "DesignerView.h"
-//#include "SMoveWnd.h"
 #include "propgrid/SPropertyGrid.h"
 #include "SImageBtnEx.h"
 #include "SListBoxDrop.h"
@@ -59,7 +58,6 @@ public:
 	void OnBtnNewDialog(); //新建Dialog
 	void OnBtnNewInclude(); //新建Include
 	void OnBtnWndLayout();
-	void OnbtnPreview();
 	void OnBtnZYGL();
 	void OnBtnYSGL();
 	void OnBtnAbout();
@@ -123,7 +121,6 @@ protected:
 		EVENT_NAME_COMMAND(L"toolbar_btn_SaveLayout", OnBtnSaveLayout)
 		EVENT_NAME_COMMAND(L"toolbar_btn_ZYGL", OnBtnZYGL)
 		EVENT_NAME_COMMAND(L"toolbar_btn_YSGL", OnBtnYSGL)
-		EVENT_NAME_COMMAND(L"toolbar_btn_YL", OnbtnPreview)
 		EVENT_NAME_COMMAND(L"toolbar_btn_about", OnBtnAbout)
 		EVENT_NAME_COMMAND(L"toolbar_btn_recent", OnBtnRecentFile)
 
@@ -172,7 +169,6 @@ public:
 
 	ResManger m_UIResFileMgr;	// 管理编辑的UI文件资源
 
-	//SList<SDesignerView*> m_ViewList;
 	SDesignerView *m_pDesignerView;
 
 	SRealWnd *m_pLayoutContainer;
@@ -189,11 +185,6 @@ public:
 	SStatic* m_textCtrlTypename;	//显示选择的控件类型
 
 	STabPage*	m_pageEditor;		//编辑器的Page页
-//	SPropertyGrid *m_pPropgrid;
-
-	//SMap<SStringT, pugi::xml_node> m_mapCommonProperty; //属性通用样式列表   <"skin", xmlnode> <"pos", xmlNode>
-
-	//SMap<SStringT, pugi::xml_node> m_mapProperty;  //控件属性列表 <"button",xmlnode>  <"checkbox",xmlnode>
 
 	SStringT m_strUiresPath;	//uires.idx 的全路径
 	SStringT m_strProPath;

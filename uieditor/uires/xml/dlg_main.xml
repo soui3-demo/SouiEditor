@@ -22,7 +22,6 @@
 				<imgbtnex name="toolbar_btn_SaveAll" skin="skin_app_button" text="全部保存" pos="[0,{0, @100, @30" animate="1" class="ue_cls_title" />
 				<imgbtnex name="toolbar_btn_SaveLayout" skin="skin_app_button" text="保存布局" pos="[0,{0, @100, @30" animate="1" class="ue_cls_title" />
 				<imgbtnex name="toolbar_btn_ZYGL" pos="[0,{0, @100, @30" skin="skin_app_button" text="资源管理" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_YL" pos="[0,{0, @100, @30" skin="skin_app_button" text="预览" animate="1" class="ue_cls_title" show="0" />
 				<imgbtnex name="toolbar_btn_YSGL" pos="[0,{0, @100, @30" skin="skin_app_button" text="样式管理" animate="1" class="ue_cls_title" show="0" />
 				<imgbtnex name="toolbar_btn_about" pos="-102,{0, @100,@30" skin="skin_app_button" text="关于" animate="1" class="ue_cls_title" />
 			</window>

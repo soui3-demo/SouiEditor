@@ -84,7 +84,36 @@ void CPreviewContainer::OnPaint(HDC hdc)
 	PAINTSTRUCT ps;
 	hdc = BeginPaint(m_hWnd,&ps);
 	CRect rc;
-	GetClientRect(&rc);
-	::FillRect(hdc,&rc,(HBRUSH)GetStockObject(DKGRAY_BRUSH));
+	GetClientRect(rc);
+
+	HBRUSH hBoxBrush = CreateSolidBrush(RGB(204, 204, 204));
+	HBRUSH brWhite = CreateSolidBrush(RGB(255, 255, 255));
+	HPEN hPenNone = CreatePen(PS_NULL, 1, RGB(255, 255, 255));
+
+	HGDIOBJ hOldBursh = SelectObject(hdc, brWhite);
+	HGDIOBJ hOldPen = SelectObject(hdc, hPenNone);
+
+	Rectangle(hdc, 0, 0, rc.right, rc.bottom);	
+
+	SelectObject(hdc, hBoxBrush);
+	const int boxsize = 12;
+	int line = 0;
+	for (int i = 0; i < rc.Height(); i += boxsize)
+	{
+		for (int j = 0; j < rc.Width(); j += boxsize * 2)
+		{
+			int start = 0;
+			if (line & 1)
+				start = boxsize;
+			Rectangle(hdc, start + j, i, start + j + boxsize, i + boxsize);
+		}
+		line++;
+	}
+	SelectObject(hdc,hOldPen);
+	SelectObject(hdc,hOldBursh);
+	::DeleteObject(hBoxBrush);
+	::DeleteObject(brWhite);
+	::DeleteObject(hPenNone);
+
 	EndPaint(m_hWnd,&ps);
 }
