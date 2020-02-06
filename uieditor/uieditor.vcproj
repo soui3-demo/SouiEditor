@@ -286,15 +286,7 @@
 				>
 			</File>
 			<File
-				RelativePath="SDemoSkin.cpp"
-				>
-			</File>
-			<File
 				RelativePath="SImageBtnEx.cpp"
-				>
-			</File>
-			<File
-				RelativePath="SImageSwitcher.cpp"
 				>
 			</File>
 			<File
@@ -456,15 +448,7 @@
 				>
 			</File>
 			<File
-				RelativePath="SDemoSkin.h"
-				>
-			</File>
-			<File
 				RelativePath="SImageBtnEx.h"
-				>
-			</File>
-			<File
-				RelativePath="SImageSwitcher.h"
 				>
 			</File>
 			<File
