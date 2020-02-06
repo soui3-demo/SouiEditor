@@ -1,20 +1,18 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExtendCtrls", "ExtendCtrls\ExtendCtrls.vcproj", "{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExtendCtrls", "D:/work/SouiEditor/ExtendCtrls\ExtendCtrls.vcxproj", "{3290A555-C744-3448-8FF1-89DD2BDF1FA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uieditor", "uieditor\uieditor.vcproj", "{2B2D2DD5-0A57-37B1-9050-B5C917B5B5E4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uieditor", "D:/work/SouiEditor/uieditor\uieditor.vcxproj", "{7732E54F-1B7F-3F70-B706-E1AE488E9583}"
 	ProjectSection(ProjectDependencies) = postProject
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7} = {0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7} = {0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3} = {3290A555-C744-3448-8FF1-89DD2BDF1FA3}
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3} = {3290A555-C744-3448-8FF1-89DD2BDF1FA3}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uiviewer", "uiviewer\uiviewer.vcproj", "{F42D7928-C381-3967-84F3-CADC2F0B04B1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uiviewer", "D:/work/SouiEditor/uiviewer\uiviewer.vcxproj", "{5D2F8C9B-8213-3CD9-9459-806FCF65957E}"
 	ProjectSection(ProjectDependencies) = postProject
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7} = {0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7} = {0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3} = {3290A555-C744-3448-8FF1-89DD2BDF1FA3}
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3} = {3290A555-C744-3448-8FF1-89DD2BDF1FA3}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "soui3", "..\soui3.git\SOUI\soui3.vcproj", "{A278536F-80DF-3C47-A1FD-14BAACB6B8C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,24 +20,21 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}.Debug|Win32.Build.0 = Debug|Win32
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}.Release|Win32.ActiveCfg = Release|Win32
-		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}.Release|Win32.Build.0 = Release|Win32
-		{2B2D2DD5-0A57-37B1-9050-B5C917B5B5E4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2B2D2DD5-0A57-37B1-9050-B5C917B5B5E4}.Debug|Win32.Build.0 = Debug|Win32
-		{2B2D2DD5-0A57-37B1-9050-B5C917B5B5E4}.Release|Win32.ActiveCfg = Release|Win32
-		{2B2D2DD5-0A57-37B1-9050-B5C917B5B5E4}.Release|Win32.Build.0 = Release|Win32
-		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Debug|Win32.Build.0 = Debug|Win32
-		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Release|Win32.ActiveCfg = Release|Win32
-		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Release|Win32.Build.0 = Release|Win32
-		{A278536F-80DF-3C47-A1FD-14BAACB6B8C6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A278536F-80DF-3C47-A1FD-14BAACB6B8C6}.Debug|Win32.Build.0 = Debug|Win32
-		{A278536F-80DF-3C47-A1FD-14BAACB6B8C6}.Release|Win32.ActiveCfg = Release|Win32
-		{A278536F-80DF-3C47-A1FD-14BAACB6B8C6}.Release|Win32.Build.0 = Release|Win32
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3}.Debug|Win32.Build.0 = Debug|Win32
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3}.Release|Win32.ActiveCfg = Release|Win32
+		{3290A555-C744-3448-8FF1-89DD2BDF1FA3}.Release|Win32.Build.0 = Release|Win32
+		{7732E54F-1B7F-3F70-B706-E1AE488E9583}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7732E54F-1B7F-3F70-B706-E1AE488E9583}.Debug|Win32.Build.0 = Debug|Win32
+		{7732E54F-1B7F-3F70-B706-E1AE488E9583}.Release|Win32.ActiveCfg = Release|Win32
+		{7732E54F-1B7F-3F70-B706-E1AE488E9583}.Release|Win32.Build.0 = Release|Win32
+		{5D2F8C9B-8213-3CD9-9459-806FCF65957E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5D2F8C9B-8213-3CD9-9459-806FCF65957E}.Debug|Win32.Build.0 = Debug|Win32
+		{5D2F8C9B-8213-3CD9-9459-806FCF65957E}.Release|Win32.ActiveCfg = Release|Win32
+		{5D2F8C9B-8213-3CD9-9459-806FCF65957E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
 	EndGlobalSection
 EndGlobal
