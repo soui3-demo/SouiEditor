@@ -3,7 +3,6 @@
 #include "Scintilla.h"
 #include "layout/SouiLayout.h"
 #include "layout/SLinearLayout.h"
-#include "SDesignerRoot.h"
 #include <map>
 
 class CSysDataMgr;
@@ -19,7 +18,7 @@ namespace SOUI
 	public:
 		static BOOL LoadConfig(pugi::xml_document &doc,const SStringT & cfgFile);
 
-		SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeCtrl *pTreeXmlStruct);
+		SDesignerView(SHostDialog *pMainHost, STreeCtrl *pTreeXmlStruct);
 		~SDesignerView();
 
 		long GetWindowUserData(SWindow *pWnd);
@@ -58,8 +57,6 @@ namespace SOUI
 		void RenameAllLayoutWnd();
 		void RemoveWndName(pugi::xml_node xmlNode, BOOL bClear, SStringT strFileName = _T(""));
 
-		//void UpdatePosToXmlNode(SUIWindow *pRealWnd, SMoveWnd* pMoveWnd);//移动控件的同时将控件位置写入xml节点
-
 		//调试用
 		void Debug(pugi::xml_node);
 		void Debug(SStringT str);
@@ -97,9 +94,6 @@ namespace SOUI
 
 		void LocateControlXML();
 
-		//SMoveWnd* GetMoveWndRoot() { return m_pMoveWndRoot; };
-		SWindow* GetRealWndRoot() { return m_pRealWndRoot; };
-
 		void AddCodeToEditor(CScintillaWnd* pSciWnd);  //复制xml代码到代码编辑器
 		void GetCodeFromEditor();
 		void GetCodeFromEditor(CScintillaWnd* pSciWnd);//从代码编辑器获取xml代码
@@ -132,9 +126,7 @@ namespace SOUI
 		SStringT UnitToStr(int nUnit);
 
 	public:
-		CAutoRefPtr<IFont> m_defFont;
-
-		SDesignerRoot *m_pRealWndRoot;       //布局容器窗口;
+		SAutoRefPtr<IFont> m_defFont;
 	
 		bool	 m_bXmlResLoadOK;
 		int		 m_nSciCaretPos;		//代码编辑窗口光标位置
@@ -159,7 +151,6 @@ namespace SOUI
 		SStringT m_strCurLayoutXmlFile; //当前打开的窗体文件名  xml\main.xml
 		SStringT m_strCurFileEditor; //当前代码编辑器打开代码对应的文件  xml\main.xml
 
-		SUIWindow *m_pContainer;  //所有布局窗口根的容器 
 		pugi::xml_node m_CurrentLayoutNode;		//当前正在编辑布局的XML文档结点
 
 		SMap<SStringT, pugi::xml_document*> m_mapCtrlProperty;//所有控件的属性列表 <Button, xmlnode> <Check, xmlNode>

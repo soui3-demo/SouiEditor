@@ -157,7 +157,6 @@
     <ClCompile Include="ResManger.cpp" />
     <ClCompile Include="colorpicker\SColorPicker.cpp" />
     <ClCompile Include="SDemoSkin.cpp" />
-    <ClCompile Include="SDesignerRoot.cpp" />
     <ClCompile Include="SImageBtnEx.cpp" />
     <ClCompile Include="SImageSwitcher.cpp" />
     <ClCompile Include="SImgCanvas.cpp" />
@@ -199,7 +198,6 @@
     <ClInclude Include="colorpicker\SColorPicker.h" />
     <ClInclude Include="..\ExtendCtrls\SCtrlsRegister.h" />
     <ClInclude Include="SDemoSkin.h" />
-    <ClInclude Include="SDesignerRoot.h" />
     <ClInclude Include="SImageBtnEx.h" />
     <ClInclude Include="SImageSwitcher.h" />
     <ClInclude Include="SImgCanvas.h" />

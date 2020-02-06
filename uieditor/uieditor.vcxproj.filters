@@ -75,9 +75,6 @@
     <ClCompile Include="SDemoSkin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDesignerRoot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SImageBtnEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -195,9 +192,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SDemoSkin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDesignerRoot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SImageBtnEx.h">

@@ -71,10 +71,6 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         pRenderFactory->SetImgDecoderFactory(pImgDecoderFactory);
 		SouiEditorApp *theApp = new SouiEditorApp(pRenderFactory, hInstance,ksz_editor_cls);
 
-		theApp->RegisterWindowClass<SDesignerRoot>();
-		theApp->RegisterWindowClass<SUIWindow>();
-
-		//theApp->RegisterWindowClass<SMoveWnd>();
 		theApp->RegisterWindowClass<SImageBtnEx>();
 
 		theApp->RegisterWindowClass<SListBoxDrop>();

@@ -114,68 +114,6 @@ public:
 		m_pCDropWnd=GetTopLevelParent()->FindChildByName2<CDropWnd>(L"dropwindow");
 		SASSERT(m_pCDropWnd);
 	}
-	void OnLButtonDown(UINT nFlags, CPoint pt)
-	{
-		__super::OnLButtonDown(nFlags, pt);	
-		if (!m_pDesignerView->m_pContainer->IsVisible(TRUE))
-			return;
-		if (m_pDesignerView->m_pContainer->GetChildrenCount()==0)
-			return;
-		int iHoverItem = HitTest(pt);
-		if (iHoverItem != -1)
-		{
-			if (m_controlDb != NULL)
-			{
-				SStringT strText = GetText(iHoverItem);
-				SMap<SStringT, pugi::xml_node>::CPair *p = m_controlDb->Lookup(strText);  //查找
-				if (p)
-				{
-					ctrlNode = p->m_value;
-					SWindow *pChild = SApplication::getSingleton().CreateWindowByName(p->m_value.first_child().name());
-					if (pChild)
-					{
-						SPrintWindow *pPrintWindow = new SPrintWindow();						
-						m_pDesignerView->m_pContainer->GetParent()->InsertChild(pChild);
-
-						m_pDesignerView->UseEditorUIDef(false);
-
-						pChild->InitFromXml(p->m_value.first_child());
-						//view系列加上适配器
-						if (pChild->IsClass(SMCListView::GetClassNameW()))
-						{
-							CBaseMcAdapterFix *mcAdapter = new CBaseMcAdapterFix();
-							((SMCListView*)pChild)->SetAdapter(mcAdapter);
-							mcAdapter->Release();
-						}
-						//listview(flex)需要重新处理，有空再来
-						if (pChild->IsClass(SListView::GetClassNameW()))
-						{
-							CBaseAdapterFix *listAdapter = new CBaseAdapterFix();
-							((SListView*)pChild)->SetAdapter(listAdapter);
-							listAdapter->Release();
-						}
-						if (pChild->IsClass(STileView::GetClassNameW()))
-						{
-							CBaseAdapterFix *listAdapter = new CBaseAdapterFix();
-							((STileView*)pChild)->SetAdapter(listAdapter);
-							listAdapter->Release();
-						}
-
-						m_pDesignerView->UseEditorUIDef(true);
-
-						m_pDesignerView->m_pContainer->BringWindowToTop();
-						m_pDesignerView->m_pContainer->GetParent()->UpdateChildrenPosition();
-						pPrintWindow->Attach(pChild);
-						m_pCDropWnd->CopyDropWindBkgndFormWindow(pPrintWindow);	
-						m_pCDropWnd->SetVisible(FALSE);
-						m_pDesignerView->m_pContainer->GetParent()->DestroyChild(pChild);
-						::SetCursor(GETRESPROVIDER->LoadCursor(_T("hand")));
-						bLdown = true;	
-					}
-				}
-			}
-		}
-	}
 	void OnMouseMove(UINT nFlags, CPoint pt)
 	{		 
 		if (m_pDesignerView&&bLdown)
@@ -191,17 +129,6 @@ public:
 		{
 			m_pCDropWnd->SetVisible(FALSE, TRUE);
 			m_pDesignerView->SetSelCtrlNode(ctrlNode);
-			/*SWND pChild = m_pDesignerView->m_pMoveWndRoot->SwndFromPoint(pt);			
-			SWindow *pSChild = SWindowMgr::GetWindow(pChild);
-			if (pSChild == 0)
-			{
-				m_pDesignerView->m_nState = 0;
-				return;
-			}
-
-			m_pDesignerView->NewWnd(pt,(SMoveWnd*)pSChild);
-			((SMoveWnd*)pSChild)->m_pRealWnd->RequestRelayout();
-			((SMoveWnd*)pSChild)->m_pRealWnd->UpdateLayout();*/
 			m_pDesignerView->AddCodeToEditor(NULL);
 
 			m_pDesignerView->CreatePropGrid(m_pDesignerView->m_curSelXmlNode.name());
@@ -209,7 +136,6 @@ public:
 		}
 	}
 	SOUI_MSG_MAP_BEGIN()
-		MSG_WM_LBUTTONDOWN(OnLButtonDown)
 		MSG_WM_MOUSEMOVE(OnMouseMove)
 		MSG_WM_LBUTTONUP(OnLButtonUp)
 	SOUI_MSG_MAP_END()

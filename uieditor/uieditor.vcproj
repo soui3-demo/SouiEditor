@@ -290,10 +290,6 @@
 				>
 			</File>
 			<File
-				RelativePath="SDesignerRoot.cpp"
-				>
-			</File>
-			<File
 				RelativePath="SImageBtnEx.cpp"
 				>
 			</File>
@@ -461,10 +457,6 @@
 			</File>
 			<File
 				RelativePath="SDemoSkin.h"
-				>
-			</File>
-			<File
-				RelativePath="SDesignerRoot.h"
 				>
 			</File>
 			<File

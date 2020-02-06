@@ -61,7 +61,6 @@ HEADERS += Adapter.h \
            resource.h \
            ScintillaWnd.h \
            SDemoSkin.h \
-           SDesignerRoot.h \
            SImageBtnEx.h \
            SImageSwitcher.h \
            SImgCanvas.h \
@@ -104,7 +103,6 @@ SOURCES += Adapter.cpp \
            ResManger.cpp \
            ScintillaWnd.cpp \
            SDemoSkin.cpp \
-           SDesignerRoot.cpp \
            SImageBtnEx.cpp \
            SImageSwitcher.cpp \
            SImgCanvas.cpp \

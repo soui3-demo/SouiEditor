@@ -42,12 +42,10 @@ BOOL SDesignerView::NewLayout(SStringT strResName, SStringT strPath)
 }
 
 
-SDesignerView::SDesignerView(SHostDialog *pMainHost, SWindow *pContainer, STreeCtrl *pTreeXmlStruct)
+SDesignerView::SDesignerView(SHostDialog *pMainHost,  STreeCtrl *pTreeXmlStruct)
 {
 	m_nSciCaretPos = 0;
 	m_nState = 0;
-	m_pRealWndRoot = NULL;
-	m_pContainer = (SUIWindow*)pContainer;
 	m_pMainHost = pMainHost;
 	m_treeXmlStruct = pTreeXmlStruct;
 	m_ndata = 0;
@@ -124,8 +122,6 @@ BOOL SDesignerView::CloseProject()
 	m_textCtrlTypename->SetWindowText(L"");
 	((CMainDlg*)m_pMainHost)->m_textNodenum->SetWindowText(L"");
 
-	m_pContainer->SSendMessage(WM_DESTROY);
-	m_pContainer->Invalidate();
 	m_pScintillaWnd->SendEditor(SCI_CLEARALL);
 	m_treeXmlStruct->RemoveAllItems();
 
@@ -135,7 +131,6 @@ BOOL SDesignerView::CloseProject()
 		m_pPropgrid = NULL;
 	}
 
-	m_pRealWndRoot = NULL;
 	m_nState = 0;
 	m_ndata = 0;
 	m_nSciCaretPos = 0;
@@ -2149,11 +2144,6 @@ BOOL SDesignerView::GetTC_CtrlNodeTag(HSTREEITEM fromItem, HSTREEITEM findItem, 
 // 响应窗口结构中点击选中界面元素
 bool SDesignerView::OnTCSelChanged(EventArgs *pEvt)
 {
-	if (!m_pContainer->GetParent()->IsVisible())
-	{   //先这样写吧，有时间再改
-		return true;
-	}
-
 	EventTCSelChanged *evt = (EventTCSelChanged*)pEvt;
 	HSTREEITEM item = m_treeXmlStruct->GetSelectedItem();
 	m_CurSelCtrlItem = item;

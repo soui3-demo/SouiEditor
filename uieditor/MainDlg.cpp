@@ -275,7 +275,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 
 	m_RecentFileMenu.LoadMenu(UIRES.smenu.menu_recent);
 	//======================================================================
-	m_pDesignerView = new SDesignerView((SHostDialog*)this, m_pLayoutContainer, m_treeXmlStruct);
+	m_pDesignerView = new SDesignerView((SHostDialog*)this, m_treeXmlStruct);
 	m_RealWndXmlFile->GetRealHwnd();	//触发建立真窗口
 		
 	m_textCurXmlFile->SetWindowText(_T(" 在编辑窗口按Ctrl+S保存文件"));

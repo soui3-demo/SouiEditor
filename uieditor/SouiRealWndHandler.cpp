@@ -31,7 +31,7 @@ namespace SOUI
 		else if (pRealWnd->GetRealWndParam().m_strClassName == _T("designer_wnd"))
 		{
 			CDesignWnd *pWnd = new CDesignWnd;
-			BOOL bOK = pWnd->CreateWnd(pRealWnd->GetRealWndParam().m_strWindowName, WS_CHILD, CRect(0, 0, 0, 0), 
+			BOOL bOK = pWnd->CreateWnd(pRealWnd->GetRealWndParam().m_strWindowName, WS_CHILD|WS_CLIPCHILDREN, CRect(0, 0, 0, 0), 
 				pRealWnd->GetContainer()->GetHostHwnd(), pRealWnd->GetID(), SApplication::getSingleton().GetInstance());
 			if (!bOK)
 			{
