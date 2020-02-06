@@ -842,12 +842,13 @@ void CMainDlg::LoadWorkSpace()
 		return;
 
 	SStringT strOpenLayoutFile = m_pDesignerView->m_strCurLayoutXmlFile;
+	SStringT strCurLayoutName = m_pDesignerView->m_strCurLayoutName;
 	m_pDesignerView->CloseProject();
 	OpenProject(m_strUiresPath);
 	m_bIsOpen = TRUE;
 
 	if (!strOpenLayoutFile.IsEmpty())
-		m_pDesignerView->LoadLayout(strOpenLayoutFile, L"");
+		m_pDesignerView->LoadLayout(strOpenLayoutFile, strCurLayoutName);
 }
 
 bool CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
@@ -860,8 +861,8 @@ bool CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 	SStringT strLayoutName;
 	tree->GetItemText(pEvt->hItem, strLayoutName);
 
-	m_pDesignerView->LoadLayout(*s, strLayoutName);
 	m_tabDesigner->SetCurSel(0);
+	m_pDesignerView->LoadLayout(*s, strLayoutName);
 	
 	/*if (m_tabDesigner->GetCurSel() == 0)
 	{
@@ -1054,6 +1055,9 @@ void CMainDlg::OnScintillaSave(CScintillaWnd *pObj, int custom_msg, SStringT str
 			{	// 布局可视化编辑时按了Ctrl+S
 				g_pMainDlg->m_pDesignerView->GetCodeFromEditor(NULL);
 				pScintillaWnd->SetDirty(false);
+
+				SStringT strOpenLayoutFile = g_pMainDlg->m_pDesignerView->m_strCurLayoutXmlFile;
+				g_pMainDlg->m_pDesignerView->InsertLayoutToMap(strOpenLayoutFile);
 			}
 			else
 			{	// 是在直接编辑文件

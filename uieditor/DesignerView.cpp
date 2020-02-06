@@ -212,9 +212,13 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 	SMap<SStringT, pugi::xml_document*>::CPair *p = m_mapLayoutFile.Lookup(strFileName);
 	if (!p)
 	{
+		m_pScintillaWnd->SendMessage(SCI_SETREADONLY, 0, 0);
+		m_pScintillaWnd->OpenFile(m_strProPath + _T("\\") + strFileName);
+
 		SStringT strNote;
 		strNote.Format(_T("%s 的源文件可能存在语法错误, 请检查后重新加载工程"), strFileName);
-		SMessageBox(NULL, strNote, _T("提示"), MB_OK);
+		SMessageBox(NULL, strNote, _T("提示"), MB_OK);		
+
 		return FALSE;
 	}
 	pugi::xml_node xmlroot = p->m_value->document_element();
