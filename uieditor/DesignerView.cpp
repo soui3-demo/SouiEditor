@@ -2454,12 +2454,12 @@ void SDesignerView::SelectCtrlByOrder(int *pOrder,int nLen,HSTREEITEM hFrom)
 		else
 		{
 			int iIndex = (int)m_treeXmlStruct->GetItemData(hChild);
-			SelectCtrlByIndex(iIndex, false);
+			SelectCtrlByIndex(iIndex);
 		}
 	}else
 	{//指定的窗口没有找到，选中父窗口
 		int iIndex = (int)m_treeXmlStruct->GetItemData(hFrom);
-		SelectCtrlByIndex(iIndex,false);
+		SelectCtrlByIndex(iIndex);
 	}
 }
 
