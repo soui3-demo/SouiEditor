@@ -104,7 +104,6 @@ void CDesignWnd::OnPaint(HDC dc)
 	PAINTSTRUCT ps;
 	dc = ::BeginPaint(m_hWnd, &ps);
 
-	if (!g_pMainDlg || !g_pMainDlg->m_hViewer)
 	{
 		if (m_bmpLogo)
 		{
@@ -169,4 +168,9 @@ void CDesignWnd::RefreshDesignLayout()
 void CDesignWnd::OnSize(UINT nType, CSize size)
 {
 	RefreshDesignLayout();
+}
+
+BOOL CDesignWnd::OnEraseBkgnd(HDC dc)
+{
+	return TRUE;
 }
