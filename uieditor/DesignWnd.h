@@ -26,4 +26,6 @@ protected:
 		MSG_WM_SIZE(OnSize)
 		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()
+
+	HBITMAP		m_bmpLogo;
 };

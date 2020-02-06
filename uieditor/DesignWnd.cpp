@@ -14,12 +14,52 @@ extern CMainDlg* g_pMainDlg;
 //////////////////////////////////////////////////////////////////////////
 
 
-CDesignWnd::CDesignWnd()
+CDesignWnd::CDesignWnd():m_bmpLogo(NULL)
 {
 }
 
 CDesignWnd::~CDesignWnd()
 {
+	if(m_bmpLogo)
+	{
+		DeleteObject(m_bmpLogo);
+	}
+}
+
+static HBITMAP CreateGDIBitmap( int nWid,int nHei,void ** ppBits )
+{
+	BITMAPINFO bmi;
+	memset(&bmi, 0, sizeof(bmi));
+	bmi.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
+	bmi.bmiHeader.biWidth       = nWid;
+	bmi.bmiHeader.biHeight      = -nHei; // top-down image 
+	bmi.bmiHeader.biPlanes      = 1;
+	bmi.bmiHeader.biBitCount    = 32;
+	bmi.bmiHeader.biCompression = BI_RGB;
+	bmi.bmiHeader.biSizeImage   = 0;
+
+	HDC hdc=GetDC(NULL);
+	HBITMAP hBmp=CreateDIBSection(hdc,&bmi,DIB_RGB_COLORS,ppBits,0,0);
+	ReleaseDC(NULL,hdc);
+	return hBmp;
+}
+
+static HBITMAP BmpFromIBitmap( int nWid,int nHei ,const LPVOID pBits/*=NULL*/)
+{
+	LPVOID pBmpBits=NULL;
+	HBITMAP hBmp = CreateGDIBitmap(nWid,nHei,&pBmpBits);
+	if(hBmp)
+	{
+		const int stride = nWid*4;
+		if(pBits)
+		{
+			memcpy(pBmpBits,pBits,stride*nHei);
+		}else
+		{
+			memset(pBmpBits,0,stride*nHei);
+		}
+	}
+	return hBmp;
 }
 
 
@@ -33,6 +73,14 @@ BOOL CDesignWnd::CreateWnd(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& re
 	{
 		int err = GetLastError();
 		return FALSE;
+	}
+	
+	IBitmap *pBmp = SApplication::getSingletonPtr()->LoadImage(_T("img"),_T("png_logo"));
+	if(pBmp)
+	{
+		const LPVOID pBits = pBmp->GetPixelBits();
+		m_bmpLogo = BmpFromIBitmap(pBmp->Width(),pBmp->Height(),pBits);
+		pBmp->Release();
 	}
 	InitDesignWnd();
 	return TRUE;
@@ -56,6 +104,29 @@ void CDesignWnd::OnPaint(HDC dc)
 	PAINTSTRUCT ps;
 	dc = ::BeginPaint(m_hWnd, &ps);
 
+	if(m_bmpLogo)
+	{
+		BITMAP bm;
+		GetObject(m_bmpLogo,sizeof(bm),&bm);
+
+		CRect rc;
+		GetClientRect(&rc);
+
+		BITMAPINFO bmi;
+		memset(&bmi, 0, sizeof(bmi));
+		bmi.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
+		bmi.bmiHeader.biWidth       = bm.bmWidth;
+		bmi.bmiHeader.biHeight      = -bm.bmHeight; // top-down image
+		bmi.bmiHeader.biPlanes      = 1;
+		bmi.bmiHeader.biBitCount    = 32;
+		bmi.bmiHeader.biCompression = BI_RGB;
+		bmi.bmiHeader.biSizeImage   = bm.bmWidth*bm.bmHeight*4;
+
+		SetStretchBltMode(dc,HALFTONE);
+		StretchDIBits(dc,0,0,rc.Width(),rc.Height(),0,0,bm.bmWidth,bm.bmHeight,bm.bmBits,&bmi,DIB_RGB_COLORS,SRCCOPY);
+
+	}
+	
 	::EndPaint(m_hWnd, &ps);
 
 	if (g_pMainDlg && g_pMainDlg->m_hViewer)

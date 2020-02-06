@@ -35,6 +35,7 @@
 		<file name="tree_toggle_png" path="image\tree_toggle.png" />
 		<file name="menu_skin_png" path="image\menu_skin.png" />
 		<file name="menu_sep_png" path="image\menu_sep.png" />
+		<file name="png_logo" path="image\logo.png"/>
 	</IMG>
 	<ICON>
 		<file name="ICON_logo" path="image\soui.ico" />
