@@ -126,24 +126,6 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		theApp->SetRealWndHandler(pRealWndHandler);
 		pRealWndHandler->Release();
 
-
-        //加载多语言翻译模块。
-        SAutoRefPtr<ITranslatorMgr> trans;
-        bLoaded=pComMgr->CreateTranslator((IObjRef**)&trans);
-        SASSERT_FMT(bLoaded,_T("load interface [%s] failed!"),_T("translator"));
-        if(trans)
-        {	//加载语言翻译包
-            theApp->SetTranslator(trans);
-            pugi::xml_document xmlLang;
-            if(theApp->LoadXmlDocment(xmlLang,_T("translator:lang_cn")))
-            {
-                CAutoRefPtr<ITranslator> langCN;
-                trans->CreateTranslator(&langCN);
-                langCN->Load(&xmlLang.child(L"language"),1);//1=LD_XML
-                trans->InstallTranslator(langCN);
-            }
-        }
-        
         // BLOCK: Run application
         {
 			CCmdLine cmdLine(GetCommandLine());
