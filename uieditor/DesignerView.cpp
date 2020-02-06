@@ -213,11 +213,19 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 	if (!p)
 	{
 		m_pScintillaWnd->SendMessage(SCI_SETREADONLY, 0, 0);
-		m_pScintillaWnd->OpenFile(m_strProPath + _T("\\") + strFileName);
-
-		SStringT strNote;
-		strNote.Format(_T("%s 的源文件可能存在语法错误, 请检查后重新加载工程"), strFileName);
-		SMessageBox(NULL, strNote, _T("提示"), MB_OK);		
+		SStringT strPath = m_strProPath + _T("\\") + strFileName;
+		m_pScintillaWnd->OpenFile(strPath);
+		pugi::xml_document xmlDoc;
+		pugi::xml_parse_result res = xmlDoc.load_file(strPath);
+		if(!res)
+		{
+			m_pScintillaWnd->GotoPos(res.offset);
+			m_pScintillaWnd->SetFocus();
+			SStringT strNote;
+			strNote.Format(_T("%s 的源文件存在语法错误, 错误位置：%d"), strFileName,res.offset);
+			
+			SMessageBox(NULL, strNote, _T("提示"), MB_OK);		
+		}
 
 		return FALSE;
 	}

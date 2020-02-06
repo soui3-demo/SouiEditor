@@ -703,3 +703,8 @@ void CScintillaWnd::displaySectionCentered(int posStart, int posEnd, bool isDown
 
 	SendEditor(SCI_SETANCHOR, posStart);
 }
+
+void CScintillaWnd::GotoPos(int nPos)
+{
+	SendEditor(SCI_GOTOPOS, nPos);
+}
