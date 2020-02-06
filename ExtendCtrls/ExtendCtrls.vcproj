@@ -121,100 +121,100 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\3dlib.cpp" />
+				RelativePath="..\..\..\controls.extend\image3d\3dlib.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\3dmatrix.cpp" />
+				RelativePath="..\..\..\controls.extend\image3d\3dmatrix.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\3dtransform.cpp" />
+				RelativePath="..\..\..\controls.extend\image3d\3dtransform.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\ExtendSkins.cpp" />
+				RelativePath="..\..\..\controls.extend\ExtendSkins.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SButtonEx.cpp" />
+				RelativePath="..\..\..\controls.extend\SButtonEx.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SChromeTabCtrl.cpp" />
+				RelativePath="..\..\..\controls.extend\SChromeTabCtrl.cpp" />
 			<File
 				RelativePath="SCtrlsRegister.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SFreeMoveWindow.cpp" />
+				RelativePath="..\..\..\controls.extend\SFreeMoveWindow.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\gif\SGifPlayer.cpp" />
+				RelativePath="..\..\..\controls.extend\gif\SGifPlayer.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SGroupList.cpp" />
+				RelativePath="..\..\..\controls.extend\SGroupList.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SMcListViewEx\SHeaderCtrlEx.cpp" />
+				RelativePath="..\..\..\controls.extend\SMcListViewEx\SHeaderCtrlEx.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SIPAddressCtrl.cpp" />
+				RelativePath="..\..\..\controls.extend\SIPAddressCtrl.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SImageMaskWnd.cpp" />
+				RelativePath="..\..\..\controls.extend\SImageMaskWnd.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SListCtrlEx.cpp" />
+				RelativePath="..\..\..\controls.extend\SListCtrlEx.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SRadioBox2.cpp" />
+				RelativePath="..\..\..\controls.extend\SRadioBox2.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SRatingBar.cpp" />
+				RelativePath="..\..\..\controls.extend\SRatingBar.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SScrollText.cpp" />
+				RelativePath="..\..\..\controls.extend\SScrollText.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\gif\SSkinAPNG.cpp" />
+				RelativePath="..\..\..\controls.extend\gif\SSkinAPNG.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\gif\SSkinGif.cpp" />
+				RelativePath="..\..\..\controls.extend\gif\SSkinGif.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\STabCtrl2.cpp" />
+				RelativePath="..\..\..\controls.extend\STabCtrl2.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SText.cpp" />
+				RelativePath="..\..\..\controls.extend\SText.cpp" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\STurn3DView.cpp" />
+				RelativePath="..\..\..\controls.extend\STurn3DView.cpp" />
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\3dTransform.h" />
+				RelativePath="..\..\..\controls.extend\image3d\3dTransform.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\3dlib.h" />
+				RelativePath="..\..\..\controls.extend\image3d\3dlib.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\3dmatrix.h" />
+				RelativePath="..\..\..\controls.extend\image3d\3dmatrix.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\ExtendSkins.h" />
+				RelativePath="..\..\..\controls.extend\ExtendSkins.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\image3d\PerspectiveTransform.h" />
+				RelativePath="..\..\..\controls.extend\image3d\PerspectiveTransform.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SButtonEx.h" />
+				RelativePath="..\..\..\controls.extend\SButtonEx.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SChromeTabCtrl.h" />
+				RelativePath="..\..\..\controls.extend\SChromeTabCtrl.h" />
 			<File
 				RelativePath="SCtrlsRegister.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SFreeMoveWindow.h" />
+				RelativePath="..\..\..\controls.extend\SFreeMoveWindow.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\gif\SGifPlayer.h" />
+				RelativePath="..\..\..\controls.extend\gif\SGifPlayer.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SGroupList.h" />
+				RelativePath="..\..\..\controls.extend\SGroupList.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SMcListViewEx\SHeaderCtrlEx.h" />
+				RelativePath="..\..\..\controls.extend\SMcListViewEx\SHeaderCtrlEx.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SIPAddressCtrl.h" />
+				RelativePath="..\..\..\controls.extend\SIPAddressCtrl.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SImageMaskWnd.h" />
+				RelativePath="..\..\..\controls.extend\SImageMaskWnd.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SListCtrlEx.h" />
+				RelativePath="..\..\..\controls.extend\SListCtrlEx.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SRadioBox2.h" />
+				RelativePath="..\..\..\controls.extend\SRadioBox2.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SRatingBar.h" />
+				RelativePath="..\..\..\controls.extend\SRatingBar.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SScrollText.h" />
+				RelativePath="..\..\..\controls.extend\SScrollText.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\gif\SSkinAPNG.h" />
+				RelativePath="..\..\..\controls.extend\gif\SSkinAPNG.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\gif\SSkinGif.h" />
+				RelativePath="..\..\..\controls.extend\gif\SSkinGif.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\STabCtrl2.h" />
+				RelativePath="..\..\..\controls.extend\STabCtrl2.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\SText.h" />
+				RelativePath="..\..\..\controls.extend\SText.h" />
 			<File
-				RelativePath="D:\work\soui3.git\controls.extend\STurn3DView.h" />
+				RelativePath="..\..\..\controls.extend\STurn3DView.h" />
 			<File
 				RelativePath="stdafx.h">
 				<FileConfiguration
