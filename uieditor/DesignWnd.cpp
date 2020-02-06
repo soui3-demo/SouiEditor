@@ -104,29 +104,46 @@ void CDesignWnd::OnPaint(HDC dc)
 	PAINTSTRUCT ps;
 	dc = ::BeginPaint(m_hWnd, &ps);
 
-	if(m_bmpLogo)
+	if (!g_pMainDlg || !g_pMainDlg->m_hViewer)
 	{
-		BITMAP bm;
-		GetObject(m_bmpLogo,sizeof(bm),&bm);
+		if (m_bmpLogo)
+		{
+			BITMAP bm;
+			GetObject(m_bmpLogo, sizeof(bm), &bm);
 
-		CRect rc;
-		GetClientRect(&rc);
+			CRect rc;
+			GetClientRect(&rc);
 
-		BITMAPINFO bmi;
-		memset(&bmi, 0, sizeof(bmi));
-		bmi.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
-		bmi.bmiHeader.biWidth       = bm.bmWidth;
-		bmi.bmiHeader.biHeight      = -bm.bmHeight; // top-down image
-		bmi.bmiHeader.biPlanes      = 1;
-		bmi.bmiHeader.biBitCount    = 32;
-		bmi.bmiHeader.biCompression = BI_RGB;
-		bmi.bmiHeader.biSizeImage   = bm.bmWidth*bm.bmHeight*4;
+			HBRUSH hBkBrush = CreateSolidBrush(RGB(59, 59, 62));
+			HGDIOBJ oldBrush = SelectObject(dc, hBkBrush);
+			Rectangle(dc, 0, 0, rc.Width(), rc.Height());
+			SelectObject(dc, oldBrush);
+			
+			BITMAPINFO bmi;
+			memset(&bmi, 0, sizeof(bmi));
+			bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+			bmi.bmiHeader.biWidth = bm.bmWidth;
+			bmi.bmiHeader.biHeight = -bm.bmHeight; // top-down image
+			bmi.bmiHeader.biPlanes = 1;
+			bmi.bmiHeader.biBitCount = 32;
+			bmi.bmiHeader.biCompression = BI_RGB;
+			bmi.bmiHeader.biSizeImage = bm.bmWidth*bm.bmHeight * 4;
 
-		SetStretchBltMode(dc,HALFTONE);
-		StretchDIBits(dc,0,0,rc.Width(),rc.Height(),0,0,bm.bmWidth,bm.bmHeight,bm.bmBits,&bmi,DIB_RGB_COLORS,SRCCOPY);
-
+			int dstW = rc.Width(), dstH = rc.Height();
+			int xpos = 0, ypos = 0;
+			if (bm.bmWidth > bm.bmHeight)
+			{
+				dstH = (float)dstW / bm.bmWidth * dstH;
+			}else
+			{
+				dstW = (float)bm.bmWidth / bm.bmHeight * dstH;
+				xpos = (rc.Width() - dstW) / 2;
+			}
+			
+			SetStretchBltMode(dc, HALFTONE);
+			StretchDIBits(dc, xpos, ypos, dstW, dstH, 0, 0, bm.bmWidth, bm.bmHeight, bm.bmBits, &bmi, DIB_RGB_COLORS, SRCCOPY);
+		}
 	}
-	
 	::EndPaint(m_hWnd, &ps);
 
 	if (g_pMainDlg && g_pMainDlg->m_hViewer)
@@ -138,11 +155,14 @@ void CDesignWnd::OnPaint(HDC dc)
 void CDesignWnd::RefreshDesignLayout()
 {
 	HWND hChild = GetWindow(m_hWnd,GW_CHILD);
-	if(hChild)
+	if ( hChild )
 	{
 		CRect rc;
 		GetClientRect(&rc);
 		::SetWindowPos(hChild,NULL,0,0,rc.Width(),rc.Height(),SWP_NOZORDER);
+	}else
+	{
+		Invalidate();
 	}
 }
 
