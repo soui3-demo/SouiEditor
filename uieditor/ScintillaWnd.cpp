@@ -36,6 +36,7 @@ const COLORREF darkBlue = RGB(0x80, 0x80, 0);
 const COLORREF red = RGB(1, 0, 0);
 const COLORREF yellow = RGB(1, 1, 0);
 const COLORREF liteBlue = RGB(0x80, 0x80, 1);
+const COLORREF default_bk = RGB(250, 250, 250);
 
 static const int MARGIN_SCRIPT_FOLD_INDEX = 1;
 
@@ -178,7 +179,7 @@ void CScintillaWnd::SetDirty(bool bDirty)
 	}
 	else
 	{
-		SetXmlLexer(white);
+		SetXmlLexer(default_bk);
 	}
 
 	if (m_fnCallback && !m_strFileName.IsEmpty())
@@ -261,7 +262,7 @@ void CScintillaWnd::InitScintillaWnd(void)
 	SendEditor(SCI_STYLESETFORE, STYLE_BRACELIGHT, RGB(0,255,0));       //代码框.置风格前景色 (#代码编辑框常量.风格_匹配括号, #红色)
 	SendEditor(SCI_STYLESETBOLD, STYLE_BRACELIGHT, true);           //风格.粗体
 
-    SetXmlLexer(white);
+    SetXmlLexer(default_bk);
 	SetFold();
 	UpdateLineNumberWidth();
 }
@@ -332,8 +333,8 @@ void CScintillaWnd::SetXmlLexer(COLORREF bkColor)
 	// Hypertext default is used for all the document's text
 	SetAStyle(SCE_H_DEFAULT, black, bkColor, 9, "宋体");
 
-	SetAStyle(SCE_H_TAG, 128);
-	SetAStyle(SCE_H_TAGEND, 128);
+	SetAStyle(SCE_H_TAG, RGB(128, 0, 255));
+	SetAStyle(SCE_H_TAGEND, RGB(128, 0, 255));
 	SetAStyle(SCE_H_ATTRIBUTE, CR_RED);
 	SetAStyle(SCE_H_NUMBER, RGB(0x80, 0, 0x80));
 	SetAStyle(SCE_H_DOUBLESTRING, RGB(0, 0, 0x80));
