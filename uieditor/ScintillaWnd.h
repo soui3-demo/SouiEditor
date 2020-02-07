@@ -46,6 +46,9 @@ public:
 		m_fnCallback = fun;
 	}
 	void GotoFoundLine();
+
+	void GotoPos(int nPos);
+
 	void InsertText(int pos, LPCSTR text);
 	
 	SStringT GetHtmlTagname(int &tagStartPos);
