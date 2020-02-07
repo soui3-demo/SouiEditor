@@ -49,10 +49,9 @@ RC_FILE += uiviewer.rc
 HEADERS += Adapter.h \
            PreviewContainer.h \
            PreviewHost.h \
-           resource.h \
-           SUnkWnd.h
+           resource.h 
+           
 SOURCES += Adapter.cpp \
            PreviewContainer.cpp \
            PreviewHost.cpp \
-           SUnkWnd.cpp \
            uiviewer.cpp

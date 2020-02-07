@@ -218,15 +218,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PreviewContainer.cpp"
+				RelativePath="PreviewContainer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\PreviewHost.cpp"
-				>
-			</File>
-			<File
-				RelativePath="SUnkWnd.cpp"
+				RelativePath="PreviewHost.cpp"
 				>
 			</File>
 			<File
@@ -244,11 +240,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PreviewContainer.h"
+				RelativePath="PreviewContainer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PreviewHost.h"
+				RelativePath="PreviewHost.h"
 				>
 			</File>
 			<File
@@ -278,10 +274,6 @@
 						Outputs="stdafx.h.cpp"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SUnkWnd.h"
-				>
 			</File>
 		</Filter>
 		<Filter
