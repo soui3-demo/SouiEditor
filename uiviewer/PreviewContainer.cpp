@@ -29,10 +29,16 @@ int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetScrollInfo(m_hWnd,SB_VERT,&si,FALSE);
 
 	m_previewHost.Create(m_hWnd,WS_CHILD|WS_VISIBLE,0,0,0,0,0);
-
-	//CPoint pt = GetViewPos();
-	//m_previewHost.SetWindowPos(NULL,pt.x,pt.y,0,0,SWP_NOZORDER|SWP_NOSIZE);
-
+	CRect rcPreview = m_previewHost.GetWindowRect();
+	if(rcHost.Width()<rcPreview.Width())
+	{
+		SetScrollPos(m_hWnd,SB_HORZ,(rcHost.Width()-rcPreview.Width())/2,FALSE);
+	}
+	if(rcHost.Height()<rcPreview.Height())
+	{
+		SetScrollPos(m_hWnd,SB_VERT,(rcHost.Height()-rcPreview.Height())/2,FALSE);
+	}
+	
 	return 0;
 }
 
