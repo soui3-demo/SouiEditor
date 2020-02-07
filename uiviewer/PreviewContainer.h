@@ -10,23 +10,27 @@ public:
 
 protected:
 	virtual void OnEditorExit() override;
-
+	virtual void OnResize() override;
+protected:
+	CPoint GetViewPos() const;
+	void UpdateViewPos();
 protected:
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	void OnScroll(int nBar,UINT nSBCode, UINT nPos, HWND hScrollBar);
-	void OnHScroll(UINT nSBCode, UINT nPos, HWND hScrollBar);
-	void OnVScroll(UINT nSBCode, UINT nPos, HWND hScrollBar);
+	void OnScroll(int nBar,int nSBCode, int nPos, HWND hScrollBar);
+	void OnHScroll(int nSBCode, int nPos, HWND hScrollBar);
+	void OnVScroll(int nSBCode, int nPos, HWND hScrollBar);
 	void OnClose();
 	void OnPaint(HDC hdc);
+	void OnSize(UINT nType, CSize size);
 	BEGIN_MSG_MAP_EX(CPreviewContainer)
 		MSG_WM_CREATE(OnCreate)
 		MSG_WM_HSCROLL(OnHScroll)
 		MSG_WM_VSCROLL(OnVScroll)
 		MSG_WM_CLOSE(OnClose)
+		MSG_WM_SIZE(OnSize)
 		MSG_WM_PAINT(OnPaint)
 		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()
-
 
 };
 

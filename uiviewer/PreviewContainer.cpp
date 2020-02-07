@@ -10,33 +10,43 @@ CPreviewContainer::~CPreviewContainer(void)
 {
 }
 
+static const int KCanvas_Size = 4096;
 int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
+	CRect rcHost;
+	GetClientRect(&rcHost);
+
+
 	SCROLLINFO si={0};
 	si.cbSize = sizeof(si);
-	si.fMask=SIF_RANGE|SIF_PAGE;
-	si.nMin=0;
-	si.nMax=4096;
+	si.fMask=SIF_RANGE|SIF_PAGE|SIF_POS;
+	si.nMin=-KCanvas_Size/2;
+	si.nMax=KCanvas_Size/2;
 	si.nPage=100;
+	si.nPos = 0;
 	SetScrollInfo(m_hWnd,SB_HORZ,&si,FALSE);
+	si.nPos = 0;
 	SetScrollInfo(m_hWnd,SB_VERT,&si,FALSE);
 
 	m_previewHost.Create(m_hWnd,WS_CHILD|WS_VISIBLE,0,0,0,0,0);
-	m_previewHost.SetWindowPos(NULL,0,0,0,0,SWP_NOZORDER|SWP_NOSIZE);
+
+	//CPoint pt = GetViewPos();
+	//m_previewHost.SetWindowPos(NULL,pt.x,pt.y,0,0,SWP_NOZORDER|SWP_NOSIZE);
+
 	return 0;
 }
 
-void CPreviewContainer::OnHScroll(UINT nSBCode, UINT nPos, HWND hScrollBar)
+void CPreviewContainer::OnHScroll(int nSBCode, int nPos, HWND hScrollBar)
 {
 	OnScroll(SB_HORZ,nSBCode,nPos,hScrollBar);
 }
 
-void CPreviewContainer::OnVScroll(UINT nSBCode, UINT nPos, HWND hScrollBar)
+void CPreviewContainer::OnVScroll(int nSBCode, int nPos, HWND hScrollBar)
 {
 	OnScroll(SB_VERT,nSBCode,nPos,hScrollBar);
 }
 
-void CPreviewContainer::OnScroll(int nBar,UINT nSBCode, UINT nPos, HWND hScrollBar)
+void CPreviewContainer::OnScroll(int nBar,int nSBCode, int nPos, HWND hScrollBar)
 {
 	SCROLLINFO si={sizeof(si),SIF_ALL,0};
 	GetScrollInfo(m_hWnd,nBar,&si);
@@ -44,6 +54,9 @@ void CPreviewContainer::OnScroll(int nBar,UINT nSBCode, UINT nPos, HWND hScrollB
 	switch(nSBCode)
 	{
 	case SB_THUMBTRACK:
+		nNewPos=nPos;
+		break;
+	case SB_THUMBPOSITION:
 		nNewPos=nPos;
 		break;
 	case SB_LINEDOWN:
@@ -59,13 +72,11 @@ void CPreviewContainer::OnScroll(int nBar,UINT nSBCode, UINT nPos, HWND hScrollB
 		nNewPos+=si.nPage;
 		break;
 	}
-	nNewPos = smin(nNewPos,si.nMax-si.nPage);
-	nNewPos = smax(0,nNewPos);
+	nNewPos = smin(nNewPos,(int)(si.nMax-si.nPage));
+	nNewPos = smax(si.nMin,nNewPos);
 	SetScrollPos(m_hWnd,nBar,nNewPos,FALSE);
 
-	int x = GetScrollPos(m_hWnd,SB_HORZ);
-	int y = GetScrollPos(m_hWnd,SB_VERT);
-	m_previewHost.SetWindowPos(0,-x,-y,0,0,SWP_NOZORDER|SWP_NOSIZE);
+	UpdateViewPos();
 }
 
 void CPreviewContainer::OnClose()
@@ -116,4 +127,36 @@ void CPreviewContainer::OnPaint(HDC hdc)
 	::DeleteObject(hPenNone);
 
 	EndPaint(m_hWnd,&ps);
+}
+
+void CPreviewContainer::OnSize(UINT nType, CSize size)
+{
+	UpdateViewPos();
+}
+
+CPoint CPreviewContainer::GetViewPos() const
+{
+	CRect rcPreview=m_previewHost.GetWindowRect();
+	CRect rcHost;
+	GetClientRect(&rcHost);
+	int x = GetScrollPos(m_hWnd,SB_HORZ);
+	int y = GetScrollPos(m_hWnd,SB_VERT);
+
+	CPoint ptCenter(-x,-y);
+	CSize szHost = rcHost.Size()/2;
+	CSize szHalf = rcPreview.Size()/2;
+	ptCenter.x += szHost.cx-szHalf.cx;
+	ptCenter.y += szHost.cy-szHalf.cy;
+	return ptCenter;
+}
+
+void CPreviewContainer::UpdateViewPos()
+{
+	CPoint pt = GetViewPos();
+	m_previewHost.SetWindowPos(NULL,pt.x,pt.y,0,0,SWP_NOZORDER|SWP_NOSIZE);
+}
+
+void CPreviewContainer::OnResize()
+{
+	UpdateViewPos();
 }
