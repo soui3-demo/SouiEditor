@@ -262,7 +262,7 @@ void CScintillaWnd::InitScintillaWnd(void)
 	SendEditor(SCI_STYLESETFORE, STYLE_BRACELIGHT, RGB(0,255,0));       //代码框.置风格前景色 (#代码编辑框常量.风格_匹配括号, #红色)
 	SendEditor(SCI_STYLESETBOLD, STYLE_BRACELIGHT, true);           //风格.粗体
 
-    SetXmlLexer(default_bk);
+	SetXmlLexer(default_bk);
 	SetFold();
 	UpdateLineNumberWidth();
 }

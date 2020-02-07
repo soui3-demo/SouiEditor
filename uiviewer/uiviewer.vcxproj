@@ -147,14 +147,12 @@
     <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="PreviewContainer.cpp" />
     <ClCompile Include="PreviewHost.cpp" />
-    <ClCompile Include="SUnkWnd.cpp" />
     <ClCompile Include="uiviewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="PreviewContainer.h" />
     <ClInclude Include="PreviewHost.h" />
-    <ClInclude Include="SUnkWnd.h" />
     <ClInclude Include="resource.h" />
     <CustomBuild Include="stdafx.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">echo /*-------------------------------------------------------------------- &gt;stdafx.h.cpp

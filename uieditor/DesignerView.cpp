@@ -147,7 +147,6 @@ BOOL SDesignerView::InsertLayoutToMap(SStringT strFileName)
 
 	pugi::xml_document *xmlDoc1 = new pugi::xml_document();
 
-	//if(!xmlDoc1->load_file(FullFileName,pugi::parse_default,pugi::encoding_utf8))
 	if (!xmlDoc1->load_file(FullFileName, pugi::parse_full))
 		return FALSE;
 
@@ -215,16 +214,34 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 		m_pScintillaWnd->SendMessage(SCI_SETREADONLY, 0, 0);
 		SStringT strPath = m_strProPath + _T("\\") + strFileName;
 		m_pScintillaWnd->OpenFile(strPath);
-		pugi::xml_document xmlDoc;
-		pugi::xml_parse_result res = xmlDoc.load_file(strPath);
-		if(!res)
+
+		int n = m_pScintillaWnd->SendEditor(SCI_GETTEXT, 0, 0);
+		if (n > 0)
 		{
-			m_pScintillaWnd->GotoPos(res.offset);
+			char *chText = new char[n];
+			m_pScintillaWnd->SendEditor(SCI_GETTEXT, n, (LPARAM)chText);
+			SStringW sText = S_CA2W(chText, CP_UTF8);
+			delete chText;
+
+			pugi::xml_document xmlDoc;
+			pugi::xml_parse_result res = xmlDoc.load_buffer(sText.c_str(), sText.GetLength(), pugi::parse_full);
+
+			int linecount = 0;
+			SStringW subText = sText.Mid(0, res.offset);
+			//MessageBoxW(0, subText.c_str(), L"", 0);
+			for (int i = 0; i < subText.GetLength(); i++)
+			{
+				if (subText[i] == '\n')
+					linecount++;
+			}
 			m_pScintillaWnd->SetFocus();
-			SStringT strNote;
-			strNote.Format(_T("%s 的源文件存在语法错误, 错误位置：%d"), strFileName,res.offset);
+			m_pScintillaWnd->SendEditor(SCI_GOTOLINE, linecount, 0);
+			m_pScintillaWnd->SendEditor(SCI_LINESCROLL, 0, linecount);
 			
-			SMessageBox(NULL, strNote, _T("提示"), MB_OK);		
+			SStringT strNote;
+			strNote.Format(_T("%s 的源文件在 %d 行附近存在语法错误"), strFileName, linecount);
+
+			SMessageBox(NULL, strNote, _T("提示"), MB_OK);
 		}
 
 		return FALSE;

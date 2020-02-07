@@ -36,9 +36,6 @@
     <ClCompile Include="PreviewHost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SUnkWnd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="uiviewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PreviewHost.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SUnkWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
