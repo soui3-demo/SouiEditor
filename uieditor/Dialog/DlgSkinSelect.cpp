@@ -741,7 +741,7 @@ namespace SOUI
 				skinName = _T("skin_");
 			skinName += *s;
 			//判断当前资源已被其他皮肤引用
-			pugi::xml_node NodeTemp = skinNode.find_child_by_attribute(_T("src"), strSrc);
+			pugi::xml_node NodeTemp = skinNode.find_child_by_attribute(_T("src"), strSrc, false);
 			if (NodeTemp)
 			{
 				CDebug::Debug(_T("当前资源已被其他皮肤引用:") + CDebug::Debug1(NodeTemp));
