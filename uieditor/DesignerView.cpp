@@ -153,10 +153,11 @@ BOOL SDesignerView::InsertLayoutToMap(SStringT strFileName)
 	m_mapLayoutFile[strFileName] = xmlDoc1;
 	m_mapIncludeReplace[strFileName] = new SMap<int, SStringT>;
 
+	SStringT tmpFilename = m_strCurLayoutXmlFile;
 	m_strCurLayoutXmlFile = strFileName;
 	//RenameChildeWnd(xmlDoc1->first_child());
 	RenameChildeWnd(xmlDoc1->root());
-
+	m_strCurLayoutXmlFile = tmpFilename;
 	return TRUE;
 }
 
@@ -246,6 +247,7 @@ BOOL SDesignerView::LoadLayout(SStringT strFileName, SStringT layoutName)
 
 		return FALSE;
 	}
+
 	pugi::xml_node xmlroot = p->m_value->document_element();
 	m_CurrentLayoutNode = xmlroot;
 	ReloadLayout(TRUE);
