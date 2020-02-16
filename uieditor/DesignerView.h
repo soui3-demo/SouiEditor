@@ -100,8 +100,6 @@ namespace SOUI
 
 		void SetSelCtrlNode(pugi::xml_node xmlNode);
 
-		void NewWnd(CPoint pt, void *pM);
-
 		int InitXMLStruct(pugi::xml_node xmlNode, HSTREEITEM item);
 		BOOL GoToXmlStructItem(int data, HSTREEITEM item);
 		BOOL SDesignerView::GetTC_CtrlNodeTag(HSTREEITEM fromItem, HSTREEITEM item, SStringA& strTag);
