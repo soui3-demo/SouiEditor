@@ -274,8 +274,6 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	m_ndata = 0;
 	m_CurSelCtrlItem = NULL;
 
-	((SouiEditorApp*)SApplication::getSingletonPtr())->InitEnv();
-	
 	if (m_CurrentLayoutNode == NULL)
 		return TRUE;
 
@@ -337,21 +335,6 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 			attr = attr.next_attribute();
 		}
 
-		attr = xmlnode.first_attribute();
-		while (attr)
-		{
-			s1.Format(L" %s=\"%s\" ", attr.name(), attr.value());
-			s2 = s2 + s1;
-
-			attr = attr.next_attribute();
-		}
-
-		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN, nWidth + MARGIN * 2,
-		                   nHeight + MARGIN * 2);
-
-		s2 = L"<designerRoot pos=\"20, 20\" " + s2 + strAttrSize + L"></designerRoot>";
-
 		//删除size 改成width height
 		if (bHasSize)
 		{
@@ -397,16 +380,8 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 			nHeight = 500;
 			m_CurrentLayoutNode.append_attribute(_T("height")).set_value(nHeight);
 		}
-
-		SStringW strAttrSize;
-		strAttrSize.Format(L" margin= \"%d\" width = \"%d\" height = \"%d\" ", MARGIN,
-		                   (nWidth == -1) ? 800 : nWidth + MARGIN * 2,
-		                   (nHeight == -1) ? 500 : nHeight + MARGIN * 2);
-
-		s2 = L"<designerRoot pos=\"20,20\" " + strAttrSize + L" colorBkgnd=\"#d0d0d0\"/>";
 	}
 
-	int level = 0;
 	SStringA strNoteTag;
 	m_treeXmlStruct->RemoveAllItems();
 	m_rootItem = NULL;
@@ -1780,8 +1755,6 @@ void SDesignerView::GetCodeFromEditor()
 	pugi::xml_node xmlroot = p->m_value->document_element();
 
 	m_CurrentLayoutNode = xmlroot;
-
-	BOOL bRoot = FALSE;
 
 	// 先记下原来选的控件是第几个顺序的控件, 再进行重布局
 	int data = m_CurSelCtrlIndex;

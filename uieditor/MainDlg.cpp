@@ -1055,9 +1055,6 @@ void CMainDlg::OnScintillaSave(CScintillaWnd *pObj, int custom_msg, SStringT str
 			{	// 布局可视化编辑时按了Ctrl+S
 				g_pMainDlg->m_pDesignerView->GetCodeFromEditor(NULL);
 				pScintillaWnd->SetDirty(false);
-
-				SStringT strOpenLayoutFile = g_pMainDlg->m_pDesignerView->m_strCurLayoutXmlFile;
-				g_pMainDlg->m_pDesignerView->InsertLayoutToMap(strOpenLayoutFile);
 			}
 			else
 			{	// 是在直接编辑文件
