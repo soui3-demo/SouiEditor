@@ -184,6 +184,7 @@ CColourPopup::~CColourPopup()
 {
     m_pColorPicker->GetMsgLoop()->RemoveMessageFilter(this);
     DeleteObject(m_Font);
+	m_pColorPicker = NULL;
 }
 
 BOOL CColourPopup::Create(CPoint p, COLORREF crColour,

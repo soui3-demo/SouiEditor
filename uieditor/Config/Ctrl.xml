@@ -115,7 +115,7 @@
 		</flash>
 
 		<gif_动画>
-			<gifplayer pos="0,0" size="96,96" />
+			<gifplayer pos="0,0, @96, @96" />
 		</gif_动画>
 		
 		<group_组合框>
@@ -200,15 +200,14 @@
 		</listview>
 
 		<mclistview>
-			<mclistview size="120,120" headerHeight="30">
-				<header align="center" itemSwapEnable="1" fixWidth="0" sortHeader="1" colorText="#000000ff">
+			<mclistview pos="5,[2,@200,@200" headerHeight="30">
+				<headerStyle align="center" itemSwapEnable="1" fixWidth="0" sortHeader="1" colorText="#000000ff">
 					<items>
 						<item width="50">姓名</item>
 						<item width="50">年龄</item>
 						<item width="50">age</item>
-						<item width="50">score</item>
 					</items>
-				</header>
+				</headerStyle>
 				<template itemHeight="80" colorHover="#cccccc" colorSelected="#0000ff">
 					<window name="col1" clipClient="1">
 						<img name="img_icon" skin="" pos="10,8,@64,@64"/>
@@ -222,10 +221,7 @@
 					</window>
 					<window name="col3" clipClient="1">
 						<text name="txt_size" pos="0,26,-0,-26" font="adding:-4" align="center" >85.92M</text>
-					</window>
-					<window  name="col4" clipClient="1">
-						<text name="txt_installtime" pos="0,26,-0,-26" font="adding:-4" align="center" >2015-01-09</text>
-					</window>        
+					</window>       
 				</template>
 
 			</mclistview>	

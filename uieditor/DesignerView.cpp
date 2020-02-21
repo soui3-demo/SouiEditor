@@ -20,6 +20,7 @@ extern CMainDlg* g_pMainDlg;
 
 extern BOOL g_bHookCreateWnd;	//是否拦截窗口的建立
 extern CSysDataMgr g_SysDataMgr;
+static pugi::xml_node emptyNode;
 
 namespace SOUI{
 
@@ -134,7 +135,7 @@ BOOL SDesignerView::CloseProject()
 	m_nState = 0;
 	m_ndata = 0;
 	m_nSciCaretPos = 0;
-
+	m_curPropertyXmlNode = emptyNode;
 
 	ShowNoteInSciwnd();
 
@@ -266,6 +267,7 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 	if (bClearSel)
 	{
 		m_CurSelCtrlIndex = 0;
+		m_curPropertyXmlNode = emptyNode;
 	}
 
 	pugi::xml_node xmlnode;
@@ -273,7 +275,7 @@ BOOL SDesignerView::ReloadLayout(BOOL bClearSel)
 
 	m_ndata = 0;
 	m_CurSelCtrlItem = NULL;
-
+	
 	if (m_CurrentLayoutNode == NULL)
 		return TRUE;
 
@@ -1257,6 +1259,10 @@ void SDesignerView::InitCtrlProperty(pugi::xml_node NodeCom, pugi::xml_node Node
 
 void SDesignerView::CreatePropGrid(SStringT strCtrlType)
 {
+	if (m_curPropertyXmlNode == m_curSelXmlNode)
+		return;
+	
+	m_curPropertyXmlNode = m_curSelXmlNode;
 	m_pPropgrid = (SPropertyGrid *)m_pPropertyContainer->GetWindow(GSW_FIRSTCHILD);
 	if (m_pPropgrid)
 	{
@@ -1480,12 +1486,12 @@ bool SDesignerView::OnPropGridValueChanged(EventArgs *pEvt)
 		}
 	}
 
-	
-
 	// 先记下原来选的控件是第几个顺序的控件, 再进行重布局
 	int data = m_CurSelCtrlIndex;
 	ReloadLayout(FALSE);
 	SelectCtrlByIndex(data, false);
+
+	GetCodeFromEditor(NULL);
 	return true;
 }
 
