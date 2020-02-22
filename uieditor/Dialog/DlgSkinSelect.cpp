@@ -553,7 +553,7 @@ namespace SOUI
 			return;
 		}
 
-		CFileDialogEx OpenDlg(TRUE, NULL, NULL, 6, _T("所有文件 (*.*)\0*.*\0\0"));
+		CFileDialogEx OpenDlg(TRUE, m_strProPath, NULL, NULL, 6, _T("所有文件 (*.*)\0*.*\0\0"));
 		if (IDOK == OpenDlg.DoModal())
 		{
 			SStringT strFileName = OpenDlg.m_szFileName;

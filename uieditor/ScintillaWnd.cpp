@@ -152,7 +152,7 @@ BOOL CScintillaWnd::OpenFile(LPCTSTR lpFileName)
 
 void CScintillaWnd::DoSave()
 {
-	if (m_strFileName.IsEmpty())
+	if (!m_bDirty || m_strFileName.IsEmpty())
 	{
 		return;
 	}

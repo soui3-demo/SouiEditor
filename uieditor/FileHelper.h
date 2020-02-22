@@ -58,6 +58,7 @@ public:
     TCHAR m_szFileName[_MAX_PATH];     // contains full path name after return
 
     CFileDialogEx(BOOL bOpenFileDialog, // TRUE for FileOpen, FALSE for FileSaveAs
+		LPCTSTR lpszInitDir = NULL,
         LPCTSTR lpszDefExt = NULL,
         LPCTSTR lpszFileName = NULL,
         DWORD dwFlags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT ,
@@ -74,6 +75,7 @@ public:
         m_ofn.nMaxFile = _MAX_PATH;
         m_ofn.lpstrDefExt = lpszDefExt;
         m_ofn.lpstrFileTitle = (LPTSTR)m_szFileTitle;
+		m_ofn.lpstrInitialDir = lpszInitDir;
         m_ofn.nMaxFileTitle = _MAX_FNAME;
         m_ofn.Flags = dwFlags | OFN_EXPLORER | OFN_ENABLEHOOK | OFN_ENABLESIZING| OFN_NOCHANGEDIR;
         m_ofn.lpstrFilter = lpszFilter;
