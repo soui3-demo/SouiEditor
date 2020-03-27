@@ -1091,10 +1091,55 @@
 				<fixWidth style="proptext" name ="fixWidth" />	
 				<itemSwapEnable style="proptext" name ="itemSwapEnable" />	
 				<sortHeader style="proptext" name ="sortHeader" />
+                <itemSkin style="proptext" name ="SplitLineColor"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineOffset"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineOffsetTop"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineOffsetBottom"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineColor"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="DrawSplitLine"  ButtonType="skin"/>
 				<matchParent style="propoption" name ="matchParent" options="是:1|否:0" />
-			</分组>	
-
+			</分组>
 		</header2>
+        
+        <headerStyle>
+			<分组 name="基本属性: header ">
+				<id/>
+				<name/>
+				<skin/>
+				<layout_gravity/>
+				<weight/>
+				<extend/>				
+				<pos/>
+				<size/>
+				<offset/>
+				<class/>
+				<tip/>
+				
+				<font/>		
+				<colorBkgnd/>
+				<colorText/>
+
+				<UiEdit_windowText/>	
+				<enable/>
+				<visible/>
+				<show/>				
+				<display/>
+			</分组>
+			<分组 name="属性: header">
+				<itemSkin style="proptext" name ="itemSkin"  ButtonType="skin"/>	
+				<sortSkin style="proptext" name ="sortSkin"  ButtonType="skin"/>	
+				<fixWidth style="proptext" name ="fixWidth" />	
+				<itemSwapEnable style="proptext" name ="itemSwapEnable" />	
+				<sortHeader style="proptext" name ="sortHeader" />
+                <itemSkin style="proptext" name ="SplitLineColor"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineOffset"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineOffsetTop"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineOffsetBottom"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="SplitLineColor"  ButtonType="skin"/>
+                <itemSkin style="proptext" name ="DrawSplitLine"  ButtonType="skin"/>
+				<matchParent style="propoption" name ="matchParent" options="是:1|否:0" />
+			</分组>
+		</headerStyle>
 
 
 		<hotkey>

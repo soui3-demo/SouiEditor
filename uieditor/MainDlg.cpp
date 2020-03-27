@@ -25,6 +25,7 @@
 	
 
 #define TIMERID_RELOAD_LAYOUT  100
+#define TIMERID_HEART		   101
 
 #define UIRES_FILE	L"uires.idx"
 //////////////////////////////////////////////////////////////////////////
@@ -525,8 +526,12 @@ void CMainDlg::OnTimer(UINT_PTR timeID)
 {
 	if (timeID == TIMERID_RELOAD_LAYOUT)
 	{
-		m_pDesignerView->GetCodeFromEditor(NULL);
 		SNativeWnd::KillTimer(TIMERID_RELOAD_LAYOUT);
+		m_pDesignerView->GetCodeFromEditor(NULL);
+	}
+	else if (timeID == TIMERID_HEART)
+	{
+		::SendMessage(m_hViewer, kmsg_heart, (WPARAM)0, (LPARAM)0);
 	}
 	else
 	{
@@ -581,7 +586,7 @@ void CMainDlg::OnBtnOpen()
 		CDebug::Debug(_T("请关闭当前工程后再打开新的"));
 		return;
 	}
-	CFileDialogEx OpenDlg(TRUE, _T("idx"), _T("uires.idx"), 6, _T("soui skin index(*.idx)\0*.idx\0All files (*.*)\0*.*\0\0"));
+	CFileDialogEx OpenDlg(TRUE, NULL, _T("idx"), _T("uires.idx"), 6, _T("soui skin index(*.idx)\0*.idx\0All files (*.*)\0*.*\0\0"));
 	if (IDOK == OpenDlg.DoModal())
 	{
 		OpenProject(OpenDlg.m_szFileName);
@@ -1055,9 +1060,6 @@ void CMainDlg::OnScintillaSave(CScintillaWnd *pObj, int custom_msg, SStringT str
 			{	// 布局可视化编辑时按了Ctrl+S
 				g_pMainDlg->m_pDesignerView->GetCodeFromEditor(NULL);
 				pScintillaWnd->SetDirty(false);
-
-				SStringT strOpenLayoutFile = g_pMainDlg->m_pDesignerView->m_strCurLayoutXmlFile;
-				g_pMainDlg->m_pDesignerView->InsertLayoutToMap(strOpenLayoutFile);
 			}
 			else
 			{	// 是在直接编辑文件
@@ -1232,7 +1234,13 @@ BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 LRESULT CMainDlg::OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp)
 {
 	m_hViewer = (HWND)wp;
-
+	if (m_hViewer)
+	{
+		SNativeWnd::SetTimer(TIMERID_HEART, 1000);
+	}else
+	{
+		SNativeWnd::KillTimer(TIMERID_HEART);
+	}
 	return 0;
 }
 

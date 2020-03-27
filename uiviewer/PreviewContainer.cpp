@@ -11,25 +11,33 @@ CPreviewContainer::~CPreviewContainer(void)
 }
 
 static const int KCanvas_Size = 4096;
+
+void CPreviewContainer::SetScrollMax(int hmax, int vmax) const
+{
+	SCROLLINFO si = { 0 };
+	si.cbSize = sizeof(si);
+	si.fMask = SIF_RANGE | SIF_PAGE | SIF_POS;
+	si.nMin = -hmax / 2;
+	si.nMax = hmax / 2;
+	si.nPage = 100;
+	si.nPos = 0;
+	SetScrollInfo(m_hWnd, SB_HORZ, &si, TRUE);
+	si.nPos = 0;
+	si.nMin = -vmax / 2;
+	si.nMax = vmax / 2;
+	SetScrollInfo(m_hWnd, SB_VERT, &si, TRUE);
+}
+
 int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	CRect rcHost;
-	GetClientRect(&rcHost);
-
-
-	SCROLLINFO si={0};
-	si.cbSize = sizeof(si);
-	si.fMask=SIF_RANGE|SIF_PAGE|SIF_POS;
-	si.nMin=-KCanvas_Size/2;
-	si.nMax=KCanvas_Size/2;
-	si.nPage=100;
-	si.nPos = 0;
-	SetScrollInfo(m_hWnd,SB_HORZ,&si,FALSE);
-	si.nPos = 0;
-	SetScrollInfo(m_hWnd,SB_VERT,&si,FALSE);
+	SetScrollMax(KCanvas_Size, KCanvas_Size);
 
 	m_previewHost.Create(m_hWnd,WS_CHILD|WS_VISIBLE,0,0,0,0,0);
 	CRect rcPreview = m_previewHost.GetWindowRect();
+
+	CRect rcHost;
+	GetClientRect(&rcHost);
+	
 	if(rcHost.Width()<rcPreview.Width())
 	{
 		SetScrollPos(m_hWnd,SB_HORZ,(rcHost.Width()-rcPreview.Width())/2,FALSE);
@@ -153,6 +161,7 @@ CPoint CPreviewContainer::GetViewPos() const
 	CSize szHalf = rcPreview.Size()/2;
 	ptCenter.x += szHost.cx-szHalf.cx;
 	ptCenter.y += szHost.cy-szHalf.cy;
+	
 	return ptCenter;
 }
 
