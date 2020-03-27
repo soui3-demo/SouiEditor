@@ -46,8 +46,7 @@ RC_FILE += souieditor.rc
 
 
 # Input
-HEADERS += Adapter.h \
-           CDebug.h \
+HEADERS += CDebug.h \
            CmdLine.h \
            DesignerView.h \
            DesignWnd.h \
@@ -92,8 +91,7 @@ HEADERS += Adapter.h \
            ../ExtendCtrls/SCtrlsRegister.h \
            colorpicker/SColorPicker.h \
            colorpicker/ColourPopup.h
-SOURCES += Adapter.cpp \
-           DesignerView.cpp \
+SOURCES += DesignerView.cpp \
            DesignWnd.cpp \
            helpapi.cpp \
            MainDlg.cpp \

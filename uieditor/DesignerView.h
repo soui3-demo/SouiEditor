@@ -10,7 +10,6 @@ extern CSysDataMgr g_SysDataMgr;
 
 namespace SOUI
 {
-	//class SMoveWnd;
 	class SPropertyGrid;
 
 	class SDesignerView
@@ -120,7 +119,6 @@ namespace SOUI
 
 		void TrimXmlNodeTextBlank(pugi::xml_node xmlNode);
 
-		void UseEditorUIDef(bool bYes);  //使用编辑器自身的UIDef还是使用所打开的工程的UIDef
 		SStringT UnitToStr(int nUnit);
 
 	public:

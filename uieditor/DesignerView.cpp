@@ -118,7 +118,6 @@ BOOL SDesignerView::CloseProject()
 	m_strCurFileEditor.Empty();
 	m_strProPath = m_strUIResFile = L"";
 	m_xmlDocUiRes.reset();
-	UseEditorUIDef(true);
 	m_textCtrlTypename->SetWindowText(L"");
 	((CMainDlg*)m_pMainHost)->m_textNodenum->SetWindowText(L"");
 
@@ -2234,17 +2233,6 @@ bool SDesignerView::OnPropGridItemActive(EventArgs *pEvt)
 	return true;
 }
 
-void SDesignerView::UseEditorUIDef(bool bYes) //使用编辑器自身的UIDef还是使用所打开的工程的UIDef
-{
-	if (bYes)
-	{
-		//SUiDef::getSingleton().SetUiDef(m_pOldUiDef, true);
-	}
-	else
-	{
-		//SUiDef::getSingleton().SetUiDef(m_pUiDef, true);
-	}
-}
 
 SStringT SDesignerView::UnitToStr(int nUnit)
 {
