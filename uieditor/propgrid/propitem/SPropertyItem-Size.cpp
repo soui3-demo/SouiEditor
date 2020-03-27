@@ -94,7 +94,7 @@ namespace SOUI
     HRESULT SPropertyItemSize::OnAttrValue( const SStringW & strValue,BOOL bLoading )
     {
         SetString(S_CW2T(strValue));
-        return S_FALSE;
+        return S_OK;
     }
 
     HRESULT SPropertyItemSize::OnAttrChildrenNames( const SStringW & strValue,BOOL bLoading )
@@ -106,6 +106,6 @@ namespace SOUI
             GetItem(GPI_FIRSTCHILD)->SetName1(strNames[0]);
             GetItem(GPI_LASTCHILD)->SetName1(strNames[1]);
         }
-        return S_FALSE;
+        return S_OK;
     }
 }

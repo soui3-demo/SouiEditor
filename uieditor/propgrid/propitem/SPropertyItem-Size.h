@@ -6,7 +6,7 @@ namespace SOUI
 {
     class SPropertyItemSize : public SPropertyItemText
     {
-        SOUI_CLASS_NAME(SPropertyGroup,L"propsize")
+        SOUI_CLASS_NAME(SPropertyItemSize,L"propsize")
     public:
 
         virtual void SetString(const SStringT & strValue);
