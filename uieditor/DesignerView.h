@@ -111,8 +111,6 @@ namespace SOUI
 		void ShowZYGLDlg();
 		void ShowYSGLDlg();
 
-		void ShowMovWndChild(BOOL bShow, void* pMovWnd);
-
 		int GetIndexData();
 
 		SWindow* FindChildByUserData(SWindow* pWnd, int data);

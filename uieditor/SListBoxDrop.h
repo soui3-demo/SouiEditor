@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "DesignerView.h"
-#include "Adapter.h"
 class SPrintWindow : public SWindow
 {
 	SOUI_CLASS_NAME(SPrintWindow, L"SPrintWindow")

@@ -6,7 +6,6 @@
 #include "Dialog/DlgFontSelect.h"
 #include "core/SWnd.h"
 #include "MainDlg.h"
-#include "adapter.h"
 #include "Global.h"
 #include "pugixml_write.h"
 #include "SysdataMgr.h"
