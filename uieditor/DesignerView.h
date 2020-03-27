@@ -117,8 +117,6 @@ namespace SOUI
 
 		void TrimXmlNodeTextBlank(pugi::xml_node xmlNode);
 
-		SStringT UnitToStr(int nUnit);
-
 	public:
 		SAutoRefPtr<IFont> m_defFont;
 	

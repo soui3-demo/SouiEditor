@@ -1075,9 +1075,7 @@ SStringW SDesignerView::GetPosFromLayout(SouiLayoutParam *pLayoutParam, INT nPos
 	{
 		strPos = strPos + L"-";
 	}
-	SStringW strTemp;
-	int n = (int)Pi.nPos.fSize;
-	strTemp.Format(L"%d%s", n, UnitToStr(Pi.nPos.unit));
+	SStringW strTemp=Pi.nPos.toString();
 	strPos = strPos + strTemp;
 	return strPos;
 }
@@ -2097,9 +2095,6 @@ void SDesignerView::unPreview()
 {
 	ReloadLayout();
 	m_nState = 0;
-/*
-	GetMoveWndRoot()->Click(0, CPoint(0, 0));
-	m_pMoveWndRoot->GetParent()->Invalidate();*/
 }
 
 void SDesignerView::ShowZYGLDlg()
@@ -2131,28 +2126,6 @@ void SDesignerView::ShowYSGLDlg()
 		RefreshRes();
 	}
 }
-/*
-
-void SDesignerView::ShowMovWndChild(BOOL bShow, SMoveWnd* pMovWnd)
-{
-	if (bShow)
-	{
-		for (; pMovWnd; pMovWnd = (SMoveWnd*)pMovWnd->GetWindow(GSW_NEXTSIBLING))
-		{
-			SWindow* pRealWnd = pMovWnd->m_pRealWnd;
-			pMovWnd->SetVisible(pRealWnd->IsVisible());
-			ShowMovWndChild(bShow, (SMoveWnd*)pMovWnd->GetWindow(GSW_FIRSTCHILD));
-		}
-	}
-	else
-	{
-		for (; pMovWnd; pMovWnd = (SMoveWnd*)pMovWnd->GetWindow(GSW_NEXTSIBLING))
-		{
-			pMovWnd->SetVisible(FALSE);
-			ShowMovWndChild(bShow, (SMoveWnd*)pMovWnd->GetWindow(GSW_FIRSTCHILD));
-		}
-	}
-}*/
 
 int SDesignerView::GetIndexData()
 {
@@ -2232,24 +2205,6 @@ bool SDesignerView::OnPropGridItemActive(EventArgs *pEvt)
 	return true;
 }
 
-
-SStringT SDesignerView::UnitToStr(int nUnit)
-{
-	//	px=0,dp,dip,sp
-	switch (nUnit)
-	{
-	case 0:
-		return _T("");
-	case 1:
-		return _T("dp");
-	case 2:
-		return _T("dip");
-	case 3:
-		return _T("sp");
-	default:
-		return _T("");
-	}
-}
 
 BOOL SDesignerView::LoadConfig(pugi::xml_document &doc,const SStringT & cfgFile)
 {
