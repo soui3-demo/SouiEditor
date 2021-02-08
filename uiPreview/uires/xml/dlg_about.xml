@@ -1,0 +1,20 @@
+﻿<SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16" margin="5,5,5,5"  resizable="1" wndType="normal"
+translucent="1"
+>
+  <root skin="_skin.sys.wnd.bkgnd" cache="1"  width="300" height="200" layout="vbox">
+    <caption size="-2,30" layout="hbox" gravity="center" padding_left="5">
+      <icon src="ICON_LOGO:16"/>
+      <text extend_left="5">@string/about</text>
+      <window size="0,0" weight="1"/>
+      <imgbtn id="IDCANCEL" skin="_skin.sys.btn.close"  tip="close" animate="1"/>
+    </caption>
+    <window layout="vbox" interval="10" gravity="left" size="-2,-2" padding="10,50,10,10">
+      <text>SOUI资源包预览器1.0版</text>
+      <text>版权所有：启程软件</text>
+      <window size="-1,-1" layout="hbox" interval="10" layout_gravity="center">
+        <link href="http://www.cnblogs.com/setoutsoft/" class="cls_btn_weblink">SOUI教程</link>
+        <link href="http://www.soui.vip" class="cls_btn_weblink">SOUI论坛</link>
+      </window>
+    </window>
+  </root>
+</SOUI>

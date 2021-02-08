@@ -143,7 +143,7 @@ protected:
 		MSG_WM_SHOWWINDOW(OnShowWindow)
 		MSG_WM_COMMAND(OnCommand)
 		MSG_WM_COPYDATA(OnCopyData)
-		MESSAGE_HANDLER_EX(kmsg_viewer,OnCreateViewer)
+		MESSAGE_HANDLER_EX(kmsg_viewer_create,OnCreateViewer)
 		CHAIN_MSG_MAP(SHostWnd)
 		REFLECT_NOTIFICATIONS_EX()
 	END_MSG_MAP()

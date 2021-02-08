@@ -1,0 +1,39 @@
+﻿<SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:32" smallIcon="ICON_LOGO:16" margin="5,5,5,5"  resizable="1" wndType="appMain"
+appWnd="1"
+translucent="1" 
+>
+  <root skin="_skin.sys.wnd.bkgnd" cache="1"  width="300" height="400" layout="vbox">
+    <caption size="-2,30" layout="hbox" gravity="center" padding_left="5">
+      <icon src="ICON_LOGO:16"/>
+      <text extend_left="5">@string/title</text>
+      <window size="0,0" weight="1"/>
+      <button name="btn_about" text="关于" padding="5,3,5,3"/>
+      <imgbtn name="btn_min" skin="_skin.sys.btn.minimize" animate="1" />
+      <imgbtn name="btn_close" skin="_skin.sys.btn.close"  tip="close" animate="1"/>
+    </caption>
+    <window size="-2,0" weight="1" layout="vbox" padding="5,5,5,5" interval="2">
+      <window size="-2,-1" layout="hbox" interval="5" gravity="center">
+        <button name="btn_open_uires" text="打开资源包" padding="5,5,5,5"/>
+        <button name="btn_close_uires" text="关闭资源包" padding="5,5,5,5"/>
+      </window>
+      <window size="-2,-1" layout="hbox" interval="5" gravity="center">
+        <text text="搜索:"/> 
+        <edit name="edit_filter" size="0,25" weight="1" margin="1" notifyChange="1"/>
+      </window>
+      <listview name="lv_layout" size="-2,0" weight="1">
+        <template itemHeight="50" skin="skin_item_bk">
+          <window layout="vbox">
+            <window size="-2,0" weight="1" layout="hbox" gravity="center">
+              <text text="名称:"/>
+              <text name="txt_name"/>
+            </window>
+            <window size="-2,0" weight="1" layout="hbox" gravity="center" colorText="@color/gray">
+              <text text="路径:"/>
+              <text name="txt_path"/>
+            </window>
+          </window>
+        </template>
+      </listview>
+    </window>
+  </root>
+</SOUI>

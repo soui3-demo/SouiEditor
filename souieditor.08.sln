@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uiviewer", "uiviewer\uiview
 		{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7} = {0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uiPreview", "uiPreview\uiPreview.vcproj", "{3731D30C-BD8D-478D-AF32-5F2CFECB5215}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -32,6 +34,10 @@ Global
 		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Debug|Win32.Build.0 = Debug|Win32
 		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Release|Win32.ActiveCfg = Release|Win32
 		{F42D7928-C381-3967-84F3-CADC2F0B04B1}.Release|Win32.Build.0 = Release|Win32
+		{3731D30C-BD8D-478D-AF32-5F2CFECB5215}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3731D30C-BD8D-478D-AF32-5F2CFECB5215}.Debug|Win32.Build.0 = Debug|Win32
+		{3731D30C-BD8D-478D-AF32-5F2CFECB5215}.Release|Win32.ActiveCfg = Release|Win32
+		{3731D30C-BD8D-478D-AF32-5F2CFECB5215}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

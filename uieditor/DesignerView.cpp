@@ -1737,7 +1737,7 @@ void SDesignerView::GetCodeFromEditor()
 		return;
 	}
 
-	g_pMainDlg->SendMsgToViewer(kcds_id, (void*)s.c_str(), s.GetLength());
+	g_pMainDlg->SendMsgToViewer(update_buf_id, (void*)s.c_str(), s.GetLength());
 	HSTREEITEM rootitem = m_treeXmlStruct->GetRootItem();
 	if (rootitem && m_CurSelCtrlItem)
 	{

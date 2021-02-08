@@ -11,6 +11,7 @@ public:
 protected:
 	virtual void OnEditorExit() override;
 	virtual void OnResize() override;
+	virtual void OnRePos(const POINT *pt);
 protected:
 	CPoint GetViewPos() const;
 	void UpdateViewPos();
@@ -32,6 +33,7 @@ protected:
 		MSG_WM_PAINT(OnPaint)
 		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()
+
 
 };
 

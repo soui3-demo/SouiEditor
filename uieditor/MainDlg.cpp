@@ -1207,7 +1207,7 @@ void CMainDlg::SendMsgToViewer(int msgid, void* pMsgData, int msglen)
 
 BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 {
-	if (pCopyDataStruct->dwData == kcds_id)
+	if (pCopyDataStruct->dwData == select_id)
 	{
 		int *pIndex = (int*)pCopyDataStruct->lpData;
 		int  nCount = pCopyDataStruct->cbData / sizeof(int);
@@ -1224,7 +1224,6 @@ BOOL CMainDlg::OnCopyData(HWND wnd, PCOPYDATASTRUCT pCopyDataStruct)
 		{
 			m_pDesignerView->SelectCtrlByOrder(pIndex,nCount);
 		}
-		//	m_pDesignerView->SelectCtrlByTag(strXmlNodeTag);
 		SLOG_INFO("nCount:" << nCount << "Tag:" << strXmlNodeTag.c_str());
 	}
 	

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<skin>
+  <imgframe name="skin_item_bk" src="img:png_item_bk" states="3" margin="3,3,3,3"/>
+</skin>

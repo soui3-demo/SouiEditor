@@ -175,3 +175,8 @@ void CPreviewContainer::OnResize()
 {
 	UpdateViewPos();
 }
+
+void CPreviewContainer::OnRePos(const POINT *pt)
+{
+	SetWindowPos(NULL,pt->x,pt->y,0,0,SWP_NOSIZE|SWP_NOZORDER);
+}
