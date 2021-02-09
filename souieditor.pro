@@ -12,6 +12,7 @@ INCLUDEPATH += .
 SUBDIRS += ExtendCtrls
 SUBDIRS += uieditor
 SUBDIRS += uiviewer
+SUBDIRS += uiPreview
 
 uieditor.depends += ExtendCtrls
 uiviewer.depends += ExtendCtrls
