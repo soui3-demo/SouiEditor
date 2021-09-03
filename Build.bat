@@ -40,10 +40,27 @@ if %selected%==1 (
 	goto error
 )
 
+
+
 SET proj_ext=
 
+
+
+for /f "skip=2 delims=: tokens=1,*" %%i in ('%windir%\system32\reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion" /v "ProgramFilesDir (x86)"') do ( 
+	    set str=%%i
+		set var=%%j
+		set "var=!var:"=!"
+		if not "!var:~-1!"=="=" set strCMD=!str:~-1!:!var!
+ )
+SET strCMD=%strCMD%\Microsoft Visual Studio\Installer\vswhere.exe
+
+if exist "%strCMD%" (
+	for /f "delims=" %%i in ('"%strCMD%" -nologo -version [16.0^,17.0] -prerelease -property installationPath -format value') do (
+		set vs2019path=%%i
+	)
+)
 rem 选择开发环境
-SET /p selected=2.选择开发环境[1=2008;2=2010;3=2012;4=2013;5=2015;6=2017;7=2005]:
+SET /p selected=2.选择开发环境[1=2008;2=2010;3=2012;4=2013;5=2015;6=2017;7=2005;8=2019]:
 
 if %selected%==1 (
 	SET specs=win32-msvc2008
@@ -99,6 +116,15 @@ if %selected%==1 (
 	SET specs=win32-msvc2005
 	SET proj_ext=vcproj
 	SET vsvarbat="%VS80COMNTOOLS%..\..\VC\vcvarsall.bat"
+	call !vsvarbat! %target%
+	rem call "%VS80COMNTOOLS%..\..\VC\vcvarsall.bat" %target%
+	goto built
+) else if %selected%==8 (
+	SET specs=win32-msvc2017
+	SET proj_ext=vcproj
+	SET value=!vs2019path!\VC\Auxiliary\Build\vcvarsall.bat
+	ECHO Vs2019 path is:!value! 
+	SET vsvarbat="!value!"
 	call !vsvarbat! %target%
 	rem call "%VS80COMNTOOLS%..\..\VC\vcvarsall.bat" %target%
 	goto built
