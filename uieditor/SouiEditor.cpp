@@ -135,7 +135,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 			SetWindowText(dlgMain.m_hWnd,ksz_editor_wnd);
             dlgMain.SendMessage(WM_INITDIALOG);
             dlgMain.CenterWindow(dlgMain.m_hWnd);
-            dlgMain.ShowWindow(SW_SHOWNORMAL);
+            dlgMain.ShowWindow(SW_MAXIMIZE);
             nRet = theApp->Run(dlgMain.m_hWnd);
         }
 

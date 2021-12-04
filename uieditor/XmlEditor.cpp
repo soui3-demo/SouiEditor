@@ -32,6 +32,7 @@ BOOL CXmlEditor::CloseProject()
 	m_strProPath = SStringT();
 
 	m_pScintillaWnd->SendEditor(SCI_CLEARALL);
+	m_pScintillaWnd->SetDirty(false);
 	m_treeXmlStruct->RemoveAllItems();
 
 	return TRUE;
@@ -125,7 +126,7 @@ bool CXmlEditor::SaveFile()
 	{
 		return false;
 	}
-	return m_pScintillaWnd->SaveFile(m_strXmlFile);
+	return m_pScintillaWnd->SaveFile(m_strProPath + _T("\\")+ m_strXmlFile);
 }
 
 bool CXmlEditor::UpdateXmlStruct(spugi::xml_node xmlNode, HSTREEITEM item,int iSib)
