@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 
-class CSysDataMgr
+class CSysDataMgr : public SOUI::SSingleton<CSysDataMgr>
 {
 public:
 	struct CtrlAttrItem
@@ -27,9 +27,13 @@ public:
 
 	void InitProperty();
 
+	void InitSkinProp();
+
 	void InitComAttr(pugi::xml_node NodeCom, pugi::xml_node cNode, CTRL_ATTR_VALUE & arrControlStyle);
 
 	void InitCtrlProperty(pugi::xml_node NodeCom, pugi::xml_node NodeCtrl, CTRL_ATTR_VALUE* arr_attr);
+
+	void InitCtrlDef();
 
 	// 获取控件名称列表
 	SStringA GetCtrlAutos();
@@ -37,10 +41,15 @@ public:
 	// 获取指定控件的自动完成字串
 	SStringA GetCtrlAttrAutos(SStringT ctrlname);
 
+	pugi::xml_node getCtrlDefNode();
+
+	pugi::xml_node getSkinPropNode();
 public:
 	pugi::xml_document m_xmlDocProperty;	//property.xml文件doc
 
+	pugi::xml_document m_xmlCtrlDef;
 
+	pugi::xml_document m_xmlSkinProp;
 private:
 	static int textCmp(const void * p1, const void*p2)
 	{

@@ -2,7 +2,7 @@
 #include "core/shostwnd.h"
 #include "core/smsgloop.h"
 #include "core/SHostDialog.h"
-#include "DesignerView.h"
+#include "XmlEditor.h"
 
 #ifdef _UNICODE  
 #define tstring wstring  
@@ -17,7 +17,7 @@ namespace SOUI
 	{
 		SOUI_CLASS_NAME(SDlgFontSelect,L"dlgfontselect")
 	public:
-		SDlgFontSelect(SStringT strFont, SDesignerView *pDesignerView);
+		SDlgFontSelect(SStringT strFont, CXmlEditor *pDesignerView);
 
 		~SDlgFontSelect(void)
 		{
@@ -94,7 +94,7 @@ namespace SOUI
 
 		SStringT m_strFont;
 		SMap<SStringT, SStringT> m_map;
-		SDesignerView *m_pDesignerView;
+		CXmlEditor *m_pDesignerView;
 
 
 

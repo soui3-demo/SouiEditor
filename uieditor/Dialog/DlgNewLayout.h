@@ -49,7 +49,7 @@ namespace SOUI
 			EVENT_ID_HANDLER(R.id.new_layout_resname, EventRENotify::EventID, OnResNameInputNotify)
 		EVENT_MAP_END()
 
-		BEGIN_MSG_MAP_EX(SDlgSkinSelect)
+		BEGIN_MSG_MAP_EX(SResMgrDlg)
 			MSG_WM_INITDIALOG(OnInitDialog)
 			//MSG_WM_CLOSE(OnCancel)
 			//MSG_WM_KEYDOWN(OnKeyDown)

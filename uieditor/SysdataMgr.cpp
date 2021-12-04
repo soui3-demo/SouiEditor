@@ -7,7 +7,8 @@
 #include "Global.h"
 #include <algorithm>
 
-extern SStringT g_CurDir;
+template<>
+CSysDataMgr * SSingleton<CSysDataMgr>::ms_Singleton = NULL;
 
 CSysDataMgr::CSysDataMgr()
 {
@@ -22,7 +23,8 @@ bool CSysDataMgr::LoadSysData(LPCTSTR cfgDir)
 {
 	m_strConfigDir = cfgDir;
 	InitProperty();
-
+	InitCtrlDef();
+	InitSkinProp();
 	return true;
 }
 
@@ -55,7 +57,7 @@ void CSysDataMgr::InitProperty()   //初始化属性列表
 	*/
 
 
-	pugi::xml_parse_result result = m_xmlDocProperty.load_file(g_CurDir + L"Config\\property.xml");
+	pugi::xml_parse_result result = m_xmlDocProperty.load_file(m_strConfigDir + L"\\property.xml");
 	if (!result)
 	{
 		CDebug::Debug(_T("InitProperty失败"));
@@ -280,4 +282,24 @@ SStringA CSysDataMgr::GetCtrlAttrAutos(SStringT ctrlname)
 	strAuto.TrimRight(' ');
 	SStringA str = S_CW2A(strAuto, CP_UTF8);
 	return str;
+}
+
+void CSysDataMgr::InitCtrlDef()
+{
+	pugi::xml_parse_result result = m_xmlCtrlDef.load_file(m_strConfigDir + L"\\ctrl.xml");
+}
+
+pugi::xml_node CSysDataMgr::getCtrlDefNode()
+{
+	return m_xmlCtrlDef.child(L"root");
+}
+
+void CSysDataMgr::InitSkinProp()
+{
+	m_xmlSkinProp.load_file(m_strConfigDir + L"\\SkinProperty.xml");
+}
+
+pugi::xml_node CSysDataMgr::getSkinPropNode()
+{
+	return m_xmlSkinProp.root().child(L"root");
 }

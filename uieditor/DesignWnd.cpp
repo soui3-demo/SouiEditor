@@ -5,12 +5,7 @@
 #include "DesignWnd.h"
 #include <shlwapi.h>
 
-#include "MainDlg.h"
 
-
-extern CMainDlg* g_pMainDlg;
-
-#define STR_DESIGNWNDCLS _T("DesignWnd")
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -145,10 +140,6 @@ void CDesignWnd::OnPaint(HDC dc)
 	}
 	::EndPaint(m_hWnd, &ps);
 
-	if (g_pMainDlg && g_pMainDlg->m_hViewer)
-	{
-		g_pMainDlg->Desiner_TabSelChanged(NULL);
-	}
 }
 
 void CDesignWnd::RefreshDesignLayout()

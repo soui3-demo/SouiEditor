@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <root>
-
-
-	<容器控件>
-		<!--可以在上面摆放其他控件的控件，需要再这里声明，否则上面不能摆放控件-->
-		<caption/>
-		<group/>
-		<window/>
-		<page/>
-		<page2/>		
-
-		<div/>
-
-		<pane/>
-		<scrollview/>
-	</容器控件>
-
-
-	<控件列表>
+	<toolbar>
+		<icons class_name="imglist" name="widget_icons" src="file:img\skin_icons.png" states="9"/>
+	</toolbar>
+<controls>
 		<!-- pos和size都不是必须的，设计器根据鼠标按下的位置设置pos -->
 		<!-- 控件的大小最好是8的倍数，方便对齐 -->
 
-		<window>
+		<window icon="0">
 			<window pos="0,0" size="120,120">	
 
 			</window>	
 
 		</window>		
 
+		<scrollview icon="1">
+			<scrollview pos="0,0" size="120,120" viewsize="-1,-1">	
+
+			</scrollview>	
+
+		</scrollview>
+		
 		<animateimg_动画>
 			<animateimg pos="0,0" size="96,96" skin="_skin.sys.tree.checkbox" autostart="1"  speed = "100"/>
 		</animateimg_动画>
@@ -390,50 +383,6 @@
 
 			</treeview>
 		</treeview>
-
-
-
-
-
-
-
-	</控件列表>
-
-
+</controls>
 </root>	
-
-<!--
- SKIN_SYS_CHECKBOX=0,            //L"_skin.sys.checkbox",
-        SKIN_SYS_RADIO,                 //L"_skin.sys.radio",
-        SKIN_SYS_FOCUSCHECKBOX,         //L"_skin.sys.focuscheckbox",
-        SKIN_SYS_FOCUSRADIO,            //L"_skin.sys.focusradio",
-        SKIN_SYS_BTN_NORMAL,            //L"_skin.sys.btn.normal",
-        SKIN_SYS_SCROLLBAR,             //L"_skin.sys.scrollbar",
-        SKIN_SYS_BORDER,                //L"_skin.sys.border",
-        SKIN_SYS_DROPBTN,               //L"_skin.sys.dropbtn",
-        SKIN_SYS_TREE_TOGGLE,           //L"_skin.sys.tree.toggle",
-        SKIN_SYS_TREE_CHECKBOX,         //L"_skin.sys.tree.checkbox"
-        SKIN_SYS_TAB_PAGE,              //L"_skin.sys.tab.page",
-        SKIN_SYS_HEADER,                //L"_skin.sys.header"
-        SKIN_SYS_SPLIT_VERT,            //L"_skin.sys.split.vert",
-        SKIN_SYS_SPLIT_HORZ,            //L"_skin.sys.split.horz",
-        SKIN_SYS_PROG_BKGND,            //L"_skin.sys.prog.bkgnd",
-        SKIN_SYS_PROG_BAR,              //L"_skin.sys.prog.bar",
-        SKIN_SYS_VERT_PROG_BKGND,       //L"_skin.sys.vert.prog.bkgnd",
-        SKIN_SYS_VERT_PROG_BAR,         //L"_skin.sys.vert.prog.bar",
-        SKIN_SYS_SLIDER_THUMB,          //L"_skin.sys.slider.thumb",
-
-        SKIN_SYS_BTN_CLOSE,             //L"_skin.sys.btn.close",
-        SKIN_SYS_BTN_MINIMIZE,          //L"_skin.sys.btn.minimize",
-        SKIN_SYS_BTN_MAXMIZE,           //L"_skin.sys.btn.maxmize",
-        SKIN_SYS_BTN_RESTORE,           //L"_skin.sys.btn.restore",
-
-        SKIN_SYS_MENU_CHECK,            //L"_skin.sys.menu.check",
-        SKIN_SYS_MENU_SEP,              //L"_skin.sys.menu.sep",
-        SKIN_SYS_MENU_ARROW,            //L"_skin.sys.menu.arrow",
-        SKIN_SYS_MENU_BORDER,           //L"_skin.sys.menu.border",
-        SKIN_SYS_MENU_SKIN,             //L"_skin.sys.menu.skin",
-        SKIN_SYS_ICONS,                 //L"_skin.sys.icons",
-        SKIN_SYS_WND_BKGND,             //L"_skin.sys.wnd.bkgnd",
-		
--->		
+	

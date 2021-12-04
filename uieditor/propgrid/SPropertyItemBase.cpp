@@ -88,22 +88,12 @@ namespace SOUI
 
     BOOL SPropertyItemBase::InsertChild( IPropertyItem * pChild,IPropertyItem * pInsertAfter/*=IC_LAST*/ )
     {
-		SPropertyGrid* grid = GetOwner();
         if(pInsertAfter == IC_LAST)
 		{
-			if (!(pChild->GetName2().IsEmpty()))
-			{
-				grid->AddGridItem(pChild);
-			}
-			
 			m_childs.InsertAfter(NULL,pChild);
 		}
         else if(pInsertAfter == IC_FIRST)
 		{
-			if (!(pChild->GetName2().IsEmpty()))
-			{
-				grid->AddGridItem(pChild);
-			}
 			m_childs.InsertBefore(NULL,pChild);
 		}
         else
@@ -111,10 +101,6 @@ namespace SOUI
             SPOSITION pos = m_childs.Find(pInsertAfter);
             if(!pos) return FALSE;
 
-			if (!(pChild->GetName2().IsEmpty()))
-			{
-				grid->AddGridItem(pChild);
-			}
             m_childs.InsertAfter(pos,pChild);            
         }
         pChild->SetParent(this);
@@ -131,11 +117,6 @@ namespace SOUI
     {
         SPOSITION pos = m_childs.Find(pChild);
         if(!pos) return FALSE;
-		SPropertyGrid* grid = GetOwner();
-		if (!(pChild->GetName2().IsEmpty()))
-		{
-			grid->RemoveGridItem(pChild);
-		}
         m_childs.RemoveAt(pos);
         pChild->Release();
         return TRUE;
@@ -149,10 +130,7 @@ namespace SOUI
             IPropertyItemPtr pChild = m_childs.GetNext(pos);
             pChild->Release();
         }
-		SPropertyGrid* grid = GetOwner();
-		grid->RemoveAllGridItem();
         m_childs.RemoveAll();
-
     }
 
     BOOL SPropertyItemBase::InitFromXml( pugi::xml_node xmlNode )
@@ -161,7 +139,7 @@ namespace SOUI
         pugi::xml_node xmlProp=xmlNode.first_child();
         while(xmlProp)
         {
-            IPropertyItem * pItem = SPropItemMap::CreatePropItem(xmlProp.name(),GetOwner());
+            IPropertyItem * pItem = GetOwner()->CreateItem(xmlProp.name());
             if(pItem)
             {
                 SPropertyItemBase *pItem2 = static_cast<SPropertyItemBase*>(pItem);
@@ -187,9 +165,46 @@ namespace SOUI
 
     void SPropertyItemBase::OnValueChanged()
     {
-        GetOwner()->OnItemValueChanged(this);
+		GetOwner()->OnItemValueChanged(this);
         if(GetParent()) GetParent()->OnChildValueChanged(this);
     }
+
+	IPropertyItem * SPropertyItemBase::FindChildByName(LPCWSTR pszName) const
+	{
+		SPOSITION pos = m_childs.GetHeadPosition();
+		while(pos)
+		{
+			IPropertyItem *pChild = m_childs.GetNext(pos);
+			if(pChild->GetName2()==pszName)
+				return pChild;
+			IPropertyItem *pFind = pChild->FindChildByName(pszName);
+			if(pFind)
+				return pFind;
+		}
+		return NULL;
+	}
+
+	IPropertyItem * SPropertyItemBase::FindChildById(int nID)
+	{
+		SPOSITION pos = m_childs.GetHeadPosition();
+		while(pos)
+		{
+			IPropertyItem *pChild = m_childs.GetNext(pos);
+			if(pChild->GetID()==nID)
+				return pChild;
+			IPropertyItem *pFind = pChild->FindChildById(nID);
+			if(pFind)
+				return pFind;
+		}
+		return NULL;
+
+	}
+
+	void SPropertyItemBase::SetReadOnly(BOOL bReadOnly)
+	{
+		m_bReadOnly = bReadOnly;
+		GetOwner()->OnItemInvalidate(this);
+	}
 
 }
 

@@ -48,36 +48,34 @@ RC_FILE += souieditor.rc
 # Input
 HEADERS += CDebug.h \
            CmdLine.h \
-           DesignerView.h \
            DesignWnd.h \
-           DragDownMgr.h \
            FileHelper.h \
            Global.h \
            helpapi.h \
            MainDlg.h \
-           pugixml_write.h \
            ResManger.h \
            resource.h \
            ScintillaWnd.h \
            SImageBtnEx.h \
            SImgCanvas.h \
-           SListBoxDrop.h \
            SouiEditorApp.h \
            SouiRealWndHandler.h \
            SSwitch.h \
            SysdataMgr.h \
            xpm_icons.h \
-           colorpicker/ColourPopup.h \
-           colorpicker/SColorPicker.h \
-           colorpicker/Tooltipctrl.h \
+           spugixml/pugiconfig.hpp \
+           spugixml/pugixml.hpp \
            Dialog/DlgAbout.h \
            Dialog/DlgCreatePro.h \
            Dialog/DlgFontSelect.h \
            Dialog/DlgInput.h \
            Dialog/DlgNewLayout.h \
            Dialog/DlgNewSkin.h \
-           Dialog/DlgSkinSelect.h \
-           Dialog/DlgStyleManage.h \
+           Dialog/DlgResMgr.h \
+           Dialog/DlgInsertXmlElement.h \
+           propgrid/colorpicker/ColourPopup.h \
+           propgrid/colorpicker/SColorPicker.h \
+           propgrid/colorpicker/Tooltipctrl.h \
            propgrid/SPropertyEmbedWndHelper.hpp \
            propgrid/SPropertyGrid.h \
            propgrid/SPropertyItem-i.h \
@@ -87,15 +85,15 @@ HEADERS += CDebug.h \
            propgrid/propitem/SPropertyItem-Option.h \
            propgrid/propitem/SPropertyItem-Size.h \
            propgrid/propitem/SPropertyItem-Text.h \
+           propgrid/propitem/SPropertyItem-Group.h \
            SImgCanvas.h \
            ../ExtendCtrls/SCtrlsRegister.h \
            colorpicker/SColorPicker.h \
            colorpicker/ColourPopup.h
-SOURCES += DesignerView.cpp \
+SOURCES +=  \
            DesignWnd.cpp \
            helpapi.cpp \
            MainDlg.cpp \
-           pugixml_write.cpp \
            ResManger.cpp \
            ScintillaWnd.cpp \
            SImageBtnEx.cpp \
@@ -105,19 +103,23 @@ SOURCES += DesignerView.cpp \
            SouiRealWndHandler.cpp \
            SSwitch.cpp \
            SysdataMgr.cpp \
-           colorpicker/ColourPopup.cpp \
-           colorpicker/SColorPicker.cpp \
+           XmlEditor.cpp \
+           XmlParser.cpp \
+           spugixml/pugixml.cpp \
            Dialog/DlgAbout.cpp \
            Dialog/DlgCreatePro.cpp \
            Dialog/DlgFontSelect.cpp \
            Dialog/DlgInput.cpp \
            Dialog/DlgNewLayout.cpp \
            Dialog/DlgNewSkin.cpp \
-           Dialog/DlgSkinSelect.cpp \
-           Dialog/DlgStyleManage.cpp \
+           Dialog/DlgResMgr.cpp \
+           Dialog/DlgInsertXmlElement.cpp \
            propgrid/SPropertyGrid.cpp \
            propgrid/SPropertyItemBase.cpp \
            propgrid/propitem/SPropertyItem-Color.cpp \
            propgrid/propitem/SPropertyItem-Option.cpp \
            propgrid/propitem/SPropertyItem-Size.cpp \
            propgrid/propitem/SPropertyItem-Text.cpp \
+           propgrid/propitem/SPropertyItem-Group.cpp \
+           propgrid/colorpicker/ColourPopup.cpp \
+           propgrid/colorpicker/SColorPicker.cpp \

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:48" smallIcon="ICON_LOGO:32" width="1377" height="900" margin="5,5,5,5" resizable="1" wndType="appMain">
+<SOUI name="mainWindow" title="@string/title" bigIcon="ICON_LOGO:48" smallIcon="ICON_LOGO:32" width="1377" height="900" margin="5,5,5,5" resizable="1" wndType="appMain"
+      sendWheel2Hover="1">
 	<root colorBkgnd="#6f1111" cache="1">
 		<window pos="1,[1,-1,-1" colorBkgnd="@color/bkBlack1">
 			<caption pos="0,0,-0,40" name="UI_main_caption" show="1" font="adding:0" colorBkgnd="#FFFFFF20">
@@ -12,34 +13,25 @@
 				<imgbtn name="btn_SetSkin" pos="-148,0" tip="" animate="1" show="0" />
 			</caption>
 			<img pos="0,[0, -0, @2" skin="skin_caption_line" />
-			<window pos="1,[1,-1,@34" colorBkgnd="@color/bkBlack1" alpha="255">
-				<imgbtnex name="toolbar_btn_Open" skin="skin_app_button" text="打开工程" pos="8,|-15, @100, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_recent" skin="skin_open_menu_png" text="" pos="[0,{0, @25, @30" animate="1" margin-x="0" />
-				<imgbtnex name="toolbar_btn_Close" skin="skin_app_button" text="关闭工程" pos="[0,{0, @110, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_reload" skin="skin_app_button" text="重新加载工程" pos="[0,{0, @110, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_NewDialog" skin="skin_app_button" text="新建Dialog" pos="[0,{0, @110, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_NewInclude" skin="skin_app_button" text="新建Include" pos="[0,{0, @120, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_SaveAll" skin="skin_app_button" text="全部保存" pos="[0,{0, @100, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_SaveLayout" skin="skin_app_button" text="保存布局" pos="[0,{0, @100, @30" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_ZYGL" pos="[0,{0, @100, @30" skin="skin_app_button" text="资源管理" animate="1" class="ue_cls_title" />
-				<imgbtnex name="toolbar_btn_YSGL" pos="[0,{0, @100, @30" skin="skin_app_button" text="样式管理" animate="1" class="ue_cls_title" show="0" />
-				<imgbtnex name="toolbar_btn_about" pos="-102,{0, @100,@30" skin="skin_app_button" text="关于" animate="1" class="ue_cls_title" />
+			<window pos="1,[1,-1,@34" colorBkgnd="@color/bkBlack1" layout="hbox" interval="10" gravity="center">
+				<imgbtnex name="toolbar_btn_Open" skin="skin_app_button" text="打开工程" size="100,30" animate="1" class="ue_cls_title" />
+				<imgbtnex name="toolbar_btn_recent" skin="skin_open_menu_png" text="" size="25,30" animate="1" margin-x="0" />
+				<imgbtnex name="toolbar_btn_Close" skin="skin_app_button" text="关闭工程" size="100,30" animate="1" class="ue_cls_title" />
+				<imgbtnex name="toolbar_btn_NewLayout" skin="skin_app_button" text="新建布局" size="100,30" animate="1" class="ue_cls_title" />
+				<imgbtnex name="toolbar_btn_NewInclude" skin="skin_app_button" text="新建Include" size="100,30" animate="1" class="ue_cls_title" />
+				<imgbtnex name="toolbar_btn_savexml" skin="skin_app_button" text="保存XML" size="100,30" animate="1" class="ue_cls_title" />
+				<imgbtnex name="toolbar_btn_resmgr" size="100,30" skin="skin_app_button" text="资源管理" animate="1" class="ue_cls_title" />
+        <check name="chk_autosave" text="文件自动保存" colorText="@color/white"/>
+        <window size="0,0" weight="1" visible="0"/>
+				<imgbtnex name="toolbar_btn_about" size="100,30" skin="skin_app_button" text="关于" animate="1" class="ue_cls_title" />
 			</window>
 			<splitcol name="NAME_UIDESIGNER_split_col" pos="0,[5,-0,-3" sepSkin="" sepSize="6">
 				<pane idealSize="380" minSize="30" priority="1" clipClient="1">
 					<include src="layout:xml_mainwnd_left" />
 				</pane>
 				<pane idealSize="800" minSize="30" priority="0" clipClient="1">
-					<tabctrl name="uidesigner_maintab" pos="0,0,-0,-0" tabAlign="top" tabSkin="skin_tab_skin" tabInterSize="2" tabWidth="120" tabHeight="30" focusable="0" show="1" curSel="0" font="face:微软雅黑,size:15">
-						<page title="窗体" colorBorder="#ffff00">
-							<include src="layout:xml_uidesigner_main" />
-						</page>
-						<page name="page_editor" title="其它XML编辑" colorBorder="#ffff00">
-							<text name="uidesigner_curfile" pos="1,0,-1,24" cueText="rsss" />
-							<realwnd pos="0,[0,-0,-0" name="uidesigner_xml_scintilla" wndclass="scintilla" id="100000" wndname="scintilla" />
-						</page>
-					</tabctrl>
-				</pane>
+          <include src="layout:xml_uidesigner_main" />
+        </pane>
 				<pane idealSize="250" minSize="30" priority="1" clipClient="1">
 					<include src="layout:xml_mainwnd_right" />
 				</pane>

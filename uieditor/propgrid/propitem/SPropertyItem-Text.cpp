@@ -34,7 +34,7 @@ namespace SOUI
         virtual void UpdateData()
         {
             SStringT strValue=GetWindowText();
-            m_pOwner->SetString(strValue);
+            m_pOwner->SetValue(strValue);
         }
 
     protected:
@@ -42,25 +42,42 @@ namespace SOUI
 
     };
     
+	SPropertyItemText::SPropertyItemText(SPropertyGrid *pOwner) :SPropertyItemBase(pOwner),m_pEdit(NULL),m_hasButton(FALSE)
+	{
+	}
+
+	static const WCHAR * kEditStyle = L"editStyle";
+
+	LPCWSTR SPropertyItemText::GetInplaceItemStyleName()
+	{
+		return kEditStyle;
+	}
+
     void SPropertyItemText::DrawItem( IRenderTarget *pRT,CRect rc )
     {
-        SStringT strValue = GetString();
+        SStringT strValue = GetValue();
 		rc.left += 5;
         pRT->DrawText(strValue,strValue.GetLength(),rc,DT_SINGLELINE|DT_VCENTER);
     }
     
-    void SPropertyItemText::OnInplaceActive(bool bActive)
+    void SPropertyItemText::OnInplaceActive(BOOL bActive)
     {
         __super::OnInplaceActive(bActive);
         if(bActive)
         {
             SASSERT(!m_pEdit);
             m_pEdit = new TplPropEmbedWnd<SPropEdit>(this);
+			pugi::xml_node inplaceStyle=m_pOwner->GetInplaceItemStyle(kEditStyle);			
             pugi::xml_document xmlDoc;
-            pugi::xml_node xmlNode=xmlDoc.append_child(L"root");
-            xmlNode.append_attribute(L"colorBkgnd").set_value(L"#000000");
-            m_pOwner->OnInplaceActiveWndCreate(this,m_pEdit,xmlNode);
-            m_pEdit->SetWindowText(GetString());
+			if(!inplaceStyle)
+			{
+				inplaceStyle=xmlDoc.root();
+				inplaceStyle.append_attribute(L"colorBkgnd").set_value(L"#FFFFFF");
+				inplaceStyle.append_attribute(L"colorText").set_value(L"#000000");
+				inplaceStyle.append_attribute(L"autoWordSel").set_value(L"1");
+			}
+            m_pOwner->OnInplaceActiveWndCreate(this,m_pEdit,inplaceStyle);
+            m_pEdit->SetWindowText(GetValue());
 			m_pEdit->SetFocus();
         }else
         {
@@ -74,10 +91,10 @@ namespace SOUI
     }
 
 
-    void SPropertyItemText::SetString( const SStringT & strValue )
+    void SPropertyItemText::SetValue( const SStringT & strValue )
     {
 		//如果值没有改变，就不发送通知
-		if (m_strValue.CompareNoCase(strValue) != 0)
+		if (m_strValue != strValue)
 		{
 			m_strValue = strValue;
 			OnValueChanged();
@@ -85,24 +102,21 @@ namespace SOUI
 		
     }
 
-	void SPropertyItemText::SetStringOnly( const SStringT & strValue )
-	{
-		m_strValue = strValue;
-	}
-
-
-    void SPropertyItemText::OnButtonClick()
-	{
-		GetOwner()->OnItemButtonClick(this, m_strButtonType);
-	}
-
     BOOL SPropertyItemText::HasButton() const 
 	{
-		if (m_strButtonType.IsEmpty())
-		{
-			return FALSE;
-		}
-		
-		return TRUE;
+		return m_hasButton;
 	}
+
+
+	BOOL SPropertyItemText::HasValue() const
+	{
+		return !m_strValue.IsEmpty();
+	}
+
+	void SPropertyItemText::ClearValue()
+	{
+		m_strValue.Empty();
+		OnValueChanged();
+	}
+
 }

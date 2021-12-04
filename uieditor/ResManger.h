@@ -12,30 +12,12 @@ public:
 		SStringT class_name;
 		SStringT name;
 		SStringT src;
-		pugi::xml_document* attrdoc;
 		SkinItem() { ; }
 		SkinItem(SStringT _classname, SStringT _name, SStringT _src, pugi::xml_node xmlnode)
 		{
 			class_name = _classname;
 			name = _name;
 			src = _src;
-			attrdoc = new pugi::xml_document();
-			attrdoc->append_copy(xmlnode);
-		}
-	};
-
-	struct StyleItem
-	{
-		SStringT class_name;
-		SStringT name;
-		pugi::xml_document* attrdoc;
-		StyleItem() { ; }
-		StyleItem(SStringT _classname, SStringT _name, pugi::xml_node xmlnode)
-		{
-			class_name = _classname;
-			name = _name;
-			attrdoc = new pugi::xml_document();
-			attrdoc->append_copy(xmlnode);
 		}
 	};
 
@@ -86,6 +68,7 @@ public:
 
 	SStringT GetResPathByName(const SStringT & resname);
 
+	void onXmlSave(LPCTSTR pszFileName);
 protected:
 	void LoadResFileEx(SStringT & filepath, pugi::xml_document &xmlDoc, SStringT tagname);
 
@@ -114,7 +97,7 @@ public:
 	SMap<SStringT, SStringT> m_mapXmlFile;		// 所有XML文件信息
 
 	SMap<SStringT, SkinItem> m_mapSkins;		//所有定义的Skin项目
-	SMap<SStringT, StyleItem> m_mapStyles;		//所有定义的Style项目
+	SMap<SStringW, SStringW> m_mapStyles;		//所有定义的Style项目
 	SMap<SStringT, ValueItem> m_mapStrings;		//所有定义的String
 	SMap<SStringT, ValueItem> m_mapColors;		//所有定义的Color
 };

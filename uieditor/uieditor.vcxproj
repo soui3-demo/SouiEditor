@@ -14,7 +14,6 @@
     <ProjectGuid>{7732E54F-1B7F-3F70-B706-E1AE488E9583}</ProjectGuid>
     <RootNamespace>uieditor</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -23,8 +22,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>..\obj\release\uieditor\</IntermediateDirectory>
-    <PrimaryOutput>uieditor</PrimaryOutput>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <OutputDirectory>..\bin\</OutputDirectory>
@@ -32,8 +30,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>..\obj\debug\uieditor\</IntermediateDirectory>
-    <PrimaryOutput>uieditord</PrimaryOutput>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -47,22 +44,21 @@
   <PropertyGroup>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\obj\release\uieditor\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">uieditor</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\obj\debug\uieditor\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">uieditord</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2017;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-FS /MP -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>..\obj\release\uieditor\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
+      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>..\obj\release\uieditor\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -101,15 +97,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2017;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-FS /MP -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>..\obj\debug\uieditor\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>..\obj\debug\uieditor\</ObjectFileName>
-      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)\uieditord.pch</PrecompiledHeaderOutputFile>
@@ -144,29 +140,29 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Adapter.cpp" />
-    <ClCompile Include="colorpicker\ColourPopup.cpp" />
     <ClCompile Include="DesignWnd.cpp" />
-    <ClCompile Include="DesignerView.cpp" />
     <ClCompile Include="Dialog\DlgAbout.cpp" />
     <ClCompile Include="Dialog\DlgCreatePro.cpp" />
     <ClCompile Include="Dialog\DlgFontSelect.cpp" />
     <ClCompile Include="Dialog\DlgInput.cpp" />
+    <ClCompile Include="Dialog\DlgInsertXmlElement.cpp" />
     <ClCompile Include="Dialog\DlgNewLayout.cpp" />
     <ClCompile Include="Dialog\DlgNewSkin.cpp" />
-    <ClCompile Include="Dialog\DlgSkinSelect.cpp" />
-    <ClCompile Include="Dialog\DlgStyleManage.cpp" />
+    <ClCompile Include="Dialog\DlgResMgr.cpp" />
     <ClCompile Include="MainDlg.cpp" />
+    <ClCompile Include="propgrid\colorpicker\ColourPopup.cpp" />
+    <ClCompile Include="propgrid\colorpicker\SColorPicker.cpp" />
     <ClCompile Include="ResManger.cpp" />
-    <ClCompile Include="colorpicker\SColorPicker.cpp" />
     <ClCompile Include="SImageBtnEx.cpp" />
     <ClCompile Include="SImgCanvas.cpp" />
     <ClCompile Include="propgrid\SPropertyGrid.cpp" />
     <ClCompile Include="propgrid\propitem\SPropertyItem-Color.cpp" />
+    <ClCompile Include="propgrid\propitem\SPropertyItem-Group.cpp" />
     <ClCompile Include="propgrid\propitem\SPropertyItem-Option.cpp" />
     <ClCompile Include="propgrid\propitem\SPropertyItem-Size.cpp" />
     <ClCompile Include="propgrid\propitem\SPropertyItem-Text.cpp" />
     <ClCompile Include="propgrid\SPropertyItemBase.cpp" />
+    <ClCompile Include="spugixml\pugixml.cpp" />
     <ClCompile Include="SSwitch.cpp" />
     <ClCompile Include="ScintillaWnd.cpp" />
     <ClCompile Include="SouiEditor.cpp" />
@@ -174,42 +170,42 @@
     <ClCompile Include="SouiRealWndHandler.cpp" />
     <ClCompile Include="SysdataMgr.cpp" />
     <ClCompile Include="helpapi.cpp" />
-    <ClCompile Include="pugixml_write.cpp" />
+    <ClCompile Include="XmlEditor.cpp" />
+    <ClCompile Include="XmlParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Adapter.h" />
     <ClInclude Include="CDebug.h" />
     <ClInclude Include="CmdLine.h" />
-    <ClInclude Include="colorpicker\ColourPopup.h" />
     <ClInclude Include="DesignWnd.h" />
-    <ClInclude Include="DesignerView.h" />
     <ClInclude Include="Dialog\DlgAbout.h" />
     <ClInclude Include="Dialog\DlgCreatePro.h" />
     <ClInclude Include="Dialog\DlgFontSelect.h" />
     <ClInclude Include="Dialog\DlgInput.h" />
+    <ClInclude Include="Dialog\DlgInsertXmlElement.h" />
     <ClInclude Include="Dialog\DlgNewLayout.h" />
     <ClInclude Include="Dialog\DlgNewSkin.h" />
-    <ClInclude Include="Dialog\DlgSkinSelect.h" />
-    <ClInclude Include="Dialog\DlgStyleManage.h" />
-    <ClInclude Include="DragDownMgr.h" />
+    <ClInclude Include="Dialog\DlgResMgr.h" />
     <ClInclude Include="FileHelper.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="MainDlg.h" />
+    <ClInclude Include="propgrid\colorpicker\ColourPopup.h" />
+    <ClInclude Include="propgrid\colorpicker\SColorPicker.h" />
+    <ClInclude Include="propgrid\colorpicker\Tooltipctrl.h" />
     <ClInclude Include="ResManger.h" />
-    <ClInclude Include="colorpicker\SColorPicker.h" />
     <ClInclude Include="..\ExtendCtrls\SCtrlsRegister.h" />
-    <ClInclude Include="SDesignerRoot.h" />
     <ClInclude Include="SImageBtnEx.h" />
     <ClInclude Include="SImgCanvas.h" />
-    <ClInclude Include="SListBoxDrop.h" />
     <ClInclude Include="propgrid\SPropertyEmbedWndHelper.hpp" />
     <ClInclude Include="propgrid\SPropertyGrid.h" />
     <ClInclude Include="propgrid\propitem\SPropertyItem-Color.h" />
+    <ClInclude Include="propgrid\propitem\SPropertyItem-Group.h" />
     <ClInclude Include="propgrid\propitem\SPropertyItem-Option.h" />
     <ClInclude Include="propgrid\propitem\SPropertyItem-Size.h" />
     <ClInclude Include="propgrid\propitem\SPropertyItem-Text.h" />
     <ClInclude Include="propgrid\SPropertyItem-i.h" />
     <ClInclude Include="propgrid\SPropertyItemBase.h" />
+    <ClInclude Include="spugixml\pugiconfig.hpp" />
+    <ClInclude Include="spugixml\pugixml.hpp" />
     <ClInclude Include="SSwitch.h" />
     <ClInclude Include="ScintillaWnd.h" />
     <ClInclude Include="SouiEditorApp.h" />
@@ -217,7 +213,6 @@
     <ClInclude Include="SysdataMgr.h" />
     <ClInclude Include="colorpicker\Tooltipctrl.h" />
     <ClInclude Include="helpapi.h" />
-    <ClInclude Include="pugixml_write.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="resource.h" />
     <CustomBuild Include="stdafx.h">
@@ -241,7 +236,7 @@ echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&
 if errorlevel 1 goto VCEnd
 echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
-echo * generated when creating .vcxproj project files, and is not used for&gt;&gt;stdafx.h.cpp
+echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
 echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
@@ -274,7 +269,7 @@ echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&
 if errorlevel 1 goto VCEnd
 echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
-echo * generated when creating .vcxproj project files, and is not used for&gt;&gt;stdafx.h.cpp
+echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
 echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
@@ -288,6 +283,8 @@ echo #include "stdafx.h"&gt;&gt;stdafx.h.cpp</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating precompiled header source file 'stdafx.h.cpp' ...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h.cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="XmlEditor.h" />
+    <ClInclude Include="XmlParser.h" />
     <ClInclude Include="xpm_icons.h" />
   </ItemGroup>
   <ItemGroup>

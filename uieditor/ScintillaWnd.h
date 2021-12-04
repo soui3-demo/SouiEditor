@@ -16,12 +16,15 @@ protected:
 	HINSTANCE m_hModule;
 };
 
-class CScintillaWnd;
-typedef void (*SCIWND_FN_CALLBACK)(CScintillaWnd*, int, SStringT);
-
 // CScintillaWnd
 class CScintillaWnd : public SNativeWnd
 {
+public:
+	struct IListener
+	{
+		virtual void onScintillaSave(LPCTSTR pszFileName) = 0;
+	};
+
 public:
 	CScintillaWnd();
 	virtual ~CScintillaWnd();
@@ -32,7 +35,7 @@ public:
 	void ResetRedo();
 
 	void SetDirty(bool bDirty);
-
+	bool isDirty() const{return m_bDirty;}
 	BOOL SaveFile(LPCTSTR lpFileName);
 
 	LPCTSTR GetOpenedFileName(){return m_strFileName;}
@@ -41,20 +44,21 @@ public:
 	LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0) {
 		return SendMessage(Msg, wParam, lParam);
 	}
-	void SetSaveCallback(SCIWND_FN_CALLBACK fun)
-	{
-		m_fnCallback = fun;
-	}
 	void GotoFoundLine();
 
 	void GotoPos(int nPos);
 
 	void InsertText(int pos, LPCSTR text);
 	
+	SStringA GetWindowText();
+
 	SStringT GetHtmlTagname(int &tagStartPos);
 	
-	bool m_bDirty;		//指示文档是否已修改
+	void SetSel(int nBegin,int nEnd);
 
+	void ReplaseSel(LPCSTR text);
+
+	void SetListener(IListener *pListener);
 protected:
 	// 显示行号
 	void UpdateLineNumberWidth(void);
@@ -86,6 +90,9 @@ protected:
 		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()
 
+protected:
+	bool m_bDirty;		//指示文档是否已修改
+
 	SStringT m_strFileName;
-	SCIWND_FN_CALLBACK m_fnCallback;
+	IListener	*m_pListener;
 };

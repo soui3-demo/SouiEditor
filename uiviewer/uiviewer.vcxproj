@@ -14,7 +14,6 @@
     <ProjectGuid>{5D2F8C9B-8213-3CD9-9459-806FCF65957E}</ProjectGuid>
     <RootNamespace>uiviewer</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -23,8 +22,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>..\obj\release\uiviewer\</IntermediateDirectory>
-    <PrimaryOutput>uiviewer</PrimaryOutput>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <OutputDirectory>..\bin\</OutputDirectory>
@@ -32,8 +30,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>..\obj\debug\uiviewer\</IntermediateDirectory>
-    <PrimaryOutput>uiviewerd</PrimaryOutput>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -47,22 +44,21 @@
   <PropertyGroup>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\obj\release\uiviewer\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">uiviewer</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\obj\debug\uiviewer\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">uiviewerd</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2017;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-FS /MP -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>..\obj\release\uiviewer\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
+      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>..\obj\release\uiviewer\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -101,15 +97,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;$(SOUI3PATH)/third-part/Scintilla/include;..\..\soui3.git\tools\mkspecs\win32-msvc2017;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-FS /MP -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>..\obj\debug\uiviewer\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>..\obj\debug\uiviewer\</ObjectFileName>
-      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)\uiviewerd.pch</PrecompiledHeaderOutputFile>
@@ -175,7 +171,7 @@ echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&
 if errorlevel 1 goto VCEnd
 echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
-echo * generated when creating .vcxproj project files, and is not used for&gt;&gt;stdafx.h.cpp
+echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
 echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
@@ -208,7 +204,7 @@ echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&
 if errorlevel 1 goto VCEnd
 echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
-echo * generated when creating .vcxproj project files, and is not used for&gt;&gt;stdafx.h.cpp
+echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd
 echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
 if errorlevel 1 goto VCEnd

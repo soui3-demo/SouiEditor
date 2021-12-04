@@ -16,7 +16,7 @@
 
   <objattr>
 	<div sbSkin="skin_bb_scrollbar" />
-	<edit transParent="0" margin-x="0" margin-y="0" colorBorder="@color/gray" colorBkgnd="#ffffff22" colorText="@color/white"/>
+	<edit margin-x="1" margin-y="1" colorBorder="@color/gray" colorBkgnd="#ffffff22" colorText="@color/white"/>
 	<text colorText="@color/white"></text>
   </objattr>
 </UIDEF>

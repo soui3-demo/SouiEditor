@@ -214,11 +214,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="colorpicker\ColourPopup.cpp"
-				>
-			</File>
-			<File
-				RelativePath="DesignerView.cpp"
+				RelativePath=".\propgrid\colorpicker\ColourPopup.cpp"
 				>
 			</File>
 			<File
@@ -242,6 +238,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Dialog\DlgInsertXmlElement.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Dialog\DlgNewLayout.cpp"
 				>
 			</File>
@@ -250,11 +250,7 @@
 				>
 			</File>
 			<File
-				RelativePath="Dialog\DlgSkinSelect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="Dialog\DlgStyleManage.cpp"
+				RelativePath=".\Dialog\DlgResMgr.cpp"
 				>
 			</File>
 			<File
@@ -266,7 +262,7 @@
 				>
 			</File>
 			<File
-				RelativePath="pugixml_write.cpp"
+				RelativePath=".\spugixml\pugixml.cpp"
 				>
 			</File>
 			<File
@@ -278,7 +274,7 @@
 				>
 			</File>
 			<File
-				RelativePath="colorpicker\SColorPicker.cpp"
+				RelativePath=".\propgrid\colorpicker\SColorPicker.cpp"
 				>
 			</File>
 			<File
@@ -310,6 +306,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\propgrid\propitem\SPropertyItem-Group.cpp"
+				>
+			</File>
+			<File
 				RelativePath="propgrid\propitem\SPropertyItem-Option.cpp"
 				>
 			</File>
@@ -330,7 +330,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SToolBar.cpp"
+				>
+			</File>
+			<File
 				RelativePath="SysdataMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlEditor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlParser.cpp"
 				>
 			</File>
 		</Filter>
@@ -348,11 +360,7 @@
 				>
 			</File>
 			<File
-				RelativePath="colorpicker\ColourPopup.h"
-				>
-			</File>
-			<File
-				RelativePath="DesignerView.h"
+				RelativePath=".\propgrid\colorpicker\ColourPopup.h"
 				>
 			</File>
 			<File
@@ -376,6 +384,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Dialog\DlgInsertXmlElement.h"
+				>
+			</File>
+			<File
 				RelativePath="Dialog\DlgNewLayout.h"
 				>
 			</File>
@@ -384,15 +396,11 @@
 				>
 			</File>
 			<File
-				RelativePath="Dialog\DlgSkinSelect.h"
+				RelativePath=".\Dialog\DlgResMgr.h"
 				>
 			</File>
 			<File
-				RelativePath="Dialog\DlgStyleManage.h"
-				>
-			</File>
-			<File
-				RelativePath="DragDownMgr.h"
+				RelativePath=".\DropTarget.h"
 				>
 			</File>
 			<File
@@ -412,7 +420,11 @@
 				>
 			</File>
 			<File
-				RelativePath="pugixml_write.h"
+				RelativePath=".\spugixml\pugiconfig.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\spugixml\pugixml.hpp"
 				>
 			</File>
 			<File
@@ -432,7 +444,7 @@
 				>
 			</File>
 			<File
-				RelativePath="colorpicker\SColorPicker.h"
+				RelativePath=".\propgrid\colorpicker\SColorPicker.h"
 				>
 			</File>
 			<File
@@ -445,10 +457,6 @@
 			</File>
 			<File
 				RelativePath="SImgCanvas.h"
-				>
-			</File>
-			<File
-				RelativePath="SListBoxDrop.h"
 				>
 			</File>
 			<File
@@ -469,6 +477,10 @@
 			</File>
 			<File
 				RelativePath="propgrid\propitem\SPropertyItem-Color.h"
+				>
+			</File>
+			<File
+				RelativePath=".\propgrid\propitem\SPropertyItem-Group.h"
 				>
 			</File>
 			<File
@@ -520,11 +532,23 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SToolBar.h"
+				>
+			</File>
+			<File
 				RelativePath="SysdataMgr.h"
 				>
 			</File>
 			<File
-				RelativePath="colorpicker\Tooltipctrl.h"
+				RelativePath=".\propgrid\colorpicker\Tooltipctrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlEditor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XmlParser.h"
 				>
 			</File>
 			<File
@@ -562,6 +586,10 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\uires\xml\dlg_insert_element.xml"
+			>
+		</File>
 		<File
 			RelativePath="souieditor.rc"
 			>

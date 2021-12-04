@@ -5,7 +5,7 @@
 namespace SOUI
 {
 
-	SDlgFontSelect::SDlgFontSelect(SStringT strFont,SDesignerView *pDesignerView):SHostDialog(_T("LAYOUT:UIDESIGNER_XML_FONTSELECT"))
+	SDlgFontSelect::SDlgFontSelect(SStringT strFont,CXmlEditor *pDesignerView):SHostDialog(_T("LAYOUT:UIDESIGNER_XML_FONTSELECT"))
 	{
 		strFont.TrimBlank();
 		m_strFont = strFont;

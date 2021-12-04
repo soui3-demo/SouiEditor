@@ -3,11 +3,17 @@
 #include "../SPropertyEmbedWndHelper.hpp"
 #include "../SPropertyGrid.h"
 #include <commdlg.h>
+#include <res.mgr/SNamedValue.h>
 
 const int KColorWidth   = 30;
 const int KTransGridSize    =5;
 namespace SOUI
 {
+	SPropertyItemColor::SPropertyItemColor(SPropertyGrid *pOwner) :SPropertyItemText(pOwner),m_crValue(CR_INVALID)
+	{
+		m_strFormat = _T("#%02x%02x%02x%02x");
+	}
+
     void SPropertyItemColor::DrawItem( IRenderTarget *pRT,CRect rc )
     {
         CRect rcColor = rc;
@@ -29,21 +35,37 @@ namespace SOUI
         }
         pRT->PopClip();
         
-        pRT->FillSolidRect(&rcColor,m_crValue);
-        pRT->DrawRectangle(&rcColor);
-        CRect rcValue = rc;
-        rcValue.left += KColorWidth;
-        SStringT strValue = GetString();
-        pRT->DrawText(strValue,strValue.GetLength(),&rcValue,DT_SINGLELINE|DT_VCENTER);
+		if(m_crValue!=CR_INVALID)
+		{
+			pRT->FillSolidRect(&rcColor,m_crValue);
+			pRT->DrawRectangle(&rcColor);
+			CRect rcValue = rc;
+			rcValue.left += KColorWidth;
+			SStringT strValue = GetValue();
+			pRT->DrawText(strValue,strValue.GetLength(),&rcValue,DT_SINGLELINE|DT_VCENTER);
+		}else
+		{
+			SAutoRefPtr<IPen> pen,oldPen;
+			pRT->CreatePen(PS_SOLID,RGBA(255,0,0,255),1,&pen);
+			pRT->SelectObject(pen,(IRenderObj**)&oldPen);
+			{
+				CPoint pts[2]={rcColor.TopLeft(),rcColor.BottomRight()};
+				pRT->DrawLines(pts,2);
+			}
+			{
+				CPoint pts[2]={CPoint(rcColor.left,rcColor.bottom),CPoint(rcColor.right,rcColor.top)};
+				pRT->DrawLines(pts,2);
+			}
+			pRT->SelectObject(oldPen);
+		}
     }
     
-    void SPropertyItemColor::OnInplaceActive(bool bActive)
+    void SPropertyItemColor::OnInplaceActive(BOOL bActive)
     {
         SPropertyItemText::OnInplaceActive(bActive);
         if(bActive)
         {
             LRESULT lr=m_pEdit->SSendMessage(EM_SETEVENTMASK,0,ENM_CHANGE);
-            //m_pEdit->GetEventSet()->subscribeEvent(EventRENotify::EventID,Subscriber(&SPropertyItemColor::OnReNotify,this));
         }
     }
 
@@ -69,12 +91,12 @@ namespace SOUI
     }
     
 
-    void SPropertyItemColor::SetString( const SStringT & strValue )
+    void SPropertyItemColor::SetValue( const SStringT & strValue )
     {
 
 		COLORREF crTmp;
 		crTmp = CR_INVALID;
-		ParseValue(strValue,crTmp);
+		SColorParser::ParseValue(strValue,crTmp);
 		if (m_crValue != crTmp)
 		{
 			m_crValue = crTmp;
@@ -82,72 +104,15 @@ namespace SOUI
 		}
     }
 
-	void SPropertyItemColor::SetStringOnly( const SStringT & strValue )
-	{
-
-		COLORREF crTmp;
-		crTmp = CR_INVALID;
-		ParseValue(strValue,crTmp);
-		m_crValue = crTmp;
-	}
-
-    void SPropertyItemColor::OnButtonClick()
+    BOOL SPropertyItemColor::OnButtonClick()
     {
-        /*CHOOSECOLOR cc;                 // common dialog box structure 
-        static COLORREF acrCustClr[16]; // array of custom colors 
-
-         //Initialize CHOOSECOLOR 
-        ZeroMemory(&cc, sizeof(cc));
-        cc.lStructSize = sizeof(cc);
-        cc.hwndOwner = GetOwner()->GetContainer()->GetHostHwnd();
-        cc.lpCustColors = (LPDWORD) acrCustClr;
-        cc.rgbResult = m_crValue;
-        cc.Flags = CC_FULLOPEN | CC_RGBINIT;
-        
-        if (ChooseColor(&cc))
-        {
-            m_crValue = cc.rgbResult|0xff000000;
-            OnValueChanged();
-            CRect rc=GetOwner()->GetItemRect(this);
-            GetOwner()->InvalidateRect(&rc);
-        }*/
-
 		CColourPopup *pCrPopup = new CColourPopup(GetOwner()->GetContainer()->GetHostHwnd(),this);
 		CPoint pt;
 		GetCursorPos(&pt);
 		pt.x += 10;
 		pCrPopup->Create(pt,m_crValue,_T("默认"),_T("更多"));
-
+		return TRUE;
     }
-
-
-    bool SPropertyItemColor::ParseValue(const SStringT & strValue, COLORREF & value)
-	{
-		int r,g,b,a=255;
-		int nSeg=0;
-		SStringW strValueL = strValue;
-		strValueL.MakeLower();
-		if(strValueL.Left(1)==L"#")
-		{
-			nSeg = swscanf(strValueL,L"#%02x%02x%02x%02x",&r,&g,&b,&a);
-		}else if(strValueL.Left(4).CompareNoCase(L"rgba")==0)
-		{
-			nSeg = swscanf(strValueL,L"rgba(%d,%d,%d,%d)",&r,&g,&b,&a);                
-		}else if(strValueL.Left(3).CompareNoCase(L"rgb")==0)
-		{
-			nSeg = swscanf(strValueL,L"rgb(%d,%d,%d)",&r,&g,&b); 
-		}
-		if(nSeg!=3 && nSeg != 4)
-		{
-			//SASSERT_FMT(FALSE,TEXT("解析颜色值失败 [%s]"),S_CW2T(strValue));
-			value = CR_INVALID;
-			return false;
-		}else
-		{
-			value = RGBA(r,g,b,a);
-			return true;
-		}
-	}
 
     void SPropertyItemColor::AdjustInplaceActiveWndRect( CRect & rc )
     {
@@ -157,10 +122,6 @@ namespace SOUI
 
 	void SPropertyItemColor::OnColorChanged( COLORREF cr )
 	{
-		//m_crValue=cr|0xff000000;
-		//CRect rc=GetOwner()->GetItemRect(this);
-		//GetOwner()->InvalidateRect(&rc);
-		//Invalidate();
 	}
 
 	void SPropertyItemColor::OnColorEnd( BOOL bCancel,COLORREF cr )
@@ -185,6 +146,34 @@ namespace SOUI
 	SMessageLoop * SPropertyItemColor::GetMsgLoop()
 	{
 		return GetOwner()->GetContainer()->GetMsgLoop();
+	}
+
+	SOUI::SStringT SPropertyItemColor::GetValue() const
+	{
+		if (m_crValue == CR_INVALID)
+		{
+			return _T("");
+		}
+
+		SStringT str;
+		int r,g,b,a;
+		r = GetRValue(m_crValue);
+		g = GetGValue(m_crValue);
+		b = GetBValue(m_crValue);
+		a = GetAValue(m_crValue);
+		str.Format(m_strFormat,r,g,b,a);
+		return str;
+	}
+
+	BOOL SPropertyItemColor::HasValue() const
+	{
+		return m_crValue != CR_INVALID;
+	}
+
+	void SPropertyItemColor::ClearValue()
+	{
+		m_crValue = CR_INVALID;
+		OnValueChanged();
 	}
 
 }

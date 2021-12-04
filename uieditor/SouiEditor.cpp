@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MainDlg.h"
 #include "SImageBtnEx.h"
+#include "SToolBar.h"
 #include "SouiRealWndHandler.h"
 #include "SImgCanvas.h"
 #include "CmdLine.h"
@@ -72,9 +73,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 		SouiEditorApp *theApp = new SouiEditorApp(pRenderFactory, hInstance,ksz_editor_cls);
 
 		theApp->RegisterWindowClass<SImageBtnEx>();
-
-		theApp->RegisterWindowClass<SListBoxDrop>();
-		theApp->RegisterWindowClass<CDropWnd>();
+		theApp->RegisterWindowClass<SToolBar>();
 
 		theApp->RegisterWindowClass<SPropertyGrid>();//注册属性表控件
 		theApp->RegisterWindowClass<SImgCanvas>();

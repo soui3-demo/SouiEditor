@@ -3,8 +3,6 @@
 #include <core/SNativeWnd.h>
 
 
-
-// CScintillaWnd
 class CDesignWnd : public SNativeWnd
 {
 public:

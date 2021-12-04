@@ -348,12 +348,11 @@ void ResManger::LoadStyleFile()
 			xmlNode = xmlNode.next_sibling();
 			continue;
 		}
-
-		SStringT s1, s2;
-		s1 = xmlNode.name();
-		s2 = xmlNode.attribute(L"name").value();
-
-		m_mapStyles[s2] = StyleItem(s1, s2, xmlNode);
+		pugi::xml_writer_buff writer;
+		xmlNode.print(writer, L"\t", pugi::format_default, pugi::encoding_utf16);
+		SStringW strXml = SStringW(writer.buffer(), writer.size());
+		SStringW strName = xmlNode.attribute(L"name").value();
+		m_mapStyles[strName] = strXml;
 		xmlNode = xmlNode.next_sibling();
 	}
 }
@@ -425,23 +424,23 @@ SStringA ResManger::GetSkinAutos(SStringT prev)
 
 SStringA ResManger::GetStyleAutos(SStringT prev)
 {
-	std::vector<SStringT> vecTemp;
+	std::vector<SStringW> vecTemp;
 	SPOSITION pos = m_mapStyles.GetStartPosition();
 	while (pos)
 	{
-		const SMap<SStringT, StyleItem>::CPair* item = m_mapStyles.GetAt(pos);
+		const SMap<SStringW, SStringW>::CPair* item = m_mapStyles.GetAt(pos);
 		vecTemp.push_back(item->m_key);
 
 		m_mapStyles.GetNext(pos);
 	}
 	std::sort(vecTemp.begin(), vecTemp.end(), SortSStringNoCase);
 
-	SStringT strAuto;
-	std::vector<SStringT>::iterator it = vecTemp.begin();
+	SStringW strAuto;
+	std::vector<SStringW>::iterator it = vecTemp.begin();
 	for (; it != vecTemp.end(); it++)
 	{
 		strAuto += prev;
-		strAuto += *it + _T(" ");
+		strAuto += *it + L" ";
 	}
 	strAuto.TrimRight(' ');
 
@@ -499,4 +498,24 @@ SStringA ResManger::GetColorAutos(SStringT prev)
 
 	SStringA str = S_CW2A(strAuto, CP_UTF8);
 	return str;
+}
+
+void ResManger::onXmlSave(LPCTSTR pszFileName)
+{
+	if(m_strObjattrFile == pszFileName)
+	{
+		LoadObjattrFile();
+	}else if(m_strColorFile == pszFileName)
+	{
+		LoadColorFile();
+	}else if(m_strSkinFile == pszFileName)
+	{
+		LoadSkinFile();
+	}else if(m_strStringFile == pszFileName)
+	{
+		LoadStringFile();
+	}else if(m_strStyleFile == pszFileName)
+	{
+		LoadStyleFile();
+	}
 }

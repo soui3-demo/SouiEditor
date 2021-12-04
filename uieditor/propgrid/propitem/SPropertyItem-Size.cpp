@@ -2,6 +2,7 @@
 #include "SPropertyItem-Size.h"
 #include "../SPropertyEmbedWndHelper.hpp"
 #include "../SPropertyGrid.h"
+
 #include <helper/SplitString.h>
 
 #define CHILD_WIDTH     1
@@ -11,21 +12,21 @@ namespace SOUI
 {
     SPropertyItemSize::SPropertyItemSize( SPropertyGrid *pOwner ) :SPropertyItemText(pOwner),m_bChildChanged(FALSE)
     {
-        IPropertyItem *pWidth = SPropertyItemText::CreatePropItem(pOwner);
+		IPropertyItem *pWidth = pOwner->CreateItem(SPropertyItemText::GetClassName());
         pWidth->SetID(CHILD_WIDTH);
-        pWidth->SetName1(TR(L"width",GetOwner()->GetContainer()->GetTranslatorContext()));
+        pWidth->SetTitle(TR(L"width",GetOwner()->GetContainer()->GetTranslatorContext()));
         InsertChild(pWidth);
         pWidth->Release();
-        IPropertyItem *pHeight = SPropertyItemText::CreatePropItem(pOwner);
+        IPropertyItem *pHeight = pOwner->CreateItem(SPropertyItemText::GetClassName());
         pHeight->SetID(CHILD_HEIGHT);
-        pHeight->SetName1(TR(L"height",GetOwner()->GetContainer()->GetTranslatorContext()));
+        pHeight->SetTitle(TR(L"height",GetOwner()->GetContainer()->GetTranslatorContext()));
         InsertChild(pHeight);
         pHeight->Release();
         m_szValue.cx=m_szValue.cy=0;
     }
 
 
-    void SPropertyItemSize::SetString( const SStringT & strValue )
+    void SPropertyItemSize::SetValue( const SStringT & strValue )
     {
         SIZE sz;
         if(_stscanf(strValue,_T("%d,%d"),&sz.cx,&sz.cy)==2)
@@ -37,36 +38,23 @@ namespace SOUI
 				m_szValue = sz;
 				OnValueChanged();
 			}
-			
-
         }
     }
 
-	void SPropertyItemSize::SetStringOnly( const SStringT & strValue )
+	SStringT SPropertyItemSize::GetValue() const
 	{
-		if (strValue.IsEmpty())
-		{
-			/*m_szValue.cy = 0;
-			m_szValue.cx = 0;*/
-			return ;
-		}
-		
-
-		SIZE sz;
-		if(_stscanf(strValue,_T("%d,%d"),&sz.cx,&sz.cy)==2)
-		{
-			m_szValue = sz;
-		}
+		return SStringT().Format(_T("%d,%d"),m_szValue.cx,m_szValue.cy);
 	}
+
 
     void SPropertyItemSize::OnChildValueChanged( IPropertyItem *pChild )
     {
         if(pChild->GetID() == CHILD_WIDTH)
         {
-            m_szValue.cx=_ttoi(pChild->GetString());
+            m_szValue.cx=_ttoi(pChild->GetValue());
         }else if(pChild->GetID()==CHILD_HEIGHT)
         {
-            m_szValue.cy=_ttoi(pChild->GetString());
+            m_szValue.cy=_ttoi(pChild->GetValue());
         }
         m_bChildChanged=TRUE;
         OnValueChanged();
@@ -82,30 +70,42 @@ namespace SOUI
             SASSERT(pWid && pWid->GetID()==CHILD_WIDTH);
             SStringT str;
             str.Format(_T("%d"),m_szValue.cx);
-            pWid->SetString(str);
+            pWid->SetValue(str);
             IPropertyItem *pHei = GetItem(IPropertyItem::GPI_LASTCHILD);
             SASSERT(pHei && pHei->GetID()==CHILD_HEIGHT);
             str.Format(_T("%d"),m_szValue.cy);
-            pHei->SetString(str);
+            pHei->SetValue(str);
         }
         __super::OnValueChanged();
     }
 
     HRESULT SPropertyItemSize::OnAttrValue( const SStringW & strValue,BOOL bLoading )
     {
-        SetString(S_CW2T(strValue));
+        SetValue(S_CW2T(strValue));
         return S_OK;
     }
 
-    HRESULT SPropertyItemSize::OnAttrChildrenNames( const SStringW & strValue,BOOL bLoading )
+    HRESULT SPropertyItemSize::OnAttrChildrenTitles( const SStringW & strValue,BOOL bLoading )
     {
         SArray<SStringW> strNames;
         SplitString(TR(strValue,GetOwner()->GetContainer()->GetTranslatorContext()),L'|',strNames);
         if(strNames.GetCount()==2)
         {
-            GetItem(GPI_FIRSTCHILD)->SetName1(strNames[0]);
-            GetItem(GPI_LASTCHILD)->SetName1(strNames[1]);
+            GetItem(GPI_FIRSTCHILD)->SetTitle(S_CW2T(strNames[0]));
+            GetItem(GPI_LASTCHILD)->SetTitle(S_CW2T(strNames[1]));
         }
         return S_OK;
     }
+
+	BOOL SPropertyItemSize::HasValue() const
+	{
+		return m_szValue.cx || m_szValue.cy;
+	}
+
+	void SPropertyItemSize::ClearValue()
+	{
+		m_szValue.cx = m_szValue.cy =0;
+		OnValueChanged();
+	}
+
 }

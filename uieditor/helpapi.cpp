@@ -14,19 +14,7 @@ bool FileIsExist(const SStringT &filepath)
 		return true;
 	}
 }
-void PrintLassErrorMessage() {
-	TCHAR* buffer;
-	::FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL,
-		GetLastError(),
-		0,
-		(LPTSTR)&buffer,
-		0,
-		NULL);
-	SMessageBox(NULL, buffer, NULL, 0);
-	LocalFree(buffer);
-}
+
 
 SStringT GetFileExtname(const SStringT& filepath)
 {

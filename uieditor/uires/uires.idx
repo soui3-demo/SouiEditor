@@ -9,14 +9,14 @@
 		<file name="xml_mainwnd_left" path="xml\dlg_main_left.xml" />
 		<file name="xml_mainwnd_right" path="xml\dlg_main_right.xml" />
 		<file name="xml_uidesigner_main" path="xml\dlg_uidesigner.xml" />
-		<file name="UIDESIGNER_XML_SKIN_SELECT" path="xml\dlg_skin_select.xml" />
+		<file name="xml_res_mgr" path="xml\dlg_res_mgr.xml" />
 		<file name="UIDESIGNER_XML_NEW_LAYOUT" path="xml\dlg_new_layout.xml" />
 		<file name="UIDESIGNER_XML_NEW_SKIN" path="xml\dlg_new_skin.xml" />
 		<file name="UIDESIGNER_XML_INPUT" path="xml\dlg_input.xml" />
 		<file name="UIDESIGNER_XML_ABOUT" path="xml\dlg_about.xml" />
-		<file name="UIDESIGNER_XML_SYTLEMGR" path="xml\dlg_style_manage.xml" />
 		<file name="UIDESIGNER_XML_FONTSELECT" path="xml\dlg_font_select.xml" />
-	</LAYOUT>
+    <file name="UIDESIGNER_XML_INSERT_ELEMENT" path="xml\dlg_insert_element.xml" />
+  </LAYOUT>
 	<values>
 		<file name="string" path="values\string.xml" />
 		<file name="color" path="values\color.xml" />
@@ -36,7 +36,8 @@
 		<file name="menu_skin_png" path="image\menu_skin.png" />
 		<file name="menu_sep_png" path="image\menu_sep.png" />
 		<file name="png_logo" path="image\logo.png"/>
-	</IMG>
+    <file name="png_toolbar_state" path="image\toolbar_state.png"/>
+  </IMG>
 	<ICON>
 		<file name="ICON_logo" path="image\soui.ico" />
 	</ICON>

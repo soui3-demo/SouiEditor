@@ -1,40 +1,24 @@
 ﻿#pragma once
+#include <ShellAPI.h>
+#include <helper/SUnknown.h>
 
-extern CMainDlg* g_pMainDlg;
 
-class CTestDropTarget :public IDropTarget
+class CDropTarget : public SUnknown, public IDropTarget
 {
 public:
-	CTestDropTarget()
+	struct IDropListener
 	{
-		nRef = 0;
-	}
+		virtual BOOL OnDrop(LPCTSTR pszName) =0;
+	} * m_pListener;
 
-	virtual ~CTestDropTarget() {}
-
-	//////////////////////////////////////////////////////////////////////////
-	// IUnknown
-	virtual HRESULT STDMETHODCALLTYPE QueryInterface(
-		/* [in] */ REFIID riid,
-		/* [iid_is][out] */ __RPC__deref_out void __RPC_FAR *__RPC_FAR *ppvObject)
+public:
+	CDropTarget(IDropListener *pListener) :m_pListener(pListener)
 	{
-		HRESULT hr = S_FALSE;
-		if (riid == __uuidof(IUnknown))
-			*ppvObject = (IUnknown*) this, hr = S_OK;
-		else if (riid == __uuidof(IDropTarget))
-			*ppvObject = (IDropTarget*)this, hr = S_OK;
-		if (SUCCEEDED(hr)) AddRef();
-		return hr;
-
 	}
-
-	virtual ULONG STDMETHODCALLTYPE AddRef(void) { return ++nRef; }
-
-	virtual ULONG STDMETHODCALLTYPE Release(void) {
-		ULONG uRet = --nRef;
-		if (uRet == 0) delete this;
-		return uRet;
+	~CDropTarget()
+	{
 	}
+public:
 
 	//////////////////////////////////////////////////////////////////////////
 	// IDropTarget
@@ -63,25 +47,6 @@ public:
 		return S_OK;
 	}
 
-
-protected:
-	int nRef;
-};
-
-class CFileDropTarget : public CTestDropTarget
-{
-protected:
-	SWindow *m_pSWnd;
-public:
-	CFileDropTarget(SWindow *pEdit) :m_pSWnd(pEdit)
-	{
-		if (m_pSWnd) m_pSWnd->AddRef();
-	}
-	~CFileDropTarget()
-	{
-		if (m_pSWnd) m_pSWnd->Release();
-	}
-public:
 	virtual HRESULT STDMETHODCALLTYPE Drop(
 		/* [unique][in] */ __RPC__in_opt IDataObject *pDataObj,
 		/* [in] */ DWORD grfKeyState,
@@ -111,14 +76,18 @@ public:
 		DragFinish(hdrop);
 		GlobalUnlock(medium.hGlobal);
 
-		if (success && m_pSWnd)
+		HRESULT hRet = S_OK;
+		if (success && m_pListener)
 		{
-			SStringT fileN = filename;
-			if (fileN.Right(4).CompareNoCase(_T(".idx")) == 0)
-				g_pMainDlg->OutOpenProject(filename);
+			if(!m_pListener->OnDrop(filename))
+				hRet = S_FALSE;
 		}
 
 		*pdwEffect = DROPEFFECT_LINK;
-		return S_OK;
+		return hRet;
 	}
+
+public:
+	IUNKNOWN_BEGIN(IDropTarget)
+	IUNKNOWN_END()
 };

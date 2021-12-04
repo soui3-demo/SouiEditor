@@ -7,50 +7,49 @@ namespace SOUI
 {
     class SPropertyItemOption : public SPropertyItemBase
     {
+		friend class SPropertyGrid;
         SOUI_CLASS_NAME(SPropertyItemOption,L"propoption")
     public:
-        virtual void DrawItem(IRenderTarget *pRT,CRect rc);
+		static LPCWSTR GetInplaceItemStyleName();
         
-		//add
-        virtual void SetStringOnly(const SStringT & strValue);
+		virtual PropType GetType() const {return PT_OPTION;}
+        virtual void SetValue(const SStringT & strValue);
 
-        virtual void SetString(const SStringT & strValue);
-        virtual SStringT GetString() const;
+        virtual SStringT GetValue() const;
+
+		void SetValue2(int nValue);
+		int GetValue2() const {return m_nValue;}
+
+		virtual BOOL HasValue() const ;
+		virtual void ClearValue() ;
+
+        SStringT Value2Option(const SStringT& value) const;
 
         SOUI_ATTRS_BEGIN()
             ATTR_CUSTOM(L"options",OnAttrOptions)
+			ATTR_CUSTOM(L"value",OnAttrValue)
             ATTR_INT(L"dropHeight",m_nDropHeight,FALSE)
-            ATTR_INT(L"value",m_nValue,FALSE)
-			ATTR_INT(L"CanEmpty",m_bCanEmpty,FALSE)
         SOUI_ATTRS_END()
 
     protected:
-        virtual void OnInplaceActive(bool bActive);
+		virtual void DrawItem(IRenderTarget *pRT,CRect rc);
+        virtual void OnInplaceActive(BOOL bActive);
     protected:
         HRESULT OnAttrOptions(const SStringW & strValue,BOOL bLoading);
+		HRESULT OnAttrValue(const SStringW & strValue,BOOL bLoading);
 
 
         int      m_nDropHeight;
         int      m_nValue;
-		SStringT      m_strValue;
-		bool     m_bCanEmpty:  1;
 
-		SStringT m_strDisplay;
-        //SArray<SStringT>    m_options;     
-		SMap<SStringT, SStringT> m_options;
+        SArray<SStringT>    m_options;//value options   
+		SMap<SStringT, SStringT> m_text2option;//text to option map.
 
         SComboBox  * m_pCombobox;
         
     public:
-        static IPropertyItem * CreatePropItem(SPropertyGrid *pOwner)
-        {
-            return new SPropertyItemOption(pOwner);
-        }
-
 		bool OnCBSelChange(EventArgs *pEvt);
     protected:
-        SPropertyItemOption(SPropertyGrid *pOwner):SPropertyItemBase(pOwner),m_pCombobox(NULL),m_nValue(-1),m_nDropHeight(200)
-        {
-        }
+        SPropertyItemOption(SPropertyGrid *pOwner);
     };
 }

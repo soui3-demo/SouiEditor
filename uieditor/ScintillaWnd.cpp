@@ -7,15 +7,14 @@
 
 #include "Scintilla.h"
 #include "SciLexer.h"
-#include "DesignerView.h"
 #include "xpm_icons.h"
 #include "SysdataMgr.h"
 #include "MainDlg.h"
 
 #define STR_SCINTILLAWND _T("Scintilla")
-#define STR_SCINTILLADLL _T("SciLexer.dll")
 
 extern CMainDlg* g_pMainDlg;
+
 //////////////////////////////////////////////////////////////////////////
 CScintillaModule::CScintillaModule()
 {
@@ -40,9 +39,8 @@ const COLORREF default_bk = RGB(250, 250, 250);
 
 static const int MARGIN_SCRIPT_FOLD_INDEX = 1;
 
-CScintillaWnd::CScintillaWnd()
+CScintillaWnd::CScintillaWnd():m_pListener(NULL)
 {
-	m_fnCallback = NULL;
 }
 
 CScintillaWnd::~CScintillaWnd()
@@ -158,7 +156,9 @@ void CScintillaWnd::DoSave()
 	}
 
 	if (SaveFile(m_strFileName))
+	{
 		SetDirty(false);
+	}
 }
 
 void CScintillaWnd::ResetRedo()
@@ -180,11 +180,6 @@ void CScintillaWnd::SetDirty(bool bDirty)
 	else
 	{
 		SetXmlLexer(default_bk);
-	}
-
-	if (m_fnCallback && !m_strFileName.IsEmpty())
-	{
-		(this->m_fnCallback)(this, 1, bDirty ? _T("dirty") : _T(""));
 	}
 }
 
@@ -215,6 +210,12 @@ BOOL CScintillaWnd::SaveFile(LPCTSTR lpFileName)
 		fwrite(data, 1, grabSize, f);
 	}
 	fclose(f);
+	
+	SendMessage(SCI_SETSAVEPOINT);
+	if(m_pListener)
+	{
+		m_pListener->onScintillaSave(lpFileName);
+	}
 	return TRUE;
 }
 
@@ -222,7 +223,6 @@ BOOL CScintillaWnd::SaveFile(LPCTSTR lpFileName)
 void CScintillaWnd::InitScintillaWnd(void)
 {
 	SendMessage(SCI_SETCODEPAGE, SC_CP_UTF8);		//UTF8
-	//SendMessage(SCI_USEPOPUP,0,0);				//关闭右键菜单，改由父窗口view类响应
 
 	SendMessage(SCI_SETWRAPMODE, SC_WRAP_WORD);		//自动换行
 	
@@ -230,18 +230,6 @@ void CScintillaWnd::InitScintillaWnd(void)
 	SetAStyle(STYLE_DEFAULT, black, white, 11, "宋体");
 	SendMessage(SCI_STYLECLEARALL);	// 将全局默认style应用到所有
 
-	//清空所有默认的Ctrl快捷键消息,避免产生乱码
-	// byte key = 'A';
-	// while (key <= 'Z')
-	// {
-	// 	int keyDefinition = key + (SCMOD_CTRL << 16);
-	// 	SendMessage(SCI_ASSIGNCMDKEY,(WPARAM)keyDefinition,(LPARAM)SCI_NULL);
-	// 	keyDefinition = key + ((SCMOD_CTRL+SCMOD_ALT) << 16);
-	// 	SendMessage(SCI_CLEARCMDKEY,(WPARAM)keyDefinition,(LPARAM)SCI_NULL);
-	// 	keyDefinition = key + ((SCMOD_CTRL+SCMOD_SHIFT) << 16);
-	// 	SendMessage(SCI_CLEARCMDKEY,(WPARAM)keyDefinition,(LPARAM)SCI_NULL);
-	// 	key += 1;
-	// }
 
 	SendEditor(SCI_ASSIGNCMDKEY, (WPARAM)('S' + (SCMOD_CTRL << 16)), (LPARAM)SCI_NULL);
 
@@ -256,7 +244,6 @@ void CScintillaWnd::InitScintillaWnd(void)
 	SendEditor(SCI_SETCARETLINEVISIBLE, TRUE);
 	SendEditor(SCI_SETCARETLINEVISIBLEALWAYS, TRUE);
 	SendEditor(SCI_SETCARETLINEBACK, 0xa0ffff);
-	//SendEditor(SCI_SETCARETLINEBACKALPHA, 100, 0);
 
 	// 括号匹配颜色
 	SendEditor(SCI_STYLESETFORE, STYLE_BRACELIGHT, RGB(0,255,0));       //代码框.置风格前景色 (#代码编辑框常量.风格_匹配括号, #红色)
@@ -456,7 +443,6 @@ SStringT CScintillaWnd::GetHtmlTagname(int &tagStartPos)
 
 SStringA CScintillaWnd::GetNotePart(int curPos)
 {
-	// int(SendEditor(SCI_GETCURRENTPOS))
 	int startPos = SendEditor(SCI_WORDSTARTPOSITION, curPos, true);
 	SStringA tagname;
 	if (curPos == startPos)
@@ -508,7 +494,6 @@ void CScintillaWnd::ShowAutoComplete(const char ch)
 	}
 	else if (ch == '/')
 	{
-		//int startPos = SendEditor(SCI_WORDSTARTPOSITION, lStart-1, true);
 		SStringA clsName = GetNotePart(lStart - 1);
 		SStringA str;
 		if (clsName.IsEmpty())
@@ -525,7 +510,7 @@ void CScintillaWnd::ShowAutoComplete(const char ch)
 	}
 	else if (ch == '<')
 	{
-		SStringA str = g_SysDataMgr.GetCtrlAutos();
+		SStringA str = CSysDataMgr::getSingleton().GetCtrlAutos();
 		if (!str.IsEmpty())
 		{
 			SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
@@ -537,7 +522,7 @@ void CScintillaWnd::ShowAutoComplete(const char ch)
 		SStringT tagname = GetHtmlTagname(tagpos);
 		if (!tagname.IsEmpty())
 		{
-			SStringA str = g_SysDataMgr.GetCtrlAttrAutos(tagname);
+			SStringA str = CSysDataMgr::getSingleton().GetCtrlAttrAutos(tagname);
 			if (!str.IsEmpty())
 			{	// 自动完成字串要进行升充排列, 否则功能不正常
 				SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
@@ -636,15 +621,8 @@ void CScintillaWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if (nChar == 'S' && IsCtrlPressed())
 	{
-		if (m_bDirty)
-		{
-			if (m_fnCallback)
-			{
-				(this->m_fnCallback)(this, 0, m_strFileName);
-			}
-		}
+		DoSave();
 	}
-	// 不加这个, 默认是Handled消息 Scintilla功能会不正常
 	SetMsgHandled(FALSE);
 }
 
@@ -708,4 +686,29 @@ void CScintillaWnd::displaySectionCentered(int posStart, int posEnd, bool isDown
 void CScintillaWnd::GotoPos(int nPos)
 {
 	SendEditor(SCI_GOTOPOS, nPos);
+}
+
+SOUI::SStringA CScintillaWnd::GetWindowText()
+{
+	int nLen = SendEditor(SCI_GETLENGTH);
+	SStringA ret;
+	char *pUtf8=ret.GetBuffer(nLen+1);
+	SendEditor(SCI_GETTEXT,nLen+1,(LPARAM)pUtf8);
+	ret.ReleaseBuffer();
+	return ret;
+}
+
+void CScintillaWnd::SetSel(int nBegin,int nEnd)
+{
+	SendEditor(SCI_SETSEL,nBegin,nEnd);
+}
+
+void CScintillaWnd::SetListener(IListener *pListener)
+{
+	m_pListener = pListener;
+}
+
+void CScintillaWnd::ReplaseSel(LPCSTR text)
+{
+	SendEditor(SCI_REPLACESEL,0,(LPARAM)text);
 }
