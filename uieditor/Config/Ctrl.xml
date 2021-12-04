@@ -22,31 +22,21 @@
 
 		</scrollview>
 		
-		<animateimg_动画>
+		<AniImg>
 			<animateimg pos="0,0" size="96,96" skin="_skin.sys.tree.checkbox" autostart="1"  speed = "100"/>
-		</animateimg_动画>
+		</AniImg>
 
-<!-- 		<anmimg_动画>		
-			<anmimg size="50,50" ani_in="_skin.sys.checkbox" ani_out="_skin.sys.radio" interval="50"  />
-		</anmimg_动画> -->
+		<button>
+			<button pos="0,0" size="96,32" colorText="#000000" skin="_skin.sys.btn.normal" >按钮</button> 
+		</button>
 
-
-		<button_按钮>
-			<button pos="0,0" size="96,32" colorText="#000000"
-			skin="_skin.sys.btn.normal" >按钮</button> 
-		</button_按钮>
-
-		<buttonex_按钮>
-			<buttonex pos="0,0" size="96,32" animate="1" colorText="#000000" icon="_skin.sys.checkbox" iconIndex="1" drawMode="horzIconText">按钮</buttonex>
-		</buttonex_按钮>
-
-		<calendar_日历> 
+		<calendar> 
 			<calendar size="96,96" daySkin="_skin.sys.btn.normal" footerHeight="30"/>
-		</calendar_日历>
+		</calendar>
 
 
 
-		<caption_标题>
+		<caption>
 			<caption pos="0,0" size="288, 32" show="1" font="adding:0">
 				<text pos="29,9">标题</text>
 				<imgbtn name="btn_close" skin="_skin.sys.btn.close"    pos="-45,0" tip="close" animate="1"/>
@@ -54,15 +44,15 @@
 				<imgbtn name="btn_restore" skin="_skin.sys.btn.restore"  pos="-83,0" show="0" animate="1" />
 				<imgbtn name="btn_min" skin="_skin.sys.btn.minimize" pos="-121,0" animate="1" />
 			</caption>			
-		</caption_标题>
+		</caption>
 
 
-		<check_复选框>
+		<check>
 			<check pos="0,0" size="96,32" skin="_skin.sys.checkbox">复选框</check>  		
-		</check_复选框>
+		</check>
 
 
-		<combobox_组合框> 
+		<combobox> 
 			<combobox size="120, 24" dropDown="1" dropHeight="150" dotted="0" animateTime="200" curSel="0" drawFocusRect="0" colorText="#000000ff" colorBkgnd="#FFFFFF">
 				<liststyle iconSkin="" itemSkin="" itemHeight="24" colorText="#000000" colorSelText="#FFFFFF" colorItemBkgnd="#FFFFFF" colorItemSelBkgnd="rgb(51,153,255)" />
 				<editstyle inset="5,0,5,0" colorText="#000000" align="left" colorBkgnd="#FFFFFF" />
@@ -76,7 +66,7 @@
 				</items>
 			</combobox>
 
-		</combobox_组合框>
+		</combobox>
 
 
 		<comboview>
@@ -94,11 +84,6 @@
 			</comboview>
 		</comboview>
 
-
-		<div>
-			<div pos="0,0" size="120,120" >div控件</div>
-		</div>
-
 		<edit>
 			<edit pos="0,0" size="96,24"  colorBkgnd="#FFFFFF" cueText="" colorText="#000000"/>		
 		</edit>
@@ -107,26 +92,26 @@
 			<flash pos="0,0" size="200,200"  url="" delay="1"/>
 		</flash>
 
-		<gif_动画>
+		<gif>
 			<gifplayer pos="0,0, @96, @96" />
-		</gif_动画>
+		</gif>
 		
-		<group_组合框>
+		<group>
 			<group pos="0,0" size="120,120" align="left" headerHeight="0">组合框</group>
-		</group_组合框>
+		</group>
 
 
-		<hotkey_热键>
+		<hotkey>
 			<hotkey size="96,24"/>		
-		</hotkey_热键>
+		</hotkey>
 
-		<hr_水平线>
+		<水平线>
 			<hr pos="0,0" size="200,1" mode="horizontal" colorLine="#ffFFFF"/>		
-		</hr_水平线>
+		</水平线>
 
-		<hr_垂直线>
+		<垂直线>
 			<hr pos="0,0" size="1,200" mode="vertical" colorLine="#ffFFFF"/>		
-		</hr_垂直线>		
+		</垂直线>		
 
 		<icon>
 			<icon pos="0,0" src="ICON_LOGO:16"/>
@@ -140,13 +125,6 @@
 		<imgbtn>
 			<imgbtn pos="0,0" size="96,32"  tip="" animate="1"/>
 		</imgbtn>		
-		<imgcanvas>
-			<imgcanvas pos="0,0" size="120,120">	
-
-			</imgcanvas>	
-
-		</imgcanvas>	
-
 
 		<include>
 			<include src=""/>	
@@ -260,9 +238,9 @@
 			<scrollbar size="200,16" min="0" max="100" value="10" page="10" vertical="0"/>
 		</scrollbar>
 
-		<scrolltext_滚动文本>
+		<scrolltext>
 			<scrolltext size="200,24" show="1"  rollType="1" colorText="#ffffff" speed="10">落花是飘在风里的一首诗 无声却叫人心动 是否你能明白它的心思 它的温柔不休不止 落花是飘在风里的一首诗 写下秋天的心事 它只想留下最美的样子</scrolltext>
-		</scrolltext_滚动文本>
+		</scrolltext>
 
 
 		<scrollview>
@@ -276,12 +254,12 @@
 		</sliderbar>
 
 
-		<spinButton_微调按钮>
+		<spinButton>
 			<window size="100,30" class="cls_edit" trackMouseEvent="1">
 				<edit pos="0,0,-16,-0" name="edit_spin" margin-x="0" margin-y="0"/>
 				<spinButton pos="[0,0,-0,-0" max="20" min="10" value="11" buddy="edit_spin"/>
 			</window>
-		</spinButton_微调按钮>
+		</spinButton>
 
 
 		<splitcol>
@@ -323,7 +301,6 @@
 				<page2 title="页2" tip="页2">
 				</page2>
 			</tabctrl2>
-
 		</tabctrl2>	
 
 
@@ -383,6 +360,6 @@
 
 			</treeview>
 		</treeview>
-</controls>
+	</controls>
 </root>	
 	
