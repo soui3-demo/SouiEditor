@@ -4,6 +4,7 @@
 class CPreviewContainer : public SNativeWnd,IListener
 {
 	CPreviewHost	m_previewHost;
+	HBITMAP			m_hBgBmp;
 public:
 	CPreviewContainer(LPCTSTR pszLayoutId, HWND hEditor = NULL);
 	~CPreviewContainer(void);
@@ -24,6 +25,7 @@ protected:
 	void OnClose();
 	void OnPaint(HDC hdc);
 	void OnSize(UINT nType, CSize size);
+	BOOL OnEraseBkgnd(HDC hdc);
 	BEGIN_MSG_MAP_EX(CPreviewContainer)
 		MSG_WM_CREATE(OnCreate)
 		MSG_WM_HSCROLL(OnHScroll)
@@ -31,6 +33,7 @@ protected:
 		MSG_WM_CLOSE(OnClose)
 		MSG_WM_SIZE(OnSize)
 		MSG_WM_PAINT(OnPaint)
+		MSG_WM_ERASEBKGND(OnEraseBkgnd)
 		CHAIN_MSG_MAP(SNativeWnd)
 	END_MSG_MAP()
 

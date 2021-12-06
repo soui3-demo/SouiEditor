@@ -1,13 +1,16 @@
 #include "stdafx.h"
 #include "PreviewContainer.h"
+#include "resource.h"
 
 CPreviewContainer::CPreviewContainer(LPCTSTR pszLayoutId, HWND hEditor)
 :m_previewHost(this,pszLayoutId,hEditor)
 {
+	m_hBgBmp = LoadBitmap(SApplication::getSingleton().GetInstance(),MAKEINTRESOURCE(IDB_BKGND));
 }
 
 CPreviewContainer::~CPreviewContainer(void)
 {
+	DeleteObject(m_hBgBmp);
 }
 
 static const int KCanvas_Size = 4096;
@@ -32,7 +35,7 @@ int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	SetScrollMax(KCanvas_Size, KCanvas_Size);
 
-	m_previewHost.Create(m_hWnd,WS_CHILD|WS_VISIBLE,0,0,0,0,0);
+	m_previewHost.Create(m_hWnd,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0);
 	CRect rcPreview = m_previewHost.GetWindowRect();
 
 	CRect rcHost;
@@ -111,34 +114,9 @@ void CPreviewContainer::OnPaint(HDC hdc)
 	CRect rc;
 	GetClientRect(rc);
 
-	HBRUSH hBoxBrush = CreateSolidBrush(RGB(204, 204, 204));
-	HBRUSH brWhite = CreateSolidBrush(RGB(255, 255, 255));
-	HPEN hPenNone = CreatePen(PS_NULL, 1, RGB(255, 255, 255));
-
-	HGDIOBJ hOldBursh = SelectObject(hdc, brWhite);
-	HGDIOBJ hOldPen = SelectObject(hdc, hPenNone);
-
-	Rectangle(hdc, 0, 0, rc.right, rc.bottom);	
-
-	SelectObject(hdc, hBoxBrush);
-	const int boxsize = 12;
-	int line = 0;
-	for (int i = 0; i < rc.Height(); i += boxsize)
-	{
-		for (int j = 0; j < rc.Width(); j += boxsize * 2)
-		{
-			int start = 0;
-			if (line & 1)
-				start = boxsize;
-			Rectangle(hdc, start + j, i, start + j + boxsize, i + boxsize);
-		}
-		line++;
-	}
-	SelectObject(hdc,hOldPen);
-	SelectObject(hdc,hOldBursh);
-	::DeleteObject(hBoxBrush);
-	::DeleteObject(brWhite);
-	::DeleteObject(hPenNone);
+	HBRUSH hBr = CreatePatternBrush(m_hBgBmp);
+	FillRect(hdc,&rc,hBr);
+	DeleteObject(hBr);
 
 	EndPaint(m_hWnd,&ps);
 }
@@ -179,4 +157,9 @@ void CPreviewContainer::OnResize()
 void CPreviewContainer::OnRePos(const POINT *pt)
 {
 	SetWindowPos(NULL,pt->x,pt->y,0,0,SWP_NOSIZE|SWP_NOZORDER);
+}
+
+BOOL CPreviewContainer::OnEraseBkgnd(HDC hdc)
+{
+	return TRUE;
 }
