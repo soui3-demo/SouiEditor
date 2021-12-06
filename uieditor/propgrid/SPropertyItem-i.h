@@ -35,6 +35,7 @@ namespace SOUI
         virtual IPropertyItem * GetParent() const =0;
         virtual void SetParent(IPropertyItem * pParent) =0;
         virtual IPropertyItem * GetItem(PROPITEMTYPE  type) const =0;
+		virtual IPropertyItem * GetChildById(int nID) const = 0;
         virtual SPropertyGrid * GetOwner() const =0;
         virtual BOOL InsertChild(IPropertyItem * pChild,IPropertyItem * pInsertAfter=IC_LAST)=0;
         virtual BOOL RemoveChild(IPropertyItem * pChild)=0;

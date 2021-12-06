@@ -3,59 +3,33 @@
 		<icons class_name="imglist" name="skin_icon" src="file:img\skin_icons.png" states="9"/>
 	</toolbar>
 	<skins>
-	<imglist icon="0">
-			<groups>
+	<base visible="0">
+		<groups>
 				<propgroup title="属性:  base"  description="属性">
 					<proptext title="皮肤名(name)" name="name" value=""/>	
-                    <proptext title="比例(scale)" name="scale" value=""/>	
+                    		<proptext title="比例(scale)" name="scale" value=""/>	
 					<proptext title="alpha" name="alpha" value=""/>	
 					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
+				</propgroup>
+		</groups>
+	</base>
+	<imglist icon="0" parent="base">
+			<groups>
 				<propgroup title="属性:  imglist"  description="属性">
 					<propoption title="autoFit" name="autoFit" value="" options="是:1|否:0"/>						
 					<propoption title="平铺(tile)" name="tile" value="" options="拉伸:0|平铺:1"/>
 					<propoption title="垂直排列(vertical)" name="vertical" value="" options="垂直:1|水平:0"/>
 					<proptext title="子图数量(states)" name="states" value=""/>
+					<proptext title="数据源(src)" name="src" value=""/>
 					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
 				</propgroup>
 			</groups>
 	</imglist>
 	
-	<imgcenter icon="1">
-			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-                    <proptext title="比例(scale)" name="scale" value=""/>	
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
-				<propgroup title="属性:  imglist"  description="属性">
-					<propoption title="autoFit" name="autoFit" value="" options="是:1|否:0"/>						
-					<propoption title="平铺(tile)" name="tile" value="" options="拉伸:0|平铺:1"/>
-					<propoption title="垂直排列(vertical)" name="vertical" value="" options="垂直:1|水平:0"/>
-					<proptext title="子图数量(states)" name="states" value=""/>
-					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
-				</propgroup>
-			</groups>
-	</imgcenter>
-
+	<imgcenter icon="1" parent="imglist"/>
 	
-	<imgframe icon="2">
+	<imgframe icon="2"  parent="imglist">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-					                    <proptext title="比例(scale)" name="scale" value=""/>	
-
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>
-				<propgroup title="属性:  imglist"  description="属性">
-					<propoption title="autoFit" name="autoFit" value="" options="是:1|否:0"/>						
-					<propoption title="平铺(tile)" name="tile" value="" options="拉伸:0|平铺:1"/>
-					<propoption title="垂直排列(vertical)" name="vertical" value="" options="垂直:1|水平:0"/>
-					<proptext title="子图数量(states)" name="states" value=""/>
-					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
-				</propgroup>
 				<propgroup title="属性:  imgframe"  description="属性">	
 					<proptext title="左边距(left)" name="left" value=""/>
 					<proptext title="上边距(top)" name="top" value=""/>
@@ -68,42 +42,11 @@
 			</groups>
 	</imgframe>
 
-	<imgframe2 icon="3">
-			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-					                    <proptext title="比例(scale)" name="scale" value=""/>	
+	<imgframe2 icon="3" parent="imgframe"/>
 
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>
-				<propgroup title="属性:  imglist"  description="属性">
-					<propoption title="autoFit" name="autoFit" value="" options="是:1|否:0"/>						
-					<propoption title="平铺(tile)" name="tile" value="" options="拉伸:0|平铺:1"/>
-					<propoption title="垂直排列(vertical)" name="vertical" value="" options="垂直:1|水平:0"/>
-					<proptext title="子图数量(states)" name="states" value=""/>
-					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
-				</propgroup>
-				<propgroup title="属性:  imgframe"  description="属性">	
-					<proptext title="左边距(left)" name="left" value=""/>
-					<proptext title="上边距(top)" name="top" value=""/>
-					<proptext title="右边距(right)" name="right" value=""/>
-					<proptext title="下边距(bottom)" name="bottom" value=""/>
-					<proptext title="九宫格4周(margin)" name="margin" value=""/>
-					<proptext title="左右边距(margin-x)" name="margin-x" value=""/>
-					<proptext title="上下边距(margin-y)" name="margin-y" value=""/>			
-				</propgroup>
-			</groups>
-	</imgframe2>
 	
-	<Button icon="4">
+	<Button icon="4" parent="base">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-                    <proptext title="比例(scale)" name="scale" value=""/>	
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
 				<propgroup title="属性:  Button"  description="属性">
 					<propcolor title="colorBorder" name="colorBorder" value="" />						
 					<propcolor title="colorBorderHover" name="colorBorderHover" value="" />
@@ -123,14 +66,8 @@
 			</groups>
 	</Button>
 	
-	<gradation icon="5">
+	<gradation icon="5" parent="base">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>
-                    <proptext title="比例(scale)" name="scale" value=""/>						
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
 				<propgroup title="属性:  gradation"  description="属性">			
 					<proptext title="渐变起始颜色(colorFrom)" name="colorFrom" value=""/>
 					<proptext title="渐变终止颜色(colorTo)" name="colorTo" value=""/>
@@ -139,22 +76,9 @@
 			</groups>
 	</gradation>	
 
-	<scrollbar icon="6">
+	<scrollbar icon="6"  parent="imglist">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-					                    <proptext title="比例(scale)" name="scale" value=""/>	
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>
-				<propgroup title="属性:  imglist"  description="属性">
-					<propoption title="autoFit" name="autoFit" value="" options="是:1|否:0"/>						
-					<propoption title="平铺(tile)" name="tile" value="" options="拉伸:0|平铺:1"/>
-					<propoption title="垂直排列(vertical)" name="vertical" value="" options="垂直:1|水平:0"/>
-					<proptext title="子图数量(states)" name="states" value=""/>
-					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
-				</propgroup>				
-				<propgroup title="属性:  gradation"  description="属性">					
+				<propgroup title="属性:  scrollbar"  description="属性">					
 					<proptext title="边缘不拉伸大小(margin)" name="margin" value=""/>
 					<propoption title="滑块帮手(hasGripper)" name="hasGripper" value="" options="是:1|否:0"/>
 					<propoption title="是否有禁用态(hasInactive)" name="hasInactive" value="" options="是:1|否:0"/>					
@@ -162,25 +86,26 @@
 			</groups>
 	</scrollbar>		
 
-	<gif icon="7">
+	<Ani visible="0" parent="base">
+		<groups>
+			<propgroup title="属性:  Ani"  description="属性">					
+					<proprect title="边缘不拉伸大小(margin)" name="margin" value=""/>
+					<proprect title="边缘不拉伸大小(margin2)" name="margin2" digit="false" value=""/>
+					<propoption title="平铺(Tile)" name="tile" value="" options="是:1|否:0"/>
+					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
+			</propgroup>
+		</groups>
+	</Ani>
+	<gif icon="7" parent="Ani">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>
-                    <proptext title="比例(scale)" name="scale" value=""/>						
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
+				<propgroup title="属性:  gif"  description="属性">
+					<proptext title="数据源(src)" name="src" value=""/>
 				</propgroup>
 			</groups>
 	</gif>	
 	
-	<ColorRect icon="8">
+	<ColorRect icon="8" parent="base">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-                    <proptext title="比例(scale)" name="scale" value=""/>	
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
 				<propgroup title="属性:  ColorRect"  description="属性">
 					<propcolor title="normal" name="normal" value="" />						
 					<propcolor title="hover" name="hover" value="" />
@@ -192,14 +117,8 @@
 			</groups>
 	</ColorRect>
 	
-	<Shape icon="0">
+	<Shape icon="0"  parent="base">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-                    <proptext title="比例(scale)" name="scale" value=""/>	
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
 				<propgroup title="属性:  Shape"  description="属性">
 					<propoption title="type" name="type" options="linear|radial|sweep"/>
 					<proptext title="渐变角度(angle)" name="angle" value=""/>
@@ -213,14 +132,8 @@
 			</groups>
 	</Shape>
 
-	<Group icon="0">
+	<Group icon="0"   parent="base">
 			<groups>
-				<propgroup title="属性:  base"  description="属性">
-					<proptext title="皮肤名(name)" name="name" value=""/>	
-                    <proptext title="比例(scale)" name="scale" value=""/>	
-					<proptext title="alpha" name="alpha" value=""/>	
-					<propoption title="enableColorize" name="enableColorize" options="是:1|否:0"/>
-				</propgroup>			
 				<propgroup title="属性:  Group"  description="属性">
 					<proptext title="正常皮肤" name="normal" value=""/>
 					<proptext title="浮动皮肤" name="hover" value="0.5"/>

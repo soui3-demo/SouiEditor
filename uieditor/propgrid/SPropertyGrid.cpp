@@ -4,6 +4,7 @@
 #include "propitem/SPropertyItem-Option.h"
 #include "propitem/SPropertyItem-Color.h"
 #include "propitem/SPropertyItem-Size.h"
+#include "propitem/SPropertyItem-Rect.h"
 
 namespace SOUI
 {
@@ -18,6 +19,8 @@ namespace SOUI
 			return new SPropertyItemColor(this);
 		if(strName.CompareNoCase(SPropertyItemSize::GetClassName())==0)
 			return new SPropertyItemSize(this);
+		if(strName.CompareNoCase(SPropertyItemRect::GetClassName())==0)
+			return new SPropertyItemRect(this);
 		if(strName.CompareNoCase(SPropertyGroup::GetClassName())==0)
 			return new SPropertyGroup(this);
 		return NULL;
@@ -30,6 +33,7 @@ namespace SOUI
 			SPropertyItemOption::GetInplaceItemStyleName(),
 			SPropertyItemColor::GetInplaceItemStyleName(),
 			SPropertyItemSize::GetInplaceItemStyleName(),
+			SPropertyItemRect::GetInplaceItemStyleName(),
 			SPropertyGroup::GetInplaceItemStyleName(),
 		};
 		for(int i=0;i<ARRAYSIZE(kInplaceStyleNames);i++)
@@ -621,7 +625,6 @@ namespace SOUI
 
 	void SPropertyGrid::LoadFromXml(pugi::xml_node data)
 	{
-		RemoveAllItems();
 		if(data)
 		{
 			pugi::xml_node xmlChild = data.child(SPropertyGroup::GetClassName());

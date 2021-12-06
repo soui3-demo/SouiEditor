@@ -3,9 +3,10 @@
 #include "propgrid/propitem/SPropertyItem-Option.h"
 
 namespace SOUI{
-	DlgInsertXmlElement::DlgInsertXmlElement(pugi::xml_node xmlInitProp)
+	DlgInsertXmlElement::DlgInsertXmlElement(pugi::xml_node xmlInitProp,SStringW strNodeName)
 		:SHostDialog(_T("layout:UIDESIGNER_XML_INSERT_ELEMENT"))
 		,m_xmlInitProp(xmlInitProp)
+		,m_strNodeName(strNodeName)
 	{
 	}
 
@@ -16,7 +17,7 @@ namespace SOUI{
 	BOOL DlgInsertXmlElement::OnInitDialog(HWND wndFocus, LPARAM lInitParam)
 	{
 		m_propgrid = FindChildByName2<SPropertyGrid>(L"propgrid_element");
-		m_propgrid->LoadFromXml(m_xmlInitProp.first_child());
+		InitPropGrid(m_strNodeName,L"");
 		SRealWnd *pReal = FindChildByName2<SRealWnd>(L"xml_editor");
 		pReal->GetRealHwnd();
 		m_xmlEditor = (CScintillaWnd*)pReal->GetUserData();
@@ -140,6 +141,22 @@ namespace SOUI{
 	void DlgInsertXmlElement::OnBtnOrderByName()
 	{
 		m_propgrid->SetOrderType(SPropertyGrid::OT_NAME);
+	}
+
+	void DlgInsertXmlElement::InitPropGrid(SStringW strNodeName,SStringW strParents)
+	{
+		pugi::xml_node xmlNode = m_xmlInitProp.child(strNodeName);
+		if(xmlNode)
+		{
+			SStringW strParent = xmlNode.attribute(L"parent").as_string();
+			if(!strParent.IsEmpty() && strParents.Find(strParent)==-1)
+			{//use strParents to avoid round parent defined.
+				strParents.Append(L",");
+				strParents.Append(strParent);
+				InitPropGrid(strParent,strParents);
+			}
+		}
+		m_propgrid->LoadFromXml(xmlNode.child(L"groups"));
 	}
 
 

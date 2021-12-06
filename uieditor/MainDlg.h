@@ -116,11 +116,14 @@ public:
 		pugi::xml_node xmlSkin = xmlNode.child(L"skins").first_child();
 		while(xmlSkin)
 		{
-			IconInfo info;
-			info.iIcon = xmlSkin.attribute(L"icon").as_int(0);
-			info.strTxt = xmlSkin.name();
-			info.strTip = xmlSkin.attribute(L"tip").as_string();
-			m_arrIcons.Add(info);
+			if(xmlSkin.attribute(L"visible").as_bool(true))
+			{
+				IconInfo info;
+				info.iIcon = xmlSkin.attribute(L"icon").as_int(0);
+				info.strTxt = xmlSkin.name();
+				info.strTip = xmlSkin.attribute(L"tip").as_string();
+				m_arrIcons.Add(info);
+			}
 			xmlSkin = xmlSkin.next_sibling();
 		}
 	}

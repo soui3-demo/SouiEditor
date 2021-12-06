@@ -647,7 +647,7 @@ void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 {
 	SStringT skinName = info->strTxt;
 
-	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinPropNode().child(L"skins").child(skinName));
+	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinPropNode().child(L"skins"),skinName);
 	if(IDOK==dlg.DoModal())
 	{
 		m_pDesigner->InsertText(dlg.GetXml());

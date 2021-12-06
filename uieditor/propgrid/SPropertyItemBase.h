@@ -21,6 +21,8 @@ namespace SOUI
         virtual IPropertyItem * GetParent() const ;
         virtual void SetParent(IPropertyItem * pParent);
         virtual IPropertyItem * GetItem(PROPITEMTYPE type) const ;
+		virtual IPropertyItem * GetChildById(int nID) const;
+
         virtual SPropertyGrid * GetOwner() const ;
         virtual BOOL InsertChild(IPropertyItem * pChild,IPropertyItem * pInsertAfter=IC_LAST);
         virtual BOOL RemoveChild(IPropertyItem * pChild);

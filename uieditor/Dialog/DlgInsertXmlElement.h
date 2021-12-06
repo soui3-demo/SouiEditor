@@ -7,7 +7,7 @@ namespace SOUI{
 	class DlgInsertXmlElement : public SHostDialog
 	{
 	public:
-		DlgInsertXmlElement(pugi::xml_node xmlInitProp);
+		DlgInsertXmlElement(pugi::xml_node xmlInitProp,SStringW strNodeName);
 		~DlgInsertXmlElement(void);
 
 	public:
@@ -42,9 +42,11 @@ namespace SOUI{
 		END_MSG_MAP()
 
 	private:
+		void InitPropGrid(SStringW strNodeName,SStringW strParents);
+
 		static BOOL OnEnumPropItem(IPropertyItem *pItem, void* opaque);
 		pugi::xml_node m_xmlInitProp;
-
+		SStringW m_strNodeName;
 
 		spugi::xml_document m_xmlDoc;
 

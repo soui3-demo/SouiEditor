@@ -47,6 +47,7 @@ RC_FILE += souieditor.rc
 
 # Input
 HEADERS += CDebug.h \
+           res/resource.h \
            CmdLine.h \
            DesignWnd.h \
            FileHelper.h \
@@ -55,6 +56,7 @@ HEADERS += CDebug.h \
            MainDlg.h \
            ResManger.h \
            resource.h \
+           DropTarget.h \
            ScintillaWnd.h \
            SImageBtnEx.h \
            SImgCanvas.h \
@@ -63,14 +65,15 @@ HEADERS += CDebug.h \
            SSwitch.h \
            SysdataMgr.h \
            xpm_icons.h \
+           XmlEditor.h \
+           XmlParser.h \
+           SToolBar.h \
            spugixml/pugiconfig.hpp \
            spugixml/pugixml.hpp \
            Dialog/DlgAbout.h \
            Dialog/DlgCreatePro.h \
-           Dialog/DlgFontSelect.h \
            Dialog/DlgInput.h \
            Dialog/DlgNewLayout.h \
-           Dialog/DlgNewSkin.h \
            Dialog/DlgResMgr.h \
            Dialog/DlgInsertXmlElement.h \
            propgrid/colorpicker/ColourPopup.h \
@@ -80,10 +83,10 @@ HEADERS += CDebug.h \
            propgrid/SPropertyGrid.h \
            propgrid/SPropertyItem-i.h \
            propgrid/SPropertyItemBase.h \
-           res/resource.h \
            propgrid/propitem/SPropertyItem-Color.h \
            propgrid/propitem/SPropertyItem-Option.h \
            propgrid/propitem/SPropertyItem-Size.h \
+           propgrid/propitem/SPropertyItem-Rect.h \
            propgrid/propitem/SPropertyItem-Text.h \
            propgrid/propitem/SPropertyItem-Group.h \
            SImgCanvas.h \
@@ -105,13 +108,12 @@ SOURCES +=  \
            SysdataMgr.cpp \
            XmlEditor.cpp \
            XmlParser.cpp \
+           SToolBar.cpp \
            spugixml/pugixml.cpp \
            Dialog/DlgAbout.cpp \
            Dialog/DlgCreatePro.cpp \
-           Dialog/DlgFontSelect.cpp \
            Dialog/DlgInput.cpp \
            Dialog/DlgNewLayout.cpp \
-           Dialog/DlgNewSkin.cpp \
            Dialog/DlgResMgr.cpp \
            Dialog/DlgInsertXmlElement.cpp \
            propgrid/SPropertyGrid.cpp \
@@ -119,6 +121,7 @@ SOURCES +=  \
            propgrid/propitem/SPropertyItem-Color.cpp \
            propgrid/propitem/SPropertyItem-Option.cpp \
            propgrid/propitem/SPropertyItem-Size.cpp \
+           propgrid/propitem/SPropertyItem-Rect.cpp \
            propgrid/propitem/SPropertyItem-Text.cpp \
            propgrid/propitem/SPropertyItem-Group.cpp \
            propgrid/colorpicker/ColourPopup.cpp \
