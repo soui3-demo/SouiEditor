@@ -16,6 +16,7 @@ namespace SOUI{
 
 	BOOL DlgInsertXmlElement::OnInitDialog(HWND wndFocus, LPARAM lInitParam)
 	{
+		m_tbProp = FindChildByID2<SToolBar>(R.id.tb_prop);
 		m_propgrid = FindChildByName2<SPropertyGrid>(L"propgrid_element");
 		InitPropGrid(m_strNodeName,L"");
 		SRealWnd *pReal = FindChildByName2<SRealWnd>(L"xml_editor");
@@ -133,16 +134,6 @@ namespace SOUI{
 		FindChildByID(R.id.txt_prop_desc)->SetWindowText(e2->pItem->GetDescription());
 	}
 
-	void DlgInsertXmlElement::OnBtnOrderByGroup()
-	{
-		m_propgrid->SetOrderType(SPropertyGrid::OT_GROUP);
-	}
-
-	void DlgInsertXmlElement::OnBtnOrderByName()
-	{
-		m_propgrid->SetOrderType(SPropertyGrid::OT_NAME);
-	}
-
 	void DlgInsertXmlElement::InitPropGrid(SStringW strNodeName,SStringW strParents)
 	{
 		pugi::xml_node xmlNode = m_xmlInitProp.child(strNodeName);
@@ -157,6 +148,22 @@ namespace SOUI{
 			}
 		}
 		m_propgrid->LoadFromXml(xmlNode.child(L"groups"));
+	}
+
+	void DlgInsertXmlElement::OnPropToolbarCmd(EventArgs *e)
+	{
+		EventToolBarCmd *e2=sobj_cast<EventToolBarCmd>(e);
+		if(e2->nCmdId == 0)
+		{
+			m_propgrid->SetOrderType(SPropertyGrid::OT_GROUP);
+			m_tbProp->SetItemCheck(0,TRUE);
+			m_tbProp->SetItemCheck(1,FALSE);
+		}else
+		{
+			m_propgrid->SetOrderType(SPropertyGrid::OT_NAME);
+			m_tbProp->SetItemCheck(1,TRUE);
+			m_tbProp->SetItemCheck(0,FALSE);
+		}
 	}
 
 

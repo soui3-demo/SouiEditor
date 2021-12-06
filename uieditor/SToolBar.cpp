@@ -36,6 +36,8 @@ namespace SOUI
 				item.strText = xmlItem.attribute(L"text").as_string();
 				item.strTip = xmlItem.attribute(L"tip").as_string();
 				item.dwState = xmlItem.attribute(L"disable").as_bool(false)?WndState_Disable:WndState_Normal;
+				if(xmlItem.attribute(L"checked").as_bool(false))
+					item.dwState|=WndState_Check;
 				m_arrItems.Add(item);
 			}else if(_wcsicmp(xmlItem.name(),L"sep")==0)
 			{
@@ -302,7 +304,7 @@ namespace SOUI
 		int iItem = HitTest(pt);
 		if(iItem!=-1)
 		{
-			if(m_arrItems[iItem].dwState & WndState_Disable)
+			if(m_arrItems[iItem].dwState & (WndState_Disable|WndState_Check))
 				return;
 			m_iClickItem = iItem;
 			m_arrItems[iItem].dwState |= WndState_PushDown;
@@ -371,10 +373,13 @@ namespace SOUI
 				}
 				if(iItem != -1)
 				{
-					m_arrItems[iItem].dwState |= WndState_Hover;
-					CRect rc = GetItemRect(iItem);
-					InvalidateRect(rc);
-					m_iHoverItem = iItem;
+					if(!(m_arrItems[iItem].dwState & (WndState_Disable |WndState_Check)))
+					{
+						m_arrItems[iItem].dwState |= WndState_Hover;
+						CRect rc = GetItemRect(iItem);
+						InvalidateRect(rc);
+						m_iHoverItem = iItem;
+					}
 				}
 			}
 			if(iItem == -1)
@@ -418,12 +423,12 @@ namespace SOUI
 
 	BOOL SToolBar::OnUpdateToolTip(CPoint pt, SwndToolTipInfo &tipInfo)
 	{
-		if(m_iHoverItem==-1)
+		int iItem = HitTest(pt);
+		if(iItem==-1)
 			return FALSE;
-		
-		tipInfo.dwCookie=m_iHoverItem;
-		tipInfo.rcTarget = GetItemRect(m_iHoverItem);
-		tipInfo.strTip = m_arrItems[m_iHoverItem].strTip;
+		tipInfo.dwCookie=iItem;
+		tipInfo.rcTarget = GetItemRect(iItem);
+		tipInfo.strTip = m_arrItems[iItem].strTip;
 		tipInfo.swnd = m_swnd;
 		return TRUE;
 	}
@@ -561,7 +566,10 @@ namespace SOUI
 		menu.LoadMenu(m_menuStyle.root().child(L"menuStyle"));
  		for(int i=m_nVisibleItems;i<m_arrItems.GetCount();i++)
  		{
- 			menu.AppendMenu(IsSeparator(&m_arrItems[i])?MF_SEPARATOR:MF_STRING,i,m_arrItems[i].strText,m_arrItems[i].iIcon);
+			UINT uFlag = IsSeparator(&m_arrItems[i])?MF_SEPARATOR:MF_STRING;
+			if(m_arrItems[i].dwState & WndState_Check)
+				uFlag |= MF_CHECKED;
+ 			menu.AppendMenu(uFlag,i,m_arrItems[i].strText,m_arrItems[i].iIcon);
  		}
 		CRect rcHost(rc);
 		GetContainer()->FrameToHost(rcHost);
@@ -579,6 +587,37 @@ namespace SOUI
 			evt.lParam = item.lParam;
 			FireEvent(evt);
 		}
+	}
+
+	BOOL SToolBar::SetItemCheck(int nItemId,BOOL bCheck)
+	{
+		int iItem = GetItemByID(nItemId);
+		if(iItem==-1)
+			return FALSE;
+		if(bCheck)
+			m_arrItems[iItem].dwState|=WndState_Check;
+		else
+			m_arrItems[iItem].dwState &=~WndState_Check;
+		if(iItem < m_nVisibleItems)
+		{
+			CRect rcItem = GetItemRect(iItem);
+			InvalidateRect(rcItem);
+		}
+		return TRUE;
+	}
+
+	int SToolBar::GetItemByID(int nID) const
+	{
+		int iRet = -1;
+		for(UINT i=0;i<m_arrItems.GetCount();i++)
+		{
+			if(m_arrItems[i].nId == nID)
+			{
+				iRet = i;
+				break;
+			}
+		}
+		return iRet;
 	}
 
 }

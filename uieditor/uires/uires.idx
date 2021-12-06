@@ -37,6 +37,7 @@
 		<file name="menu_sep_png" path="image\menu_sep.png" />
 		<file name="png_logo" path="image\logo.png"/>
     <file name="png_toolbar_state" path="image\toolbar_state.png"/>
+    <file name="png_toolbar_prop" path="image\tb_prop.png"/>
   </IMG>
 	<ICON>
 		<file name="ICON_logo" path="image\soui.ico" />

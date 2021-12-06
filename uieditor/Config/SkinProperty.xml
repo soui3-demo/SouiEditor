@@ -89,8 +89,8 @@
 	<Ani visible="0" parent="base">
 		<groups>
 			<propgroup title="属性:  Ani"  description="属性">					
-					<proprect title="边缘不拉伸大小(margin)" name="margin" value=""/>
-					<proprect title="边缘不拉伸大小(margin2)" name="margin2" digit="false" value=""/>
+					<proprect title="margin" name="margin" value="" childrenTitles="左|上|右|下"  description="边缘不拉伸大小，使用默认单位"/>
+					<proprect title="margin2" name="margin2" digit="false" value=""  childrenTitles="左|上|右|下" description="边缘不拉伸大小，可以指定单位如dp,px"/>
 					<propoption title="平铺(Tile)" name="tile" value="" options="是:1|否:0"/>
 					<propoption title="filterLevel" name="filterLevel" value="" options="none|low|medium|high"/>
 			</propgroup>

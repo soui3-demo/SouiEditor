@@ -94,11 +94,9 @@ namespace SOUI
     {
         if(!m_bChildChanged)
         {
-            IPropertyItem *pWid = GetItem(IPropertyItem::GPI_FIRSTCHILD);
-            SASSERT(pWid && pWid->GetID()==CHILD_WIDTH);
+            IPropertyItem *pWid = GetChildById(CHILD_WIDTH);
             pWid->SetValue(m_strValue[0]);
-            IPropertyItem *pHei = GetItem(IPropertyItem::GPI_LASTCHILD);
-            SASSERT(pHei && pHei->GetID()==CHILD_HEIGHT);
+            IPropertyItem *pHei = GetChildById(CHILD_HEIGHT);
             pHei->SetValue(m_strValue[1]);
         }
         __super::OnValueChanged();

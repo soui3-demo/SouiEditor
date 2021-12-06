@@ -38,6 +38,7 @@ namespace SOUI
 
 		void InsertItem(const ToolBarItem & item,int nPos=-1);
 		void SetIconsSkin(SAutoRefPtr<ISkinObj> skinIcons);
+		BOOL SetItemCheck(int nItemId,BOOL bCheck);
 	public:
 		SOUI_ATTRS_BEGIN()
 			ATTR_SKIN(L"iconSkin",m_skinIcons,TRUE)
@@ -83,6 +84,7 @@ namespace SOUI
 		BOOL HasDropDownButton() const;
 		CRect GetDropdownButtonRect() const;
 		void ShowDropDownMenu(const CRect &rc);
+		int  GetItemByID(int nID) const;
 	protected:
 		SAutoRefPtr<ISkinObj> m_skinState;
 		SAutoRefPtr<ISkinObj> m_skinIcons;

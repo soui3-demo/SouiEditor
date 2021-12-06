@@ -13,4 +13,5 @@
 	<imglist name="skin_menu_skin_png" src="IMG:menu_skin_png" states="2" />
 	<imglist name="skin_menu_sep_png" src="IMG:menu_sep_png" states="1" />
   <imgframe name="skin_toolbar_state" src="img:png_toolbar_state" states="3" margin="3,3,3,3"/>
+  <imglist name="skin_toolbar_prop" src="img:png_toolbar_prop" states="2"/>
 </skin>

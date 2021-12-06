@@ -109,13 +109,13 @@ namespace SOUI
             pLeft->SetValue(m_strValue[0]);
 
             IPropertyItem *pTop = GetChildById(CHILD_TOP);
-			pLeft->SetValue(m_strValue[1]);
+			pTop->SetValue(m_strValue[1]);
 
 			IPropertyItem *pRight = GetChildById(CHILD_RIGHT);
-			pLeft->SetValue(m_strValue[2]);
+			pRight->SetValue(m_strValue[2]);
 
 			IPropertyItem *pBottom = GetChildById(CHILD_BOTTOM);
-			pLeft->SetValue(m_strValue[3]);
+			pBottom->SetValue(m_strValue[3]);
 
 		}
         __super::OnValueChanged();
