@@ -132,5 +132,15 @@ namespace SOUI{
 		FindChildByID(R.id.txt_prop_desc)->SetWindowText(e2->pItem->GetDescription());
 	}
 
+	void DlgInsertXmlElement::OnBtnOrderByGroup()
+	{
+		m_propgrid->SetOrderType(SPropertyGrid::OT_GROUP);
+	}
+
+	void DlgInsertXmlElement::OnBtnOrderByName()
+	{
+		m_propgrid->SetOrderType(SPropertyGrid::OT_NAME);
+	}
+
 
 }

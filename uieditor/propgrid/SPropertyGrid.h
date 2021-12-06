@@ -59,7 +59,6 @@ namespace SOUI
 
 		enum ORDERTYPE
 		{
-			OT_NULL,
 			OT_GROUP,
 			OT_NAME,
 		};
@@ -68,8 +67,6 @@ namespace SOUI
 
 		SPropertyGrid(void);
 		~SPropertyGrid(void);
-
-		int GetIndent();
 
 		void OnItemExpanded(IPropertyItem *pItem);
 		CRect GetItemRect(IPropertyItem *pItem) const;
@@ -91,14 +88,18 @@ namespace SOUI
 		BOOL SetItemAttribute(IPropertyItem * pItem,const SStringW & attr,const SStringW & value);
 
 		COLORREF GetGroupColor() const;
+		void SetOrderType(ORDERTYPE type);
+		ORDERTYPE GetOrderType() const;
 
 		void EnumProp(FunEnumProp funEnum,void* opaque);
 
+	protected:
+		LRESULT OnAttrOrderType(const SStringW &strValue,BOOL bLoading);
+
 		SOUI_ATTRS_BEGIN()
-			ATTR_INT(L"indent",m_nIndent,TRUE)
 			ATTR_INT(L"titleWidth",m_nTitleWidth,TRUE)
+			ATTR_CUSTOM(L"orderType",OnAttrOrderType)
 			ATTR_ENUM_BEGIN(L"orderType",ORDERTYPE,TRUE)
-				ATTR_ENUM_VALUE(L"null",OT_NULL)
 				ATTR_ENUM_VALUE(L"group",OT_GROUP)
 				ATTR_ENUM_VALUE(L"name",OT_NAME)
 			ATTR_ENUM_END(m_orderType)
@@ -167,7 +168,6 @@ namespace SOUI
 		CRect GetInplaceWndPos(IPropertyItem *pItem) const;
 		CRect GetCmdButtonPos(IPropertyItem *pItem) const;
 	protected:
-		int m_nIndent;          //缩进大小
 		int m_nTitleWidth;    //属性名占用空间
 		ORDERTYPE   m_orderType;
 		SList<SPropertyGroup *> m_lstGroup; //根分类列表

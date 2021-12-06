@@ -51,7 +51,7 @@ namespace SOUI
 
         virtual void DrawItem(IRenderTarget *pRT,CRect rc) =0;
         virtual void AdjustInplaceActiveWndRect(CRect & rc)=0;
-        virtual BOOL IsInplaceActive()=0;
+        virtual BOOL IsInplaceActive() const =0;
         virtual void OnInplaceActive(BOOL bActive)=0;
         virtual BOOL OnButtonClick()=0;
         virtual void OnValueChanged()=0;

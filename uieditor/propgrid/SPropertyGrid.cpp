@@ -5,8 +5,6 @@
 #include "propitem/SPropertyItem-Color.h"
 #include "propitem/SPropertyItem-Size.h"
 
-const int KPropItemIndent   = 10;
-
 namespace SOUI
 {
 	//////////////////////////////////////////////////////////////////////////
@@ -50,8 +48,7 @@ namespace SOUI
 
     //////////////////////////////////////////////////////////////////////////
     SPropertyGrid::SPropertyGrid(void)
-    :m_nIndent(KPropItemIndent)
-    ,m_nTitleWidth(100)
+    :m_nTitleWidth(100)
     ,m_switchSkin(NULL)
     ,m_bDraging(FALSE)
     ,m_pInplaceActiveWnd(NULL)
@@ -80,11 +77,6 @@ namespace SOUI
             pGroup->Release();        
         }
         m_lstGroup.RemoveAll();
-    }
-
-    int SPropertyGrid::GetIndent()
-    {
-        return m_nIndent;
     }
 
     void SPropertyGrid::OnItemExpanded( IPropertyItem *pItem)
@@ -133,7 +125,7 @@ namespace SOUI
         for(int i=0;i<GetCount();i++)
         {
             IPropertyItem *p = (IPropertyItem *)GetItemData(i);
-            if(pItem->GetName()<p->GetName()) 
+            if(pItem->GetName2()<p->GetName2()) 
             {
                 iInsert = i;
                 break;
@@ -162,28 +154,6 @@ namespace SOUI
 
         switch(m_orderType)
         {
-        case OT_NULL:
-            {
-                IPropertyItem *pChild=pGroup->GetItem(IPropertyItem::GPI_FIRSTCHILD);
-                while(pChild)
-                {
-                    InsertString(-1,NULL,-1,(LPARAM)pChild);
-                    pChild = pChild->GetItem(IPropertyItem::GPI_NEXTSIBLING);
-                }
-                //展开子项s
-                pChild=pGroup->GetItem(IPropertyItem::GPI_FIRSTCHILD);
-                while(pChild)
-                {
-                    if(pChild->ChildrenCount() && pChild->IsExpand())
-                    {
-                        int iInsert = IndexOfPropertyItem(pChild);
-                        ExpandChildren(pChild,iInsert);
-                    }
-                    pChild = pChild->GetItem(IPropertyItem::GPI_NEXTSIBLING);
-                }
-
-            }
-            break;
         case OT_GROUP:
             {
                 int iInserted = InsertString(-1,NULL,-1,(LPARAM)pGroup);
@@ -755,6 +725,66 @@ namespace SOUI
 			return CRect();
 		}
 
+	}
+
+	SPropertyGrid::ORDERTYPE SPropertyGrid::GetOrderType() const
+	{
+		return m_orderType;
+	}
+
+	void SPropertyGrid::SetOrderType(SPropertyGrid::ORDERTYPE type)
+	{
+		if(type == m_orderType)
+			return;
+		int nCurSel = GetCurSel();
+		IPropertyItem *pSelItem = NULL;
+		BOOL bActive = FALSE;
+		if(nCurSel != -1)
+		{
+			pSelItem = (IPropertyItem*)GetItemData(nCurSel);
+			bActive = pSelItem->IsInplaceActive();
+		}
+		if(bActive)
+		{
+			pSelItem->OnInplaceActive(FALSE);
+		}
+		m_orderType = type;
+		DeleteAll();
+		SList<SPropertyGroup*> groups;
+		m_lstGroup.Swap(groups);
+		SPOSITION pos = groups.GetHeadPosition();
+		while(pos)
+		{
+			SPropertyGroup *p = groups.GetNext(pos);
+			InsertGroup(p);
+			p->Release();
+		}
+		if(pSelItem)
+		{
+			int iItem = IndexOfPropertyItem(pSelItem);
+			if(iItem!=-1)
+			{
+				EnsureVisible(iItem);
+				SetCurSel(iItem);
+				if(bActive)
+				{
+					pSelItem->OnInplaceActive(TRUE);
+				}
+			}
+		}
+	}
+
+	LRESULT SPropertyGrid::OnAttrOrderType(const SStringW &strValue,BOOL bLoading)
+	{
+		ORDERTYPE orderType;
+		if(strValue.CompareNoCase(L"name")==0)
+			orderType = OT_NAME;
+		else if(strValue.CompareNoCase(L"group")==0)
+			orderType = OT_GROUP;
+		else
+			return E_INVALIDARG;
+		SetOrderType(orderType);
+		return bLoading?S_OK:S_FALSE;
 	}
 
 }

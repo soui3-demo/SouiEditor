@@ -8,6 +8,10 @@
     </caption>
     <splitcol size="-2,0" weight="1">
       <pane priority="1" idealSize="300" colorBkgnd="@color/white" layout="vbox">
+        <window size="-2,-1" layout="hbox">
+          <button size="30,30" name="btn_order_by_group" text="group"/>
+          <button size="30,30" name="btn_order_by_name" text="name"/>
+        </window>
         <propgrid size="-2,0" weight="1" name="propgrid_element" switchSkin="skin_prop_switch"	titleWidth="150" orderType="group" itemHeight="26" colorGroup="RGB(96,112,138)" colorTitle="rgb(255,0,0)" colorItemSel="rgb(234,128,16)" colorItemSelText="#FF0000">
           <cmdbtnstyle skin="_skin.sys.btn.normal">...</cmdbtnstyle>
           <editStyle colorBkgnd="#FFFFFF" colorText="#000000" autoWordSel="1"/>

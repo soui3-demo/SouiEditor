@@ -39,7 +39,7 @@ namespace SOUI
 
         virtual void AdjustInplaceActiveWndRect(CRect & rc){}
         virtual void DrawItem(IRenderTarget *pRT,CRect rc){}
-        virtual BOOL IsInplaceActive(){return m_bInplaceActive;}
+        virtual BOOL IsInplaceActive() const {return m_bInplaceActive;}
         virtual void OnInplaceActive(BOOL bActive){ m_bInplaceActive = bActive;}
         virtual BOOL OnButtonClick(){ return FALSE;}
         virtual void OnValueChanged();

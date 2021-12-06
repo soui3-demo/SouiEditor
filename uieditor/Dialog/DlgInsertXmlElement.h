@@ -17,9 +17,15 @@ namespace SOUI{
 
 		void OnPropValueChanged(EventArgs *e);
 		void OnPropItemActive(EventArgs *e);
+
+		void OnBtnOrderByGroup();
+		void OnBtnOrderByName();
+
 		EVENT_MAP_BEGIN()
 			EVENT_HANDLER(EventPropGridValueChanged::EventID,OnPropValueChanged)
 			EVENT_HANDLER(EventPropGridItemActive::EventID,OnPropItemActive)
+			EVENT_ID_COMMAND(R.id.btn_order_by_group,OnBtnOrderByGroup)
+			EVENT_ID_COMMAND(R.id.btn_order_by_name,OnBtnOrderByName)
 		EVENT_MAP_END()
 
 		BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
