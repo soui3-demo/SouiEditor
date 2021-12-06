@@ -303,3 +303,8 @@ pugi::xml_node CSysDataMgr::getSkinPropNode()
 {
 	return m_xmlSkinProp.root().child(L"root");
 }
+
+SOUI::SStringT CSysDataMgr::GetConfigDir() const
+{
+	return m_strConfigDir;
+}

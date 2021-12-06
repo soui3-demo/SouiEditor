@@ -24,7 +24,8 @@ public:
 
 	// 读取系统数据, 控件属性表
 	bool LoadSysData(LPCTSTR cfgDir);
-
+	
+	SStringT GetConfigDir() const;
 	void InitProperty();
 
 	void InitSkinProp();

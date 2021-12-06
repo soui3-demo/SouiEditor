@@ -17,8 +17,6 @@
 #include "DropTarget.h"
 #include "SToolBar.h"
 
-extern SStringT g_CurDir;
-
 #define MenuId_Start  20000
 
 

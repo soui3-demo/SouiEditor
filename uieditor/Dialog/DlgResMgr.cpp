@@ -2,7 +2,6 @@
 #include "DlgResMgr.h"
 #include "CDebug.h"
 
-#include "DlgNewSkin.h"
 #include "DlgInput.h"
 #include "ResManger.h"
 #include "helpapi.h"

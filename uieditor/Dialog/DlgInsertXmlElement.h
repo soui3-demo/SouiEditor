@@ -4,10 +4,10 @@
 #include "spugixml/pugixml.hpp"
 
 namespace SOUI{
-	class DlgInsertXmlElement : public SHostDialog, CScintillaWnd::IListener
+	class DlgInsertXmlElement : public SHostDialog
 	{
 	public:
-		DlgInsertXmlElement(void);
+		DlgInsertXmlElement(pugi::xml_node xmlInitProp);
 		~DlgInsertXmlElement(void);
 
 	public:
@@ -16,31 +16,28 @@ namespace SOUI{
 		void OnGetValue(IPropertyItem *pItem,BOOL bInsertXml);
 
 		void OnPropValueChanged(EventArgs *e);
+		void OnPropItemActive(EventArgs *e);
 		EVENT_MAP_BEGIN()
 			EVENT_HANDLER(EventPropGridValueChanged::EventID,OnPropValueChanged)
+			EVENT_HANDLER(EventPropGridItemActive::EventID,OnPropItemActive)
 		EVENT_MAP_END()
 
 		BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
 		void OnTimer(UINT_PTR id);
 		void OnDestroy();
+		void OnCommand(UINT uNotifyCode, int nID, HWND wndCtl);
+
 		BEGIN_MSG_MAP_EX(DlgInsertXmlElement)
 			MSG_WM_DESTROY(OnDestroy)
 			MSG_WM_INITDIALOG(OnInitDialog)
 			MSG_WM_TIMER(OnTimer)
+			MSG_WM_COMMAND(OnCommand)
 			CHAIN_MSG_MAP(SHostDialog)
 		END_MSG_MAP()
 
-
-	protected:
-		virtual void onScintillaChange();
-
-		virtual void onScintillaSave(LPCTSTR pszFileName);
-
-	public:
-		pugi::xml_node m_xmlInitProp;
-
 	private:
 		static BOOL OnEnumPropItem(IPropertyItem *pItem, void* opaque);
+		pugi::xml_node m_xmlInitProp;
 
 
 		spugi::xml_document m_xmlDoc;

@@ -3,7 +3,9 @@
 #include "propgrid/propitem/SPropertyItem-Option.h"
 
 namespace SOUI{
-	DlgInsertXmlElement::DlgInsertXmlElement(void):SHostDialog(_T("layout:UIDESIGNER_XML_INSERT_ELEMENT"))
+	DlgInsertXmlElement::DlgInsertXmlElement(pugi::xml_node xmlInitProp)
+		:SHostDialog(_T("layout:UIDESIGNER_XML_INSERT_ELEMENT"))
+		,m_xmlInitProp(xmlInitProp)
 	{
 	}
 
@@ -18,7 +20,6 @@ namespace SOUI{
 		SRealWnd *pReal = FindChildByName2<SRealWnd>(L"xml_editor");
 		pReal->GetRealHwnd();
 		m_xmlEditor = (CScintillaWnd*)pReal->GetUserData();
-		m_xmlEditor->SetListener(this);
 		
 		m_xmlDoc.root().append_child(S_CW2A(m_xmlInitProp.name(),CP_UTF8));
 
@@ -102,16 +103,6 @@ namespace SOUI{
 		}
 	}
 
-	void DlgInsertXmlElement::onScintillaChange()
-	{
-		m_bChanged = TRUE;
-	}
-
-	void DlgInsertXmlElement::onScintillaSave(LPCTSTR pszFileName)
-	{
-	}
-
-
 	void DlgInsertXmlElement::OnDestroy()
 	{
 		m_strXml = m_xmlEditor->GetWindowText();
@@ -121,6 +112,24 @@ namespace SOUI{
 	SStringA DlgInsertXmlElement::GetXml() const
 	{
 		return m_strXml;
+	}
+
+	void DlgInsertXmlElement::OnCommand(UINT uNotifyCode, int nID, HWND wndCtl)
+	{
+		if(wndCtl == m_xmlEditor->m_hWnd && uNotifyCode == EN_CHANGE)
+		{
+			m_bChanged = TRUE;
+		}else
+		{
+			SetMsgHandled(FALSE);
+		}
+	}
+
+	void DlgInsertXmlElement::OnPropItemActive(EventArgs *e)
+	{
+		EventPropGridItemActive *e2=sobj_cast<EventPropGridItemActive>(e);
+		FindChildByID(R.id.txt_prop_title)->SetWindowText(e2->pItem->GetTitle());
+		FindChildByID(R.id.txt_prop_desc)->SetWindowText(e2->pItem->GetDescription());
 	}
 
 

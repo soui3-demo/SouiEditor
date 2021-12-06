@@ -16,9 +16,9 @@
 #include "SImgCanvas.h"
 #include "Global.h"
 #include "Dialog/DlgResMgr.h"
-#include "Dialog/DlgFontSelect.h"
 #include "Dialog/DlgInsertXmlElement.h"
 
+extern SStringT g_CurDir;
 
 #define TIMERID_HEART		   101
 
@@ -66,9 +66,9 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	m_pDesigner = new CXmlEditor(this);
 	m_pDesigner->Init(this,this);
 
-	SApplication::getSingleton().SetFilePrefix(g_CurDir+L"Config");
-
-	g_SysDataMgr.LoadSysData(g_CurDir + L"Config");
+	SStringT strCfgDir = g_CurDir + "Config";
+	SApplication::getSingleton().SetFilePrefix(strCfgDir);
+	g_SysDataMgr.LoadSysData(strCfgDir);
 
 	{//init control listbox
 		CWidgetTBAdapter * pAdapter = new CWidgetTBAdapter(g_SysDataMgr.getCtrlDefNode(),this);
@@ -409,7 +409,7 @@ void CMainDlg::OnBtnNewLayout()
 	SDlgNewLayout DlgNewDialog(_T("layout:UIDESIGNER_XML_NEW_LAYOUT"), m_strProPath);
 	if (IDOK == DlgNewDialog.DoModal(m_hWnd))
 	{
-		CopyFile(g_CurDir + ("Config\\LayoutTmpl\\Dialog.xml"), DlgNewDialog.m_strPath, FALSE);
+		CopyFile(CSysDataMgr::getSingleton().GetConfigDir() + ("\\LayoutTmpl\\Dialog.xml"), DlgNewDialog.m_strPath, FALSE);
 		NewLayout(DlgNewDialog.m_strName, DlgNewDialog.m_strPath);
 
 		SStringT *strShortPath = new SStringT(DlgNewDialog.m_strPath.Mid(m_strProPath.GetLength() + 1));
@@ -432,7 +432,7 @@ void CMainDlg::OnBtnNewInclude()
 	SDlgNewLayout DlgNewDialog(_T("layout:UIDESIGNER_XML_NEW_LAYOUT"), m_strProPath);
 	if (IDOK == DlgNewDialog.DoModal(m_hWnd))
 	{
-		CopyFile(g_CurDir + _T("Config\\LayoutTmpl\\Include.xml"), DlgNewDialog.m_strPath, FALSE);
+		CopyFile(CSysDataMgr::getSingleton().GetConfigDir() + _T("\\LayoutTmpl\\Include.xml"), DlgNewDialog.m_strPath, FALSE);
 		NewLayout(DlgNewDialog.m_strName, DlgNewDialog.m_strPath);
 
 		SStringT *strShortPath = new SStringT(DlgNewDialog.m_strPath.Mid(m_strProPath.GetLength() + 1));
@@ -647,8 +647,7 @@ void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 {
 	SStringT skinName = info->strTxt;
 
-	DlgInsertXmlElement dlg;
-	dlg.m_xmlInitProp = g_SysDataMgr.getSkinPropNode().child(L"skins").child(skinName);
+	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinPropNode().child(L"skins").child(skinName));
 	if(IDOK==dlg.DoModal())
 	{
 		m_pDesigner->InsertText(dlg.GetXml());

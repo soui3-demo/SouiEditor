@@ -7,14 +7,18 @@
       <imgbtn id="IDCANCEL" skin="_skin.sys.btn.close" pos="-45,0" tip="close" animate="1" />
     </caption>
     <splitcol size="-2,0" weight="1">
-      <pane priority="1" idealSize="300" colorBkgnd="@color/white">
-        <propgrid size="-2,-2" name="propgrid_element" switchSkin="skin_prop_switch"	titleWidth="150" orderType="group" itemHeight="26" colorGroup="RGB(96,112,138)" colorTitle="rgb(255,0,0)" colorItemSel="rgb(234,128,16)" colorItemSelText="#FF0000">
+      <pane priority="1" idealSize="300" colorBkgnd="@color/white" layout="vbox">
+        <propgrid size="-2,0" weight="1" name="propgrid_element" switchSkin="skin_prop_switch"	titleWidth="150" orderType="group" itemHeight="26" colorGroup="RGB(96,112,138)" colorTitle="rgb(255,0,0)" colorItemSel="rgb(234,128,16)" colorItemSelText="#FF0000">
           <cmdbtnstyle skin="_skin.sys.btn.normal">...</cmdbtnstyle>
           <editStyle colorBkgnd="#FFFFFF" colorText="#000000" autoWordSel="1"/>
           <optionStyle dropDown="1" btnSkin="skin_open_menu_png" colorBkgnd="#ffffff" drawFocusRect="0" colorText="#000000">
             <liststyle colorBorder="#000000" margin-x="1" margin-y="1" colorText="#000000" colorSelText="#FFFFFF" colorItemBkgnd="#FFFFFF" colorItemSelBkgnd="#000088"/>
           </optionStyle>
         </propgrid>
+        <window size="-2,100" layout="vbox" colorBkgnd="RGB(96,112,138)" interval="5">
+          <text name="txt_prop_title" font="bold:1" />
+          <text size="-2,0" weight="1" name="txt_prop_desc" multiLines="1" valign="top"/>
+        </window>
       </pane>
       <pane priority="0" idealSize="100" colorBkgnd="#ffffff">
         <realwnd size="-2,-2" name="xml_editor" wndclass="scintilla" wndname="scintilla" />
