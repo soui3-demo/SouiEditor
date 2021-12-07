@@ -127,7 +127,8 @@ void CDesignWnd::OnPaint(HDC dc)
 			int xpos = 0, ypos = 0;
 			if (bm.bmWidth > bm.bmHeight)
 			{
-				dstH = (float)dstW / bm.bmWidth * dstH;
+				dstH = (float)bm.bmHeight / bm.bmWidth * dstW;
+				ypos = (rc.Height()-dstH)/2;
 			}else
 			{
 				dstW = (float)bm.bmWidth / bm.bmHeight * dstH;
