@@ -2,7 +2,7 @@
 
 <root>
 	<toolbar>
-		<icons class_name="imglist" name="widget_icons" src="file:img\skin_icons.png" states="9"/>
+		<icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="26"/>
 	</toolbar>
 <controls>
 		<!-- pos和size都不是必须的，设计器根据鼠标按下的位置设置pos -->
@@ -22,21 +22,19 @@
 
 		</scrollview>
 		
-		<AniImg>
+		<AniImg icon="2">
 			<animateimg pos="0,0" size="96,96" skin="_skin.sys.tree.checkbox" autostart="1"  speed = "100"/>
 		</AniImg>
 
-		<button>
+		<button icon="3">
 			<button pos="0,0" size="96,32" colorText="#000000" skin="_skin.sys.btn.normal" >按钮</button> 
 		</button>
 
-		<calendar> 
+		<calendar icon="4"> 
 			<calendar size="96,96" daySkin="_skin.sys.btn.normal" footerHeight="30"/>
 		</calendar>
 
-
-
-		<caption>
+		<caption  icon="0">
 			<caption pos="0,0" size="288, 32" show="1" font="adding:0">
 				<text pos="29,9">标题</text>
 				<imgbtn name="btn_close" skin="_skin.sys.btn.close"    pos="-45,0" tip="close" animate="1"/>
@@ -47,12 +45,15 @@
 		</caption>
 
 
-		<check>
+		<check icon="5">
 			<check pos="0,0" size="96,32" skin="_skin.sys.checkbox">复选框</check>  		
 		</check>
 
-
-		<combobox> 
+		<radio icon="6">
+			<radio pos="0,0" size="96,32">radio 1</radio>  		
+		</radio>
+		
+		<combobox icon="7"> 
 			<combobox size="120, 24" dropDown="1" dropHeight="150" dotted="0" animateTime="200" curSel="0" drawFocusRect="0" colorText="#000000ff" colorBkgnd="#FFFFFF">
 				<liststyle iconSkin="" itemSkin="" itemHeight="24" colorText="#000000" colorSelText="#FFFFFF" colorItemBkgnd="#FFFFFF" colorItemSelBkgnd="rgb(51,153,255)" />
 				<editstyle inset="5,0,5,0" colorText="#000000" align="left" colorBkgnd="#FFFFFF" />
@@ -69,7 +70,7 @@
 		</combobox>
 
 
-		<comboview>
+		<comboview icon="7">
 			<comboview size="120,24"  dropDown="0" dropHeight="200" animateTime="0"  ncSkin="_skin.sys.border" margin-x="2" margin-y="2" curSel="0" id_text="3">
 				<liststyle  ncSkin="_skin.sys.border" margin-x="2" margin-y="2" colorBkgnd="#ffffff">
 					<template itemHeight="44" colorHover="#cccccc" colorSelected="#0000ff">
@@ -84,58 +85,54 @@
 			</comboview>
 		</comboview>
 
-		<edit>
+		<edit icon="8">
 			<edit pos="0,0" size="96,24"  colorBkgnd="#FFFFFF" cueText="" colorText="#000000"/>		
 		</edit>
 
-		<flash>
+		<flash icon="9">
 			<flash pos="0,0" size="200,200"  url="" delay="1"/>
 		</flash>
 
-		<gif>
+		<gif icon="9">
 			<gifplayer pos="0,0, @96, @96" />
 		</gif>
 		
-		<group>
+		<group icon="10">
 			<group pos="0,0" size="120,120" align="left" headerHeight="0">组合框</group>
 		</group>
 
 
-		<hotkey>
+		<hotkey icon="10">
 			<hotkey size="96,24"/>		
 		</hotkey>
 
-		<水平线>
+		<水平线 icon="10">
 			<hr pos="0,0" size="200,1" mode="horizontal" colorLine="#ffFFFF"/>		
 		</水平线>
 
-		<垂直线>
+		<垂直线 icon="10">
 			<hr pos="0,0" size="1,200" mode="vertical" colorLine="#ffFFFF"/>		
 		</垂直线>		
 
-		<icon>
+		<icon icon="10">
 			<icon pos="0,0" src="ICON_LOGO:16"/>
 		</icon>
 
 
-		<img>
+		<img icon="10">
 			<img pos="0,0" size="120,120"/>
 		</img>
 
-		<imgbtn>
+		<imgbtn icon="10">
 			<imgbtn pos="0,0" size="96,32"  tip="" animate="1"/>
 		</imgbtn>		
 
-		<include>
-			<include src=""/>	
-		</include>
-
-		<link>
+		<link icon="11">
 			<link pos="0,0" size="200,24"  href="www.baidu.com"   cursor="hand" colorText="#FFFFFF" colorTextHover="rgb(231,155,64)" font="italic:1" fontHover="underline:1,italic:1" >点击进入百度</link>
 		</link>
 
 
-		<listbox>
+		<listbox icon="12">
 			<listbox pos="0,0" size="200,200" hotTrack="1"   itemHeight="30" colorText="#FFFFFF" colorSelText="#FFFFFF" colorItemSelBkgnd="rgb(234,128,16)" text-x="20">
 				<items>
 					<item text="item1" icon="1" data="100" />
@@ -148,7 +145,7 @@
 			</listbox>	
 		</listbox>
 
-		<listctrl>
+		<listctrl icon="12">
 			<listctrl pos="0,0" size="200,200" hotTrack="1" itemHeight="20" headerHeight="30"  font="underline:1" > 
 				<header align="left" itemSwapEnable="1" fixWidth="0" sortHeader="1">
 					<items>
@@ -161,7 +158,7 @@
 			</listctrl>	
 		</listctrl>
 
-		<listview>
+		<listview icon="13">
 			<listview size="120,120" dividerSize="5" wantTab="1">
 				<template itemHeight="50" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1">
 
@@ -170,7 +167,7 @@
 			</listview>
 		</listview>
 
-		<mclistview>
+		<mclistview icon="13">
 			<mclistview pos="5,[2,@200,@200" headerHeight="30">
 				<headerStyle align="center" itemSwapEnable="1" fixWidth="0" sortHeader="1" colorText="#000000ff">
 					<items>
@@ -198,63 +195,35 @@
 			</mclistview>	
 		</mclistview>
 
-		<mediaplayer>
-			<mediaplayer pos="0,0" size="200,200"  url="" delay="1"/>
-		</mediaplayer>			
-
-
-
-		<progress>
+		<progress icon="14">
 			<progress  pos="0,0" size="200,16" value="20" min="0" max="100" showPercent="1"/>
 		</progress>
 
 
-		<richedit>
+		<richedit icon="15">
 			<richedit  size="96,96" multilines="1" autovscroll="1" wordwrap="1"  margin-x="2" margin-y="2" cueText="">
           Richedit
 			</richedit>	
 		</richedit>		
 
-
-
-
-		<radio>
-			<radio pos="0,0" size="96,32" skin="_skin.sys.radio">单选框</radio>
-		</radio>
-
-		<realwnd>
+		<realwnd icon="15">
 			<realwnd pos="0,0" size="120,120" name="" wndclass="" id="" wndname="" />
 		</realwnd>  	
 
-		<RotateWindow>
-			<RotateWindow AnimImg="png:image_animation_foreground_png" size="270,270" msgTransparent="1" speed="2" turn="right">
-				<window pos="0,0,-0,-0" msgTransparent="1">
-					<text name="percent_wnd" colorText="#ffffff" font="size:40" pos="| -50,|-50" align="center" height="100" width="100">1%</text>
-				</window>
-			</RotateWindow>
-		</RotateWindow>
-
-		<scrollbar>
+		<scrollbar icon="16">
 			<scrollbar size="200,16" min="0" max="100" value="10" page="10" vertical="0"/>
 		</scrollbar>
 
-		<scrolltext>
-			<scrolltext size="200,24" show="1"  rollType="1" colorText="#ffffff" speed="10">落花是飘在风里的一首诗 无声却叫人心动 是否你能明白它的心思 它的温柔不休不止 落花是飘在风里的一首诗 写下秋天的心事 它只想留下最美的样子</scrolltext>
+		<scrolltext icon="16">
+			<scrolltext size="200,24" show="1"  rollType="1" colorText="#ffffff" speed="10">落花是飘在风里的一首诗 无声却叫人心动 是否你能明白它的心思 它的温柔不休不止 落花是飘在风里的一首诗 写下秋天的心事 它只想留下最美的样子			</scrolltext>
 		</scrolltext>
 
-
-		<scrollview>
-			<scrollview pos="0,0" size="200,200" viewSize="-1,-1"/>
-		</scrollview>		
-
-
-		<sliderbar>
-
+		<sliderbar icon="17">
 			<sliderbar size="120,24" thumbInRail="0"  alpha="200" width="200" value="20" min="0" max="100"/>
 		</sliderbar>
 
 
-		<spinButton>
+		<spinButton icon="18">
 			<window size="100,30" class="cls_edit" trackMouseEvent="1">
 				<edit pos="0,0,-16,-0" name="edit_spin" margin-x="0" margin-y="0"/>
 				<spinButton pos="[0,0,-0,-0" max="20" min="10" value="11" buddy="edit_spin"/>
@@ -262,7 +231,7 @@
 		</spinButton>
 
 
-		<splitcol>
+		<splitcol icon="19">
 			<splitcol  size="300,300" sepSize="6">
 				<pane idealSize="50" minSize="30" priority="1" clipClient="1">
 				</pane>
@@ -273,7 +242,7 @@
 			</splitcol>
 		</splitcol>
 
-		<splitrow>
+		<splitrow icon="19">
 			<splitrow  size="300,300" sepSize="6">
 				<pane idealSize="50" minSize="30" priority="1" clipClient="1">
 				</pane>
@@ -284,7 +253,7 @@
 			</splitrow>
 		</splitrow>
 
-		<tabctrl>
+		<tabctrl icon="20">
 			<tabctrl  pos="0,0" size="200,200"  tabAlign="left" tabSkin="" tabInterSize="2" tabWidth="70" tabHeight="30" colorText="#FFFFFF" focusable="0" show="1" curSel="0" >
 
 				<page title="页1" tip="提示1">
@@ -294,21 +263,11 @@
 			</tabctrl>  
 		</tabctrl>
 
-		<tabctrl2>			
-			<tabctrl2 size = "200, 200" font="face:微软雅黑,adding:-2" tabPos="10" tabAlign="top" colorText="#ffffff" pos="0,25,-0,-0" show="1" curSel="0" focusable="0" tabHeight="75" tabSkin="" iconSkin="" text-y="50" icon-x="12" tabInterSize="5">
-				<page2 title="页1" tip="页1" interval="50">
-				</page2>
-				<page2 title="页2" tip="页2">
-				</page2>
-			</tabctrl2>
-		</tabctrl2>	
-
-
-		<text>
+		<text icon="21">
 			<text pos="0,0">文本</text>
 		</text>
 
-		<tileview>
+		<tileview icon="22">
 			<tileview size="120,120"  wantTab="1" marginSize="5" >	
 				<template itemHeight="130" itemWidth="135" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1" skin="">
 					<img pos="|0,0,@100,@100" offset="-0.5,0" name="img_file_icon"/>
@@ -317,12 +276,12 @@
 			</tileview>
 		</tileview>
 
-		<toggle>
+		<toggle icon="23">
 			<toggle pos="0,0" offset="0,-0.5" name="tgl_switch" skin="_skin.sys.tree.toggle" />
 		</toggle>
 
 
-		<treectrl>
+		<treectrl icon="24">
 			<treectrl size="200,200"  itemHeight="30" checkBox="1" font="underline:1">
 				<item text="组织机构" img="0" selImg="1"  expand="1">
 					<item text="市场部" img="0" selImg="1">
@@ -345,9 +304,7 @@
 			</treectrl>
 		</treectrl>
 
-
-
-		<treeview>
+		<treeview icon="25">
 
 			<treeview size="200,200"  itemHeight="-1" colorItemBkgnd="#FFFFFF" colorItemSelBkgnd="#cccccc" indent="30">
 

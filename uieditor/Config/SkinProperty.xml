@@ -1,6 +1,6 @@
 <root>
 	<toolbar>
-		<icons class_name="imglist" name="skin_icon" src="file:img\skin_icons.png" states="9"/>
+		<icons class_name="imglist" name="skin_icon" src="file:img\skin_icons.png" states="10"/>
 	</toolbar>
 	<skins>
 	<base visible="0">
@@ -45,7 +45,7 @@
 	<imgframe2 icon="3" parent="imgframe"/>
 
 	
-	<Button icon="4" parent="base">
+	<Button icon="3" parent="base">
 			<groups>
 				<propgroup title="属性:  Button"  description="属性">
 					<propcolor title="colorBorder" name="colorBorder" value="" />						
@@ -66,7 +66,7 @@
 			</groups>
 	</Button>
 	
-	<gradation icon="5" parent="base">
+	<gradation icon="4" parent="base">
 			<groups>
 				<propgroup title="属性:  gradation"  description="属性">			
 					<proptext title="渐变起始颜色(colorFrom)" name="colorFrom" value=""/>
@@ -76,7 +76,7 @@
 			</groups>
 	</gradation>	
 
-	<scrollbar icon="6"  parent="imglist">
+	<scrollbar icon="5"  parent="imglist">
 			<groups>
 				<propgroup title="属性:  scrollbar"  description="属性">					
 					<proptext title="边缘不拉伸大小(margin)" name="margin" value=""/>
@@ -96,7 +96,7 @@
 			</propgroup>
 		</groups>
 	</Ani>
-	<gif icon="7" parent="Ani">
+	<gif icon="6" parent="Ani">
 			<groups>
 				<propgroup title="属性:  gif"  description="属性">
 					<proptext title="数据源(src)" name="src" value=""/>
@@ -104,7 +104,7 @@
 			</groups>
 	</gif>	
 	
-	<ColorRect icon="8" parent="base">
+	<ColorRect icon="7" parent="base">
 			<groups>
 				<propgroup title="属性:  ColorRect"  description="属性">
 					<propcolor title="normal" name="normal" value="" />						
@@ -117,7 +117,7 @@
 			</groups>
 	</ColorRect>
 	
-	<Shape icon="0"  parent="base">
+	<Shape icon="8"  parent="base">
 			<groups>
 				<propgroup title="属性:  Shape"  description="属性">
 					<propoption title="type" name="type" options="linear|radial|sweep"/>
@@ -132,7 +132,7 @@
 			</groups>
 	</Shape>
 
-	<Group icon="0"   parent="base">
+	<Group icon="9"   parent="base">
 			<groups>
 				<propgroup title="属性:  Group"  description="属性">
 					<proptext title="正常皮肤" name="normal" value=""/>
