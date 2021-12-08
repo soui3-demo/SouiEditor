@@ -280,8 +280,8 @@ public:
 	SStatic* m_textNodenum;			//当前编辑窗口的控件数量
 	SStatic* m_textCtrlTypename;	//显示选择的控件类型
 	
-	SListView * m_pLvSkin;
-	SListView * m_pLvWidget;
+	SListView * m_lvSkin;
+	SListView * m_lvWidget;
 
 	SStringT m_strUiresPath;	//uires.idx 的全路径
 	SStringT m_strProPath;

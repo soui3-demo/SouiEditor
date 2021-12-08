@@ -2,7 +2,7 @@
 
 <root>
 	<toolbar>
-		<icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="26"/>
+		<icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="31"/>
 	</toolbar>
 <controls>
 		<!-- pos和size都不是必须的，设计器根据鼠标按下的位置设置pos -->
@@ -102,28 +102,28 @@
 		</group>
 
 
-		<hotkey icon="10">
+		<hotkey icon="30">
 			<hotkey size="96,24"/>		
 		</hotkey>
 
-		<水平线 icon="10">
+		<水平线 icon="28">
 			<hr pos="0,0" size="200,1" mode="horizontal" colorLine="#ffFFFF"/>		
 		</水平线>
 
-		<垂直线 icon="10">
+		<垂直线 icon="29">
 			<hr pos="0,0" size="1,200" mode="vertical" colorLine="#ffFFFF"/>		
 		</垂直线>		
 
-		<icon icon="10">
+		<icon icon="27">
 			<icon pos="0,0" src="ICON_LOGO:16"/>
 		</icon>
 
 
-		<img icon="10">
+		<img icon="9">
 			<img pos="0,0" size="120,120"/>
 		</img>
 
-		<imgbtn icon="10">
+		<imgbtn icon="26">
 			<imgbtn pos="0,0" size="96,32"  tip="" animate="1"/>
 		</imgbtn>		
 

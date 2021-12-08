@@ -58,8 +58,8 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 
 	m_tabWorkspace = FindChildByName2<STabCtrl>(L"workspace_tab");
 
-	m_pLvSkin = FindChildByName2<SListView>(L"lv_tb_skin");
-	m_pLvWidget = FindChildByName2<SListView>(L"lv_tb_widget");
+	m_lvSkin = FindChildByName2<SListView>(L"lv_tb_skin");
+	m_lvWidget = FindChildByName2<SListView>(L"lv_tb_widget");
 
 	m_RecentFileMenu.LoadMenu(UIRES.smenu.menu_recent);
 	//======================================================================
@@ -72,12 +72,12 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 
 	{//init control listbox
 		CWidgetTBAdapter * pAdapter = new CWidgetTBAdapter(g_SysDataMgr.getCtrlDefNode(),this);
-		m_pLvWidget->SetAdapter(pAdapter);
+		m_lvWidget->SetAdapter(pAdapter);
 		pAdapter->Release();
 	}
 	{//init skin listbox
 		CSkinTBAdapter * pAdapter = new CSkinTBAdapter(g_SysDataMgr.getSkinPropNode(),this);
-		m_pLvSkin->SetAdapter(pAdapter);
+		m_lvSkin->SetAdapter(pAdapter);
 		pAdapter->Release();
 	}
 
@@ -283,7 +283,10 @@ void CMainDlg::CloseProject()
 	m_pDesigner->CloseProject();
 	m_treePro->RemoveAllItems();
 	m_lbWorkSpaceXml->DeleteAll();
-	m_UIResFileMgr.ReleaseUIRes();
+	m_UIResFileMgr.ReleaseUIRes();	
+
+	m_lvSkin->SetVisible(FALSE,TRUE);
+	m_lvWidget->SetVisible(FALSE,TRUE);
 
 	SendMsgToViewer(exitviewer_id, NULL, 0);
 	m_bIsOpen = FALSE;
@@ -506,8 +509,8 @@ void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 		}
 	}
 	m_pDesigner->LoadXml(*s, strLayoutName);
-	m_pLvWidget->SetVisible(TRUE,TRUE);
-	m_pLvSkin->SetVisible(FALSE,TRUE);
+	m_lvWidget->SetVisible(TRUE,TRUE);
+	m_lvSkin->SetVisible(FALSE,TRUE);
 }
 
 
@@ -549,9 +552,9 @@ void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
 		}
 		m_pDesigner->LoadXml(filename,SStringT());
 
-		m_pLvWidget->SetVisible(FALSE,TRUE);
+		m_lvWidget->SetVisible(FALSE,TRUE);
 		BOOL bSkin = filename.EndsWith(_T("skin.xml"));
-		m_pLvSkin->SetVisible(bSkin,TRUE);
+		m_lvSkin->SetVisible(bSkin,TRUE);
 
 	}
 }
