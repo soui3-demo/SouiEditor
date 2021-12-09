@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <set>
 
 class CSysDataMgr : public SOUI::SSingleton<CSysDataMgr>
 {
@@ -42,6 +43,10 @@ public:
 	// 获取指定控件的自动完成字串
 	SStringA GetCtrlAttrAutos(SStringT ctrlname);
 
+	SStringA GetSkinAutos();
+
+	SStringA GetSkinAttrAutos(SStringW skinName);
+
 	pugi::xml_node getCtrlDefNode();
 
 	pugi::xml_node getSkinPropNode();
@@ -52,6 +57,7 @@ public:
 
 	pugi::xml_document m_xmlSkinProp;
 private:
+	void _GetSkinAttrs(SStringW skinName,std::set<SStringW> &attrs);
 	static int textCmp(const void * p1, const void*p2)
 	{
 		const SStringT *tag1 = (const SStringT*)p1;

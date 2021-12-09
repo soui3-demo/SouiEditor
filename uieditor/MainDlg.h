@@ -161,19 +161,17 @@ private:
 
 class CMainDlg : public SHostWnd, STreeCtrl::IListener,CScintillaWnd::IListener,public CDropTarget::IDropListener, CWidgetTBAdapter::IListener, CSkinTBAdapter::IListener
 {
+	enum XmlType{
+		XML_LAYOUT,
+		XML_SKIN,
+		XML_UNKNOWN,
+	};
 public:
 	CMainDlg();
 	~CMainDlg();
 
-	void OnClose();
-	void OnMaximize();
-	void OnRestore();
-	void OnMinimize();
-	void OnSize(UINT nType, CSize size);
-	void OnShowWindow(BOOL bShow, UINT nStatus);
-
-	BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
-
+	void SendMsgToViewer(int msgid, const void* pMsgData, int msglen);
+protected:
 	void LoadAppCfg();
 
 	void SaveAppCfg();
@@ -182,6 +180,23 @@ public:
 	void ReloadWorkspaceUIRes();
 	void CloseProject();
 
+	void UpdateToolbar();
+protected:
+	void onScintillaSave(CScintillaWnd *pSci,LPCTSTR pszFileName) override;
+	void onScintillaAutoComplete(CScintillaWnd *pSci,char c) override;
+protected:
+	BOOL OnDrop(LPCTSTR pszName) override;
+	void OnInsertWidget(CWidgetTBAdapter::IconInfo *info) override;
+	void OnInertSkin(CSkinTBAdapter::IconInfo * info) override;
+	void OnDeleteItem(STreeCtrl *pTreeCtrl,HSTREEITEM hItem,LPARAM lParam) override;
+protected:
+	//soui消息
+	bool OnTreeproContextMenu(CPoint pt);
+	void OnAutoCheck(EventArgs *e);
+	void OnClose();
+	void OnMaximize();
+	void OnRestore();
+	void OnMinimize();
 	void OnBtnOpen(); //打开工程
 	void OnBtnClose();
 	void OnBtnSave(); //保存布局
@@ -190,31 +205,10 @@ public:
 	void OnBtnResMgr();
 	void OnBtnAbout();
 	void OnBtnRecentFile();
-
 	void OnTreeItemDbClick(EventArgs *pEvtBase);
-
 	void OnWorkspaceXMLDbClick(EventArgs *pEvtBase);
-
-	void SendMsgToViewer(int msgid, const void* pMsgData, int msglen);
-
-protected:
-	BOOL OnDrop(LPCTSTR pszName) override;
-	void onScintillaSave(LPCTSTR pszFileName) override;
-	void OnInsertWidget(CWidgetTBAdapter::IconInfo *info) override;
-	void OnInertSkin(CSkinTBAdapter::IconInfo * info) override;
-	void OnDeleteItem(STreeCtrl *pTreeCtrl,HSTREEITEM hItem,LPARAM lParam) override;
-protected:
-	bool OnTreeproContextMenu(CPoint pt);
-	
-	void OnTimer(UINT_PTR timeID);
-
-	void OnCommand(UINT uNotifyCode, int nID, HWND wndCtl);
-
-	void OnAutoCheck(EventArgs *e);
-
-	//soui消息
 	EVENT_MAP_BEGIN()
-		if(m_pDesigner) CHAIN_EVENT_MAP_MEMBER((*m_pDesigner))
+		if(m_pXmlEdtior) CHAIN_EVENT_MAP_MEMBER((*m_pXmlEdtior))
 		EVENT_NAME_COMMAND(L"btn_close", OnClose)
 		EVENT_NAME_COMMAND(L"btn_min", OnMinimize)
 		EVENT_NAME_COMMAND(L"btn_max", OnMaximize)
@@ -236,10 +230,16 @@ protected:
 		EVENT_ID_HANDLER(R.id.chk_autosave,EventSwndStateChanged::EventID,OnAutoCheck)
 	EVENT_MAP_END()
 
-	LRESULT OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp);
+protected:
 	//HostWnd真实窗口消息处理
+	void OnSize(UINT nType, CSize size);
+	void OnShowWindow(BOOL bShow, UINT nStatus);
+	void OnTimer(UINT_PTR timeID);
+	void OnCommand(UINT uNotifyCode, int nID, HWND wndCtl);
+	BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
+	LRESULT OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp);
 	BEGIN_MSG_MAP_EX(CMainDlg)
-		if(m_pDesigner) CHAIN_MSG_MAP_MEMBER((*m_pDesigner))
+		if(m_pXmlEdtior) CHAIN_MSG_MAP_MEMBER((*m_pXmlEdtior))
 		MSG_WM_INITDIALOG(OnInitDialog)
 		MSG_WM_CLOSE(OnClose)
 		MSG_WM_SIZE(OnSize)
@@ -274,7 +274,8 @@ public:
 
 	ResManger m_UIResFileMgr;	// 管理编辑的UI文件资源
 
-	CXmlEditor *m_pDesigner;
+	CXmlEditor *m_pXmlEdtior;
+	XmlType		m_editXmlType;
 
 	SStatic* m_staticAppTitle;		//软件标题
 	SStatic* m_textNodenum;			//当前编辑窗口的控件数量

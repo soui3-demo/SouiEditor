@@ -8,12 +8,8 @@
 #include "Scintilla.h"
 #include "SciLexer.h"
 #include "xpm_icons.h"
-#include "SysdataMgr.h"
-#include "MainDlg.h"
 
 #define STR_SCINTILLAWND _T("Scintilla")
-
-extern CMainDlg* g_pMainDlg;
 
 //////////////////////////////////////////////////////////////////////////
 CScintillaModule::CScintillaModule()
@@ -214,7 +210,7 @@ BOOL CScintillaWnd::SaveFile(LPCTSTR lpFileName)
 	SendMessage(SCI_SETSAVEPOINT);
 	if(m_pListener)
 	{
-		m_pListener->onScintillaSave(lpFileName);
+		m_pListener->onScintillaSave(this,lpFileName);
 	}
 	return TRUE;
 }
@@ -405,11 +401,11 @@ bool CScintillaWnd::doMatch()           //匹配括号并加亮缩进向导
 	return (braceAtCaret != -1);
 }
 
-SStringT CScintillaWnd::GetHtmlTagname(int &tagStartPos)
+SStringA CScintillaWnd::GetHtmlTagName(int &tagStartPos)
 {
 	int caretPos = int(SendEditor(SCI_GETCURRENTPOS));
-	TCHAR charBefore = '\0';
-	SStringT tagname;
+	char charBefore = '\0';
+	SStringA tagname;
 	int lengthDoc = int(SendEditor(SCI_GETLENGTH));
 	tagStartPos = -1;
 	
@@ -419,7 +415,7 @@ SStringT CScintillaWnd::GetHtmlTagname(int &tagStartPos)
 		int nameend = 0;
 		do
 		{
-			charBefore = TCHAR(SendEditor(SCI_GETCHARAT, --namestart, 0));
+			charBefore = char(SendEditor(SCI_GETCHARAT, --namestart, 0));
 		} while (charBefore != '<' && namestart >= 0);
 
 		if (namestart >= 0)
@@ -428,7 +424,7 @@ SStringT CScintillaWnd::GetHtmlTagname(int &tagStartPos)
 			nameend = namestart + 1;
 			while (nameend <= caretPos)
 			{
-				charBefore = TCHAR(SendEditor(SCI_GETCHARAT, nameend++, 0));
+				charBefore = char(SendEditor(SCI_GETCHARAT, nameend++, 0));
 				if (charBefore == ' ')
 					break;
 
@@ -448,26 +444,18 @@ SStringA CScintillaWnd::GetNotePart(int curPos)
 	if (curPos == startPos)
 		return tagname;
 
+	Sci_TextRange sci_tr;
+	sci_tr.chrg.cpMin = min(curPos,startPos);
+	sci_tr.chrg.cpMax = max(curPos,startPos);
+
+	int len = sci_tr.chrg.cpMax - sci_tr.chrg.cpMin;
+
 	const int wordMaxSize = 64;
-	char name[wordMaxSize] = {0};
-	int len = (curPos > startPos) ? (curPos - startPos) : (startPos - curPos);
 	if (len < wordMaxSize)
 	{
-		Sci_TextRange sci_tr;
-		if (curPos > startPos)
-		{
-			sci_tr.chrg.cpMin = startPos;
-			sci_tr.chrg.cpMax = curPos;
-		}
-		else
-		{
-			sci_tr.chrg.cpMin = curPos;
-			sci_tr.chrg.cpMax = startPos;
-		}
-
-		sci_tr.lpstrText = name;
+		char szBuf[wordMaxSize] = {0};
+		sci_tr.lpstrText = szBuf;
 		SendEditor(SCI_GETTEXTRANGE, 0, reinterpret_cast<LPARAM>(&sci_tr));
-
 		tagname = sci_tr.lpstrText;
 	}
 
@@ -476,59 +464,11 @@ SStringA CScintillaWnd::GetNotePart(int curPos)
 	return tagname;
 }
 
-void CScintillaWnd::ShowAutoComplete(const char ch)
+void CScintillaWnd::ShowAutoComplete(char ch)
 {
 	if (SendEditor(SCI_AUTOCACTIVE, 0, 0) != 0)
 		return;
-
-	long lStart = SendEditor(SCI_GETCURRENTPOS, 0, 0);
-	int startPos = SendEditor(SCI_WORDSTARTPOSITION, lStart, true);
-
-	if (ch == '.')
-	{
-		SStringA str = g_pMainDlg->m_UIResFileMgr.GetSkinAutos(_T(""));
-		if (!str.IsEmpty())
-		{
-			SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
-		}
-	}
-	else if (ch == '/')
-	{
-		SStringA clsName = GetNotePart(lStart - 1);
-		SStringA str;
-		if (clsName.IsEmpty())
-			str = g_pMainDlg->m_UIResFileMgr.GetStyleAutos(_T(""));
-		else if (clsName.CompareNoCase("color") == 0)
-			str = g_pMainDlg->m_UIResFileMgr.GetColorAutos(_T(""));
-		else if (clsName.CompareNoCase("string") == 0)
-			str = g_pMainDlg->m_UIResFileMgr.GetStringAutos(_T(""));
-
-		if (!str.IsEmpty())
-		{
-			SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
-		}
-	}
-	else if (ch == '<')
-	{
-		SStringA str = CSysDataMgr::getSingleton().GetCtrlAutos();
-		if (!str.IsEmpty())
-		{
-			SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
-		}
-	}
-	else if (ch >= 'a' && ch <= 'z')
-	{
-		int tagpos = -1;
-		SStringT tagname = GetHtmlTagname(tagpos);
-		if (!tagname.IsEmpty())
-		{
-			SStringA str = CSysDataMgr::getSingleton().GetCtrlAttrAutos(tagname);
-			if (!str.IsEmpty())
-			{	// 自动完成字串要进行升充排列, 否则功能不正常
-				SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
-			}
-		}		
-	}
+	m_pListener->onScintillaAutoComplete(this,ch);
 }
 
 LRESULT CScintillaWnd::OnNotify(int idCtrl, LPNMHDR pnmh)
@@ -711,4 +651,9 @@ void CScintillaWnd::SetListener(IListener *pListener)
 void CScintillaWnd::ReplaseSel(LPCSTR text)
 {
 	SendEditor(SCI_REPLACESEL,0,(LPARAM)text);
+}
+
+LRESULT CScintillaWnd::SendEditor(UINT Msg, WPARAM wParam/*=0*/, LPARAM lParam/*=0*/)
+{
+	return SendMessage(Msg, wParam, lParam);
 }

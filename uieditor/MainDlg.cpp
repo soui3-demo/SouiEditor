@@ -24,11 +24,10 @@ extern SStringT g_CurDir;
 
 #define UIRES_FILE	L"uires.idx"
 //////////////////////////////////////////////////////////////////////////
-CMainDlg* g_pMainDlg = NULL;
 CSysDataMgr g_SysDataMgr;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-CMainDlg::CMainDlg() : SHostWnd(_T("LAYOUT:XML_MAINWND")),m_pDesigner(NULL),m_bAutoSave(TRUE)
+CMainDlg::CMainDlg() : SHostWnd(_T("LAYOUT:XML_MAINWND")),m_pXmlEdtior(NULL),m_bAutoSave(TRUE),m_editXmlType(XML_UNKNOWN)
 {
 	m_hViewer = NULL;
 }
@@ -39,7 +38,6 @@ CMainDlg::~CMainDlg()
 
 BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 {
-	g_pMainDlg = this;
 	m_strOrigTitle = GETSTRING(R.string.title);
 
 	m_bIsOpen = FALSE;
@@ -63,8 +61,8 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 
 	m_RecentFileMenu.LoadMenu(UIRES.smenu.menu_recent);
 	//======================================================================
-	m_pDesigner = new CXmlEditor(this);
-	m_pDesigner->Init(this,this);
+	m_pXmlEdtior = new CXmlEditor(this);
+	m_pXmlEdtior->Init(this,this);
 
 	SStringT strCfgDir = g_CurDir + "Config";
 	SApplication::getSingleton().SetFilePrefix(strCfgDir);
@@ -280,13 +278,13 @@ void CMainDlg::OnBtnClose()
 void CMainDlg::CloseProject()
 {
 	m_xmlDocUiRes.reset();
-	m_pDesigner->CloseProject();
+	m_pXmlEdtior->CloseProject();
 	m_treePro->RemoveAllItems();
 	m_lbWorkSpaceXml->DeleteAll();
 	m_UIResFileMgr.ReleaseUIRes();	
 
-	m_lvSkin->SetVisible(FALSE,TRUE);
-	m_lvWidget->SetVisible(FALSE,TRUE);
+	m_editXmlType = XML_UNKNOWN;
+	UpdateToolbar();
 
 	SendMsgToViewer(exitviewer_id, NULL, 0);
 	m_bIsOpen = FALSE;
@@ -329,7 +327,7 @@ void CMainDlg::OpenProject(SStringT strFileName)
 		return;
 	}
 	m_strUIResFile = strFileName;
-	m_pDesigner->SetProjectPath(strFileName);
+	m_pXmlEdtior->SetProjectPath(strFileName);
 
 
 	pugi::xml_node xmlType = m_xmlDocUiRes.child(L"resource").first_child();
@@ -399,7 +397,7 @@ void CMainDlg::ReloadWorkspaceUIRes()
 
 void CMainDlg::OnBtnSave()
 {
-	m_pDesigner->SaveFile();
+	m_pXmlEdtior->SaveFile();
 }
 
 void CMainDlg::OnBtnNewLayout()
@@ -493,7 +491,7 @@ void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 	SStringT strLayoutName;
 	tree->GetItemText(pEvt->hItem, strLayoutName);
 
-	if(m_pDesigner->isDirty())
+	if(m_pXmlEdtior->isDirty())
 	{
 		if(m_bAutoSave) 
 			OnBtnSave();
@@ -508,9 +506,9 @@ void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 			}
 		}
 	}
-	m_pDesigner->LoadXml(*s, strLayoutName);
-	m_lvWidget->SetVisible(TRUE,TRUE);
-	m_lvSkin->SetVisible(FALSE,TRUE);
+	m_pXmlEdtior->LoadXml(*s, strLayoutName);
+	m_editXmlType = XML_LAYOUT;
+	UpdateToolbar();
 }
 
 
@@ -535,7 +533,7 @@ void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
 		else
 			filename += p->m_value;
 
-		if(m_pDesigner->isDirty())
+		if(m_pXmlEdtior->isDirty())
 		{
 			if(m_bAutoSave) 
 				OnBtnSave();
@@ -550,12 +548,11 @@ void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
 				}
 			}
 		}
-		m_pDesigner->LoadXml(filename,SStringT());
+		m_pXmlEdtior->LoadXml(filename,SStringT());
 
-		m_lvWidget->SetVisible(FALSE,TRUE);
 		BOOL bSkin = filename.EndsWith(_T("skin.xml"));
-		m_lvSkin->SetVisible(bSkin,TRUE);
-
+		m_editXmlType = bSkin?XML_SKIN:XML_UNKNOWN;
+		UpdateToolbar();
 	}
 }
 
@@ -627,11 +624,6 @@ void CMainDlg::OnDeleteItem(STreeCtrl *pTreeCtrl,HSTREEITEM hItem,LPARAM lParam)
 }
 
 
-void CMainDlg::onScintillaSave(LPCTSTR pszFileName)
-{
-	m_UIResFileMgr.onXmlSave(pszFileName);
-}
-
 BOOL CMainDlg::OnDrop(LPCTSTR pszName)
 {
 	SStringT strName(pszName);
@@ -643,7 +635,7 @@ BOOL CMainDlg::OnDrop(LPCTSTR pszName)
 
 void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 {
-	m_pDesigner->InsertText(info->strContent);
+	m_pXmlEdtior->InsertText(info->strContent);
 }
 
 void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
@@ -653,7 +645,7 @@ void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinPropNode().child(L"skins"),skinName);
 	if(IDOK==dlg.DoModal())
 	{
-		m_pDesigner->InsertText(dlg.GetXml());
+		m_pXmlEdtior->InsertText(dlg.GetXml());
 	}
 }
 
@@ -663,5 +655,78 @@ void CMainDlg::OnAutoCheck(EventArgs *e)
 	if(e2->CheckState(WndState_Check))
 	{
 		m_bAutoSave = e2->dwNewState&WndState_Check;
+	}
+}
+
+
+void CMainDlg::onScintillaSave(CScintillaWnd *pSci,LPCTSTR pszFileName)
+{
+	m_UIResFileMgr.onXmlSave(pszFileName);
+}
+
+void CMainDlg::onScintillaAutoComplete(CScintillaWnd *pSci,char ch)
+{
+	if(m_editXmlType == XML_UNKNOWN)
+		return;
+
+	long lStart = pSci->SendEditor(SCI_GETCURRENTPOS, 0, 0);
+	int startPos = pSci->SendEditor(SCI_WORDSTARTPOSITION, lStart, true);
+
+	if (ch == '/')
+	{
+		SStringA clsName = pSci->GetNotePart(lStart - 1);
+		SStringA str;
+		if (clsName.CompareNoCase("color") == 0)
+			str = m_UIResFileMgr.GetColorAutos(_T(""));
+		else if (clsName.CompareNoCase("string") == 0)
+			str = m_UIResFileMgr.GetStringAutos(_T(""));
+
+		if (!str.IsEmpty())
+		{
+			pSci->SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
+		}
+	}
+	else if (ch == '<')
+	{//start element
+		SStringA strAutoShow = m_editXmlType == XML_LAYOUT? CSysDataMgr::getSingleton().GetCtrlAutos()
+			:CSysDataMgr::getSingleton().GetSkinAutos();
+		if (!strAutoShow.IsEmpty())
+		{
+			pSci->SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)strAutoShow.c_str());
+		}
+	}
+	else if (ch >= 'a' && ch <= 'z')
+	{
+		int tagpos = -1;
+		SStringA tagname = pSci->GetHtmlTagName(tagpos);
+		if (!tagname.IsEmpty())
+		{
+			SStringW strTag = S_CA2W(tagname,CP_UTF8);
+			SStringA str = m_editXmlType == XML_LAYOUT?CSysDataMgr::getSingleton().GetCtrlAttrAutos(strTag)
+				:CSysDataMgr::getSingleton().GetSkinAttrAutos(strTag);
+			if (!str.IsEmpty())
+			{	// 自动完成字串要进行升充排列, 否则功能不正常
+				pSci->SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
+			}
+		}		
+	}
+}
+
+void CMainDlg::UpdateToolbar()
+{
+	switch(m_editXmlType)
+	{
+	case XML_LAYOUT:
+		m_lvWidget->SetVisible(TRUE,TRUE);
+		m_lvSkin->SetVisible(FALSE,TRUE);
+		break;
+	case XML_SKIN:
+		m_lvWidget->SetVisible(FALSE,TRUE);
+		m_lvSkin->SetVisible(TRUE,TRUE);
+		break;
+	default:
+		m_lvWidget->SetVisible(FALSE,TRUE);
+		m_lvSkin->SetVisible(FALSE,TRUE);
+		break;
 	}
 }

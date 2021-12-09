@@ -222,27 +222,15 @@ void CSysDataMgr::InitCtrlProperty(pugi::xml_node NodeCom, pugi::xml_node NodeCt
 
 SStringA CSysDataMgr::GetCtrlAutos()
 {
-	std::vector<SStringT> vecTemp;
-	SPOSITION pos = m_mapControl.GetStartPosition();
-	while (pos)
-	{
-		const SMap<SStringT, CTRL_ATTR_VALUE *>::CPair* item = m_mapControl.GetAt(pos);
-		vecTemp.push_back(item->m_key);
-
-		m_mapControl.GetNext(pos);
-	}
-	std::sort(vecTemp.begin(), vecTemp.end(), SortSStringNoCase);
-
 	SStringT strAuto;
-	std::vector<SStringT>::iterator it = vecTemp.begin();
-	for (; it != vecTemp.end(); it++)
+	pugi::xml_node xmlCtrl = getCtrlDefNode().child(L"controls").first_child();
+	while(xmlCtrl)
 	{
-		strAuto += *it + _T(" ");
+		strAuto += xmlCtrl.name();
+		strAuto += _T(' ');
+		xmlCtrl = xmlCtrl.next_sibling();
 	}
-	strAuto.TrimRight(' ');
-
-	SStringA str = S_CW2A(strAuto, CP_UTF8);
-	return str;
+	return S_CW2A(strAuto, CP_UTF8);
 }
 
 SStringA CSysDataMgr::GetCtrlAttrAutos(SStringT ctrlname)
@@ -307,4 +295,63 @@ pugi::xml_node CSysDataMgr::getSkinPropNode()
 SOUI::SStringT CSysDataMgr::GetConfigDir() const
 {
 	return m_strConfigDir;
+}
+
+SOUI::SStringA CSysDataMgr::GetSkinAutos()
+{
+	std::set<SStringW> skins;
+	pugi::xml_node xmlSkin = getSkinPropNode().child(L"skins").first_child();
+	while(xmlSkin)
+	{
+		if(xmlSkin.attribute(L"visible").as_bool(true))
+		{
+			skins.insert(xmlSkin.name());
+		}
+		xmlSkin = xmlSkin.next_sibling();
+	}
+	SStringW strAuto;
+	std::set<SStringW>::iterator it = skins.begin();
+	while(it!=skins.end())
+	{
+		strAuto += *it + L" ";
+		it++;
+	}
+	strAuto.TrimRight();
+	return S_CW2A(strAuto,CP_UTF8);
+}
+
+SOUI::SStringA CSysDataMgr::GetSkinAttrAutos(SStringW skinName)
+{
+	std::set<SStringW> attrs;
+	_GetSkinAttrs(skinName,attrs);
+	SStringW strAuto;
+	std::set<SStringW>::iterator it = attrs.begin();
+	while(it!=attrs.end())
+	{
+		strAuto += *it + L" ";
+		it++;
+	}
+	strAuto.TrimRight();
+	return S_CW2A(strAuto,CP_UTF8);
+}
+
+void CSysDataMgr::_GetSkinAttrs(SStringW skinName,std::set<SStringW> &attrs)
+{
+	pugi::xml_node xmlSkin = getSkinPropNode().child(L"skins").child(skinName);
+	if(xmlSkin)
+	{
+		pugi::xml_node skinAttr = xmlSkin.child(L"groups").child(L"propgroup").first_child();
+		while(skinAttr)
+		{
+			if(skinAttr.attribute(L"name"))
+			{
+				attrs.insert(skinAttr.attribute(L"name").as_string());
+			}
+			skinAttr = skinAttr.next_sibling();
+		}
+		if(xmlSkin.attribute(L"parent"))
+		{
+			_GetSkinAttrs(xmlSkin.attribute(L"parent").as_string(),attrs);
+		}
+	}
 }

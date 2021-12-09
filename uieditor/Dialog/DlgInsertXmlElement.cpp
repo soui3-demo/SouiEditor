@@ -23,7 +23,7 @@ namespace SOUI{
 		pReal->GetRealHwnd();
 		m_xmlEditor = (CScintillaWnd*)pReal->GetUserData();
 		
-		m_xmlDoc.root().append_child(S_CW2A(m_xmlInitProp.name(),CP_UTF8));
+		m_xmlDoc.root().append_child(S_CW2A(m_strNodeName,CP_UTF8));
 
 		m_propgrid->EnumProp(&DlgInsertXmlElement::OnEnumPropItem,this);
 
@@ -108,6 +108,7 @@ namespace SOUI{
 	void DlgInsertXmlElement::OnDestroy()
 	{
 		m_strXml = m_xmlEditor->GetWindowText();
+		m_strXml += "\0x0a\0x0d";
 		__super::OnDestroy();
 	}
 

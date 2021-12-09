@@ -22,7 +22,8 @@ class CScintillaWnd : public SNativeWnd
 public:
 	struct IListener
 	{
-		virtual void onScintillaSave(LPCTSTR pszFileName) = 0;
+		virtual void onScintillaSave(CScintillaWnd *pSci,LPCTSTR pszFileName) {}
+		virtual void onScintillaAutoComplete(CScintillaWnd *pSci,char c) {}
 	};
 
 public:
@@ -41,9 +42,7 @@ public:
 	LPCTSTR GetOpenedFileName(){return m_strFileName;}
 	void SetOpenedFileName(LPCTSTR pszFileName){m_strFileName=pszFileName;}
 
-	LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0) {
-		return SendMessage(Msg, wParam, lParam);
-	}
+	LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0);
 	void GotoFoundLine();
 
 	void GotoPos(int nPos);
@@ -52,13 +51,17 @@ public:
 	
 	SStringA GetWindowText();
 
-	SStringT GetHtmlTagname(int &tagStartPos);
+	SStringA GetHtmlTagName(int &tagStartPos);
 	
 	void SetSel(int nBegin,int nEnd);
 
 	void ReplaseSel(LPCSTR text);
 
 	void SetListener(IListener *pListener);
+
+	void GetRange(int start, int end, char* text);
+
+	SStringA GetNotePart(int curPos);
 protected:
 	// 显示行号
 	void UpdateLineNumberWidth(void);
@@ -71,11 +74,9 @@ protected:
 	void findMatchingBracePos(int & braceAtCaret, int & braceOpposite);
 	bool doMatch(); //匹配括号并加亮缩进向导;
 
-	SStringA GetNotePart(int curPos);
 
-	void ShowAutoComplete(const char ch);
+	void ShowAutoComplete(char ch);
 	
-	void GetRange(int start, int end, char* text);
 
 	void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 

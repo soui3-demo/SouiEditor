@@ -4,7 +4,7 @@
 	<toolbar>
 		<icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="31"/>
 	</toolbar>
-<controls>
+	<controls>
 		<!-- pos和size都不是必须的，设计器根据鼠标按下的位置设置pos -->
 		<!-- 控件的大小最好是8的倍数，方便对齐 -->
 
