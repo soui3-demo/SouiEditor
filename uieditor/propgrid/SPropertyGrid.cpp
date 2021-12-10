@@ -67,8 +67,10 @@ namespace SOUI
 		//1、item的值改变的时候响应
 		//2、Sel改变的时候响应
         GetEventSet()->addEvent(EVENTID(EventPropGridValueChanged));
-        GetEventSet()->addEvent(EVENTID(EventPropGridItemClick));
+        GetEventSet()->addEvent(EVENTID(EventPropGridItemButtonClick));
         GetEventSet()->addEvent(EVENTID(EventPropGridItemActive));
+		GetEventSet()->addEvent(EVENTID(EventPropGridItemInplaceInit));
+		
         GetEventSet()->subscribeEvent(EventLBSelChanged::EventID,Subscriber(&SPropertyGrid::OnSelChanged,this));
     }
 
@@ -300,7 +302,7 @@ namespace SOUI
                 pItem->Expand(!pItem->IsExpand());
             }else if(pItem->GetType()!=PT_GROUP && !pItem->IsInplaceActive()) 
             {
-                pItem->OnInplaceActive(true);
+                pItem->OnInplaceActive(TRUE);
             }
         }
     }
@@ -387,7 +389,7 @@ namespace SOUI
 						evt.pItem = pItem;
 						FireEvent(evt);
 
-						pItem->OnInplaceActive(true);
+						pItem->OnInplaceActive(TRUE);
 					}
 
                 }else if (ip == IP_TITLE)
@@ -523,6 +525,11 @@ namespace SOUI
 		CRect rcValue = GetInplaceWndPos(pItem);
 		pWnd->Move(rcValue);
 		m_pInplaceActiveWnd = pWnd;
+
+		EventPropGridItemInplaceInit evt(this);
+		evt.pItem = pItem;
+		evt.pInplaceWnd = pWnd;
+		FireEvent(evt);
     }
 
     void SPropertyGrid::OnInplaceActiveWndDestroy( IPropertyItem *pItem,SWindow *pWnd )
@@ -617,7 +624,7 @@ namespace SOUI
 	{
 		if(!pItem->OnButtonClick())
 		{
-			EventPropGridItemClick evt(this);
+			EventPropGridItemButtonClick evt(this);
 			evt.pItem = pItem;
 			FireEvent(evt);
 		}

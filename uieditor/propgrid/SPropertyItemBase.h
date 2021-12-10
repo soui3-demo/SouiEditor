@@ -50,9 +50,11 @@ namespace SOUI
 		
 		virtual BOOL IsReadOnly() const{return m_bReadOnly;}
 		virtual void SetReadOnly(BOOL bReadOnly);
+		virtual SStringW GetExtendType() const{return m_strExType;}
+
 		IPropertyItem * FindChildByName(LPCWSTR pszName) const;
 		IPropertyItem * FindChildById(int nID);
-
+		
         SOUI_ATTRS_BEGIN()
             ATTR_STRINGT(L"title",m_strTitle,TRUE)
 			ATTR_STRINGW(L"name",m_strName,FALSE)
@@ -60,6 +62,7 @@ namespace SOUI
             ATTR_STRINGT(L"description",m_strDescription,FALSE)
             ATTR_INT(L"readOnly",m_bReadOnly,FALSE)
             ATTR_CUSTOM(L"expanded",OnAttrExpanded)
+			ATTR_STRINGW(L"extendType",m_strExType,FALSE)
         SOUI_ATTRS_END()
 
         virtual BOOL InitFromXml(pugi::xml_node xmlNode);
@@ -70,6 +73,7 @@ namespace SOUI
 		SStringW		m_strName;
 		int				m_nID;
         SStringT        m_strDescription;
+		SStringW		m_strExType;
 
         SPropertyGrid * m_pOwner;
         IPropertyItem * m_pParent;

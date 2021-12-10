@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "DlgInsertXmlElement.h"
 #include "propgrid/propitem/SPropertyItem-Option.h"
+#include "souidlgs.h"
 
 namespace SOUI{
 	DlgInsertXmlElement::DlgInsertXmlElement(pugi::xml_node xmlInitProp,SStringW strNodeName)
@@ -23,13 +24,19 @@ namespace SOUI{
 		pReal->GetRealHwnd();
 		m_xmlEditor = (CScintillaWnd*)pReal->GetUserData();
 		
-		m_xmlDoc.root().append_child(S_CW2A(m_strNodeName,CP_UTF8));
-
-		m_propgrid->EnumProp(&DlgInsertXmlElement::OnEnumPropItem,this);
-
+		pugi::xml_node xmlContent = m_xmlInitProp.child(m_strNodeName).child(m_strNodeName);
+		if(xmlContent)
+		{
+			pugi::xml_writer_buff buf;
+			xmlContent.print(buf,L"", pugi::encoding_utf8);
+			m_xmlDoc.load_buffer(buf.buffer(),buf.size()*2);
+		}else
+		{
+			m_xmlDoc.root().append_child(S_CW2A(m_strNodeName,CP_UTF8));
+			m_propgrid->EnumProp(&DlgInsertXmlElement::OnEnumPropItem,this);
+		}
 		spugi::xml_writer_buff buf;
 		m_xmlDoc.root().print(buf);
-
 		m_xmlEditor->InsertText(0,buf.buffer());
 
 		m_bChanged = FALSE;
@@ -84,7 +91,7 @@ namespace SOUI{
 				if (pItem->GetType() == PT_OPTION)
 				{
 					SPropertyItemOption* pOption = ( SPropertyItemOption* )pItem;
-					value = S_CT2A(pOption->Value2Option(pItem->GetValue()),CP_UTF8);
+					value = S_CT2A(pOption->Option2Value(pItem->GetValue()),CP_UTF8);
 				}
 				if(root.attribute(name))
 					root.attribute(name).set_value(value);
@@ -135,17 +142,25 @@ namespace SOUI{
 		FindChildByID(R.id.txt_prop_desc)->SetWindowText(e2->pItem->GetDescription());
 	}
 
-	void DlgInsertXmlElement::InitPropGrid(SStringW strNodeName,SStringW strParents)
+	void DlgInsertXmlElement::InitPropGrid(const SStringW & strNodeName,SStringW strParents)
 	{
 		pugi::xml_node xmlNode = m_xmlInitProp.child(strNodeName);
 		if(xmlNode)
 		{
 			SStringW strParent = xmlNode.attribute(L"parent").as_string();
-			if(!strParent.IsEmpty() && strParents.Find(strParent)==-1)
-			{//use strParents to avoid round parent defined.
-				strParents.Append(L",");
-				strParents.Append(strParent);
-				InitPropGrid(strParent,strParents);
+			if(!strParent.IsEmpty())
+			{
+				SStringWList lstParent;
+				SplitString(strParent,L'|',lstParent);
+				for(int i=0;i<lstParent.GetCount();i++)
+				{
+					if(strParents.Find(lstParent[i])==-1)
+					{//use strParents to avoid round parent defined.
+						strParents.Append(L",");
+						strParents.Append(lstParent[i]);
+						InitPropGrid(lstParent[i],strParents);
+					}
+				}
 			}
 		}
 		m_propgrid->LoadFromXml(xmlNode.child(L"groups"));
@@ -164,6 +179,57 @@ namespace SOUI{
 			m_propgrid->SetOrderType(SPropertyGrid::OT_NAME);
 			m_tbProp->SetItemCheck(1,TRUE);
 			m_tbProp->SetItemCheck(0,FALSE);
+		}
+	}
+
+	void DlgInsertXmlElement::OnPropItemButtonClick(EventArgs *e)
+	{
+		EventPropGridItemButtonClick *e2 = sobj_cast<EventPropGridItemButtonClick>(e);
+		SStringW strExType = e2->pItem->GetExtendType();
+
+		if(strExType == _T("font"))
+		{
+			LOGFONT lf={0};
+			CFontDialog fontDlg(&lf, CF_SCREENFONTS|CF_NOVERTFONTS);
+			if(fontDlg.DoModal()== IDOK)
+			{
+				lf = fontDlg.m_lf;
+				FontInfo fi;
+				fi.strFaceName = lf.lfFaceName;
+				fi.style.attr.cSize = abs(lf.lfHeight);
+				fi.style.attr.byWeight = lf.lfWeight/4;
+				fi.style.attr.byCharset = lf.lfCharSet;
+				fi.style.attr.fItalic = lf.lfItalic;
+				fi.style.attr.fUnderline = lf.lfUnderline;
+				fi.style.attr.fStrike = lf.lfStrikeOut;
+				if(lf.lfWeight == FW_BOLD)
+				{
+					fi.style.attr.fBold = 1;
+					fi.style.attr.byWeight = 0;
+				}
+				SStringW strFontDesc = SFontPool::FontInfoToString(fi);
+				e2->pItem->SetValue(strFontDesc);
+			}
+		}
+	}
+
+	void DlgInsertXmlElement::OnPropItemInplaceInit(EventArgs *e)
+	{
+		EventPropGridItemInplaceInit *e2 = sobj_cast<EventPropGridItemInplaceInit>(e);
+		if(e2->pItem->IsClass(SPropertyItemOption::GetClassName()))
+		{
+			SComboBox *pCombox = (SComboBox*)e2->pInplaceWnd;
+			if(e2->pItem->GetExtendType() == L"skin")
+			{
+				pCombox->InsertItem(-1,L"skin0",0,0);
+				pCombox->InsertItem(-1,L"skin1",0,0);
+				pCombox->InsertItem(-1,L"skin2",0,0);
+			}else if(e2->pItem->GetExtendType() == L"class")
+			{
+				pCombox->InsertItem(-1,L"style0",0,0);
+				pCombox->InsertItem(-1,L"style1",0,0);
+				pCombox->InsertItem(-1,L"style2",0,0);
+			}
 		}
 	}
 

@@ -5,10 +5,12 @@
 #include "propitem/SPropertyItem-Group.h"
 namespace SOUI
 {
-#define EVT_PG_VALUECHANGED (EVT_EXTERNAL_BEGIN+100)
-	//ADD
-#define EVT_PG_ITEMCLICK (EVT_EXTERNAL_BEGIN+110)
-#define EVT_PG_ITEMACTIVE (EVT_EXTERNAL_BEGIN+101)
+	enum{
+		EVT_PG_VALUECHANGED = EVT_EXTERNAL_BEGIN+100,
+		EVT_PG_ITEMACTIVE,
+		EVT_PG_ITEM_BUTTON_CLICK,
+		EVT_PG_ITEM_INPLACE_INIT,
+	};
 
 	class EventPropGridValueChanged : public TplEventArgs<EventPropGridValueChanged>
 	{
@@ -20,12 +22,12 @@ namespace SOUI
 		IPropertyItem * pItem;
 	};
 
-	class EventPropGridItemClick : public TplEventArgs<EventPropGridItemClick>
+	class EventPropGridItemButtonClick : public TplEventArgs<EventPropGridItemButtonClick>
 	{
-		SOUI_CLASS_NAME(EventPropGridItemClick,L"on_propgrid_item_click")
+		SOUI_CLASS_NAME(EventPropGridItemButtonClick,L"on_propgrid_item_button_click")
 	public:
-		EventPropGridItemClick(SObject *pWnd):TplEventArgs<EventPropGridItemClick>(pWnd){}
-		enum{EventID=EVT_PG_ITEMCLICK};
+		EventPropGridItemButtonClick(SObject *pWnd):TplEventArgs<EventPropGridItemButtonClick>(pWnd){}
+		enum{EventID=EVT_PG_ITEM_BUTTON_CLICK};
 
 		IPropertyItem * pItem;
 	};
@@ -41,6 +43,15 @@ namespace SOUI
 		IPropertyItem * pItem;
 	};
 
+	class EventPropGridItemInplaceInit : public TplEventArgs<EventPropGridItemInplaceInit>
+	{
+		SOUI_CLASS_NAME(EventPropGridItemInplaceInit,L"on_propgrid_item_inplace_init")
+	public:
+		EventPropGridItemInplaceInit(SObject *pWnd):TplEventArgs<EventPropGridItemInplaceInit>(pWnd){}
+		enum{EventID=EVT_PG_ITEM_INPLACE_INIT};
+		IPropertyItem * pItem;
+		SWindow *pInplaceWnd;
+	};
 
 #define IG_FIRST (SPropertyGroup*)0
 #define IG_LAST  (SPropertyGroup*)1

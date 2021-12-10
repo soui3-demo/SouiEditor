@@ -287,7 +287,7 @@ void CSysDataMgr::InitSkinProp()
 	m_xmlSkinProp.load_file(m_strConfigDir + L"\\SkinProperty.xml");
 }
 
-pugi::xml_node CSysDataMgr::getSkinPropNode()
+pugi::xml_node CSysDataMgr::getSkinDefNode()
 {
 	return m_xmlSkinProp.root().child(L"root");
 }
@@ -300,7 +300,7 @@ SOUI::SStringT CSysDataMgr::GetConfigDir() const
 SOUI::SStringA CSysDataMgr::GetSkinAutos()
 {
 	std::set<SStringW> skins;
-	pugi::xml_node xmlSkin = getSkinPropNode().child(L"skins").first_child();
+	pugi::xml_node xmlSkin = getSkinDefNode().child(L"skins").first_child();
 	while(xmlSkin)
 	{
 		if(xmlSkin.attribute(L"visible").as_bool(true))
@@ -337,7 +337,7 @@ SOUI::SStringA CSysDataMgr::GetSkinAttrAutos(SStringW skinName)
 
 void CSysDataMgr::_GetSkinAttrs(SStringW skinName,std::set<SStringW> &attrs)
 {
-	pugi::xml_node xmlSkin = getSkinPropNode().child(L"skins").child(skinName);
+	pugi::xml_node xmlSkin = getSkinDefNode().child(L"skins").child(skinName);
 	if(xmlSkin)
 	{
 		pugi::xml_node skinAttr = xmlSkin.child(L"groups").child(L"propgroup").first_child();

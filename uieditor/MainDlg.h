@@ -46,14 +46,20 @@ public:
 		pugi::xml_node xmlWidget = xmlNode.child(L"controls").first_child();
 		while(xmlWidget)
 		{
-			IconInfo info;
-			info.iIcon = xmlWidget.attribute(L"icon").as_int(0);
-			info.strTxt = xmlWidget.name();
-			info.strTip = xmlWidget.attribute(L"tip").as_string();
-			pugi::xml_writer_buff xmlWrite;
-			xmlWidget.first_child().print(xmlWrite,L"\t", pugi::format_default, pugi::encoding_utf16);
-			info.strContent = S_CW2A(SStringW(xmlWrite.buffer(),xmlWrite.size()),CP_UTF8);
-			m_arrIcons.Add(info);
+			if(xmlWidget.attribute(L"visible").as_bool(true))
+			{
+				IconInfo info;
+				info.iIcon = xmlWidget.attribute(L"icon").as_int(0);
+				if(xmlWidget.attribute(L"text"))
+					info.strTxt=xmlWidget.attribute(L"text").as_string();
+				else
+					info.strTxt = xmlWidget.name();
+				info.strTip = xmlWidget.attribute(L"tip").as_string();
+				pugi::xml_writer_buff xmlWrite;
+				xmlWidget.child(xmlWidget.name()).print(xmlWrite,L"\t", pugi::format_default, pugi::encoding_utf16);
+				info.strContent = S_CW2A(SStringW(xmlWrite.buffer(),xmlWrite.size()),CP_UTF8);
+				m_arrIcons.Add(info);
+			}
 			xmlWidget = xmlWidget.next_sibling();
 		}
 	}
@@ -120,6 +126,10 @@ public:
 			{
 				IconInfo info;
 				info.iIcon = xmlSkin.attribute(L"icon").as_int(0);
+				if(xmlSkin.attribute(L"text"))
+					info.strTxt=xmlSkin.attribute(L"text").as_string();
+				else
+					info.strTxt = xmlSkin.name();
 				info.strTxt = xmlSkin.name();
 				info.strTip = xmlSkin.attribute(L"tip").as_string();
 				m_arrIcons.Add(info);

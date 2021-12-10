@@ -49,7 +49,7 @@ public:
 
 	pugi::xml_node getCtrlDefNode();
 
-	pugi::xml_node getSkinPropNode();
+	pugi::xml_node getSkinDefNode();
 public:
 	pugi::xml_document m_xmlDocProperty;	//property.xml文件doc
 

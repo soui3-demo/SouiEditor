@@ -14,14 +14,18 @@ namespace SOUI{
 		SStringA GetXml() const;
 	protected:
 		void OnGetValue(IPropertyItem *pItem,BOOL bInsertXml);
+		void OnPropToolbarCmd(EventArgs *e);
 
 		void OnPropValueChanged(EventArgs *e);
 		void OnPropItemActive(EventArgs *e);
-		void OnPropToolbarCmd(EventArgs *e);
+		void OnPropItemButtonClick(EventArgs *e);
+		void OnPropItemInplaceInit(EventArgs *e);
 
 		EVENT_MAP_BEGIN()
 			EVENT_HANDLER(EventPropGridValueChanged::EventID,OnPropValueChanged)
 			EVENT_HANDLER(EventPropGridItemActive::EventID,OnPropItemActive)
+			EVENT_HANDLER(EventPropGridItemButtonClick::EventID,OnPropItemButtonClick)
+			EVENT_HANDLER(EventPropGridItemInplaceInit::EventID,OnPropItemInplaceInit)
 			EVENT_HANDLER(EventToolBarCmd::EventID,OnPropToolbarCmd)
 		EVENT_MAP_END()
 
@@ -39,7 +43,7 @@ namespace SOUI{
 		END_MSG_MAP()
 
 	private:
-		void InitPropGrid(SStringW strNodeName,SStringW strParents);
+		void InitPropGrid(const SStringW &strNodeName,SStringW strParents);
 
 		static BOOL OnEnumPropItem(IPropertyItem *pItem, void* opaque);
 		pugi::xml_node m_xmlInitProp;

@@ -31,7 +31,7 @@ namespace SOUI
         virtual int  GetLevel() const =0;
         virtual BOOL IsExpand() const =0;
         virtual void Expand(BOOL bExpend) =0;
-
+		virtual SStringW GetExtendType() const =0;
         virtual IPropertyItem * GetParent() const =0;
         virtual void SetParent(IPropertyItem * pParent) =0;
         virtual IPropertyItem * GetItem(PROPITEMTYPE  type) const =0;

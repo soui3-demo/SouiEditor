@@ -74,7 +74,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 		pAdapter->Release();
 	}
 	{//init skin listbox
-		CSkinTBAdapter * pAdapter = new CSkinTBAdapter(g_SysDataMgr.getSkinPropNode(),this);
+		CSkinTBAdapter * pAdapter = new CSkinTBAdapter(g_SysDataMgr.getSkinDefNode(),this);
 		m_lvSkin->SetAdapter(pAdapter);
 		pAdapter->Release();
 	}
@@ -635,14 +635,16 @@ BOOL CMainDlg::OnDrop(LPCTSTR pszName)
 
 void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 {
-	m_pXmlEdtior->InsertText(info->strContent);
+	DlgInsertXmlElement dlg(g_SysDataMgr.getCtrlDefNode().child(L"controls"),info->strTxt);
+	if(IDOK==dlg.DoModal())
+	{
+		m_pXmlEdtior->InsertText(dlg.GetXml());
+	}
 }
 
 void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 {
-	SStringT skinName = info->strTxt;
-
-	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinPropNode().child(L"skins"),skinName);
+	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinDefNode().child(L"skins"),info->strTxt);
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());
