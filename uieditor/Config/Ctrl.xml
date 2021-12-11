@@ -10,7 +10,7 @@
 
     <base visible="0">
       <groups>
-        <propgroup title="属性:SObject"  description="属性">
+        <propgroup title="属性:SObject"  description="属性" expanded="false">
           <proptext title="皮肤名(name)" name="name" value="" description="控件名称"/>
           <proptext title="ID" name="id" value="" description="控件ID"/>
           <propoption title="水平对齐" name="align" value="" options="left|center|right" description="水平对齐方式"/>
@@ -37,20 +37,22 @@
     </base>
 
     <layout_soui visible="0">
-      <propgroup title="锚点布局属性"  description="父窗口为锚点布局时有效的属性">
-        <proptext title="位置" name ="pos" description="“|”代表参考父窗口的中心
-			      &#x000A;“%”代表在父窗口的百分比，可以是小数，负数
-			      &#x000A;“[”相对于前一兄弟窗口的右值(right,bottom)
-			      &#x000A;“]”相对于后一兄弟窗口的左值(left,top)
-			      &#x000A;“{”相对于前一兄弟窗口的左值(left,top)
-			      &#x000A;“}”相对于后一兄弟窗口的右值(right,bottom)			
-            &#x000A;“@”标志用来指定窗口的大小，只能出现在pos属性的第3，4个值中，用来标识窗口的宽度。当后面的值为负时，代表自动计算窗口的宽度或者高度" />
-        <propsize title="偏移" name="offset" childrenTitles="水平偏移系数|垂直偏移系数" description="根据pos确定位置后再做偏移，单位为控件大小" />
-      </propgroup>
+    	<groups>
+	      <propgroup title="锚点布局属性"  description="父窗口为锚点布局时有效的属性"  expanded="false">
+	        <proptext title="位置" name ="pos" description="“|”代表参考父窗口的中心
+				      &#x000A;“%”代表在父窗口的百分比，可以是小数，负数
+				      &#x000A;“[”相对于前一兄弟窗口的右值(right,bottom)
+				      &#x000A;“]”相对于后一兄弟窗口的左值(left,top)
+				      &#x000A;“{”相对于前一兄弟窗口的左值(left,top)
+				      &#x000A;“}”相对于后一兄弟窗口的右值(right,bottom)			
+	            &#x000A;“@”标志用来指定窗口的大小，只能出现在pos属性的第3，4个值中，用来标识窗口的宽度。当后面的值为负时，代表自动计算窗口的宽度或者高度" />
+	        <propsize title="偏移" name="offset" childrenTitles="水平偏移系数|垂直偏移系数" description="根据pos确定位置后再做偏移，单位为控件大小" />
+	      </propgroup>
+      </groups>
     </layout_soui>
     <layout_grid visible="0">
       <groups>
-        <propgroup title="网格布局属性"  description="父窗口为网格布局时有效的属性">
+        <propgroup title="网格布局属性"  description="父窗口为网格布局时有效的属性"  expanded="false">
           <proptext name ="xInterval" description="Grid布局子控件的水平间距"/>
           <proptext name ="yInterval" description="Grid布局子控件的垂直间距"/>
           <propoption name ="xGravity" options="左:left|上:top|中:center|右:right|下:bottom|填充:fill" description="Grid布局子控件的水平对齐方式"/>
@@ -69,7 +71,7 @@
     </layout_grid>
     <layout_linear visible="0">
       <groups>
-        <propgroup title="线性布局属性"  description="父窗口为线性布局时有效的属性">
+        <propgroup title="线性布局属性"  description="父窗口为线性布局时有效的属性"  expanded="false">
           <propoption name ="orientation" options="horizontal|vertical" description="排列方式,默认水平布局" />
           <proptext name ="weight" description="父窗口在根据size属性布局完所有子窗口后，在当前布局方向上剩下的空间的分配权重" />
         </propgroup>

@@ -170,7 +170,7 @@ namespace SOUI
 
     HRESULT SPropertyItemBase::OnAttrExpanded( const SStringW & strValue,BOOL bLoading )
     {
-        BOOL bExpanded = strValue!=L"0";
+        BOOL bExpanded = STRINGASBOOL(strValue);
         if(!bLoading) Expand(bExpanded);
         else m_bExpanded = bExpanded;
         return S_FALSE;
