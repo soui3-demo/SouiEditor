@@ -30,6 +30,7 @@ CSysDataMgr g_SysDataMgr;
 CMainDlg::CMainDlg() : SHostWnd(_T("LAYOUT:XML_MAINWND")),m_pXmlEdtior(NULL),m_bAutoSave(TRUE),m_editXmlType(XML_UNKNOWN)
 {
 	m_hViewer = NULL;
+	m_bIsOpen = FALSE;
 }
 
 CMainDlg::~CMainDlg()
@@ -38,11 +39,9 @@ CMainDlg::~CMainDlg()
 
 BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 {
+
 	m_strOrigTitle = GETSTRING(R.string.title);
 
-	m_bIsOpen = FALSE;
-
-	FindChildByID(R.id.chk_autosave)->SetCheck(m_bAutoSave);
 	m_treePro = FindChildByName2<STreeCtrl>(L"workspace_tree");
 	m_treePro->SetListener(this);
 	m_lbWorkSpaceXml = FindChildByName2<SListBox>(L"workspace_xmlfile_lb");
@@ -60,6 +59,10 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	m_lvWidget = FindChildByName2<SListView>(L"lv_tb_widget");
 
 	m_RecentFileMenu.LoadMenu(UIRES.smenu.menu_recent);
+
+	LoadAppCfg();
+	FindChildByID(R.id.chk_autosave)->SetCheck(m_bAutoSave);
+
 	//======================================================================
 	m_pXmlEdtior = new CXmlEditor(this);
 	m_pXmlEdtior->Init(this,this);
@@ -85,9 +88,6 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	SWindow* MainWnd = FindChildByName2<SWindow>("UI_main_caption");
 	if (MainWnd)
 		RegisterDragDrop(MainWnd->GetSwnd(), new CDropTarget(this));
-
-	LoadAppCfg();
-
 
 	return 0;
 }
@@ -171,7 +171,8 @@ void CMainDlg::OnClose()
 {
 	if (m_bIsOpen)
 	{
-		CloseProject();
+		if(!CloseProject())
+			return;
 	}
 
 	SNativeWnd::DestroyWindow();
@@ -275,8 +276,23 @@ void CMainDlg::OnBtnClose()
 }
 
 
-void CMainDlg::CloseProject()
+bool CMainDlg::CloseProject()
 {
+	if(m_pXmlEdtior->isDirty())
+	{
+		if(m_bAutoSave) 
+			OnBtnSave();
+		else
+		{
+			if(SMessageBox(m_hWnd,_T("当前文件还没有保存，现在保存吗？"),_T("提示"),MB_OKCANCEL)==IDOK)
+			{
+				OnBtnSave();
+			}else
+			{
+				return false;
+			}
+		}
+	}
 	m_xmlDocUiRes.reset();
 	m_pXmlEdtior->CloseProject();
 	m_treePro->RemoveAllItems();
@@ -289,6 +305,7 @@ void CMainDlg::CloseProject()
 	SendMsgToViewer(exitviewer_id, NULL, 0);
 	m_bIsOpen = FALSE;
 	m_staticAppTitle->SetWindowText(m_strOrigTitle);
+	return true;
 }
 
 //打开工程
@@ -731,4 +748,10 @@ void CMainDlg::UpdateToolbar()
 		m_lvSkin->SetVisible(FALSE,TRUE);
 		break;
 	}
+}
+
+void CMainDlg::OnDestroy()
+{
+	SaveAppCfg();
+	SHostWnd::OnDestroy();
 }

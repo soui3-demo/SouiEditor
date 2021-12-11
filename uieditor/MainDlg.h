@@ -188,7 +188,7 @@ protected:
 
 	void OpenProject(SStringT strFileName);
 	void ReloadWorkspaceUIRes();
-	void CloseProject();
+	bool CloseProject();
 
 	void UpdateToolbar();
 protected:
@@ -248,12 +248,14 @@ protected:
 	void OnCommand(UINT uNotifyCode, int nID, HWND wndCtl);
 	BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
 	LRESULT OnCreateViewer(UINT uMsg,WPARAM wp,LPARAM lp);
+	void OnDestroy();
 	BEGIN_MSG_MAP_EX(CMainDlg)
 		if(m_pXmlEdtior) CHAIN_MSG_MAP_MEMBER((*m_pXmlEdtior))
 		MSG_WM_INITDIALOG(OnInitDialog)
 		MSG_WM_CLOSE(OnClose)
 		MSG_WM_SIZE(OnSize)
 		MSG_WM_TIMER(OnTimer)
+		MSG_WM_DESTROY(OnDestroy)
 		MSG_WM_SHOWWINDOW(OnShowWindow)
 		MSG_WM_COMMAND(OnCommand)
 		MESSAGE_HANDLER_EX(kmsg_viewer_create,OnCreateViewer)
@@ -303,5 +305,5 @@ public:
 	
 	HWND		m_hViewer;
 	BOOL m_bIsOpen;  //工程是否打开
-	BOOL	 m_bAutoSave;
+	bool	 m_bAutoSave;
 };

@@ -536,6 +536,7 @@ namespace SOUI
     {
         SASSERT(m_pInplaceActiveWnd == pWnd);
         RemoveChild(pWnd);
+		pWnd->SSendMessage(WM_DESTROY);
         m_pInplaceActiveWnd = NULL;
     }
 

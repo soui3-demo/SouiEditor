@@ -26,35 +26,6 @@ namespace SOUI
             }
         }
         
-		bool OnEditKillFocus(EventArgs *e)
-		{
-			e->bubbleUp=false;
-			EventKillFocus *e2=(EventKillFocus*)e;
-			if(e2->wndFocus != m_swnd)
-			{
-				AddRef();
-				GetOwner()->OnInplaceActive(FALSE);
-				Release();
-			}
-			return true;
-		}
-
-		int OnCreate(LPVOID)
-		{
-			__super::OnCreate(NULL);
-			return 0;
-		}
-
-		BOOL CreateChildren(pugi::xml_node xmlNode)
-		{
-			BOOL bRet = __super::CreateChildren(xmlNode);
-			if(m_pEdit)
-			{
-				m_pEdit->GetEventSet()->subscribeEvent(EventKillFocus::EventID,Subscriber(&SPropCombobox::OnEditKillFocus,this));
-			}
-			return bRet;
-		}
-
         SOUI_MSG_MAP_BEGIN()
             MSG_WM_KEYDOWN(OnKeyDown)
         SOUI_MSG_MAP_END()
@@ -64,10 +35,16 @@ namespace SOUI
         virtual void UpdateData()
         {
 			SStringT strValue;
-			int nCurSel=GetCurSel();
-			if(nCurSel != -1)
+			if(m_bDropdown)
 			{
-				strValue = GetLBText(nCurSel);
+				int nCurSel=GetCurSel();
+				if(nCurSel != -1)
+				{
+					strValue = GetLBText(nCurSel);
+				}
+			}else
+			{
+				strValue = m_pEdit->GetWindowText();
 			}
 			m_pOwner->SetValue(strValue);
         }
