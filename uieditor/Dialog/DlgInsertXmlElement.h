@@ -1,13 +1,15 @@
 #pragma once
 #include "propgrid/SPropertyGrid.h"
-#include "ScintillaWnd.h"
 #include "spugixml/pugixml.hpp"
+#include "ScintillaWnd.h"
 #include "SToolBar.h"
+#include "ResManger.h"
+
 namespace SOUI{
 	class DlgInsertXmlElement : public SHostDialog
 	{
 	public:
-		DlgInsertXmlElement(pugi::xml_node xmlInitProp,SStringW strNodeName);
+		DlgInsertXmlElement(ResManger * resMgr,pugi::xml_node xmlInitProp,SStringW strNodeName);
 		~DlgInsertXmlElement(void);
 
 	public:
@@ -56,6 +58,7 @@ namespace SOUI{
 		BOOL			m_bChanged;
 		SStringA		m_strXml;
 		SToolBar *		m_tbProp;
+		ResManger	*   m_resMgr;
 
 	};
 }

@@ -191,6 +191,8 @@ protected:
 	bool CloseProject();
 
 	void UpdateToolbar();
+
+	bool CheckSave();
 protected:
 	void onScintillaSave(CScintillaWnd *pSci,LPCTSTR pszFileName) override;
 	void onScintillaAutoComplete(CScintillaWnd *pSci,char c) override;
@@ -209,7 +211,7 @@ protected:
 	void OnMinimize();
 	void OnBtnOpen(); //打开工程
 	void OnBtnClose();
-	void OnBtnSave(); //保存布局
+	BOOL OnBtnSave(); //保存布局
 	void OnBtnNewLayout(); //新建Dialog
 	void OnBtnNewInclude(); //新建Include
 	void OnBtnResMgr();

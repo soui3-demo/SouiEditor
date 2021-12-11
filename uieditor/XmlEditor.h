@@ -20,10 +20,10 @@ namespace SOUI
 		
 		void SetProjectPath(const SStringT & strProjPath);
 
-		//保存当前打开的布局文件
 		bool SaveFile();
 
 
+		bool isValidXml();
 		// 打开工程
 		BOOL CloseProject();
 		
@@ -73,5 +73,6 @@ namespace SOUI
 		SStringT m_strLayoutName; //当前打开的窗体名  XML_MAINDLG
 		SStringT m_strXmlFile; //当前打开的XML文件名  xml\main.xml
 		BOOL	 m_bChanged;
+		bool	 m_bValidXml;
 	};
 }

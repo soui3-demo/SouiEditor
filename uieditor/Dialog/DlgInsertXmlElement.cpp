@@ -4,10 +4,11 @@
 #include "souidlgs.h"
 
 namespace SOUI{
-	DlgInsertXmlElement::DlgInsertXmlElement(pugi::xml_node xmlInitProp,SStringW strNodeName)
+	DlgInsertXmlElement::DlgInsertXmlElement(ResManger * resMgr,pugi::xml_node xmlInitProp,SStringW strNodeName)
 		:SHostDialog(_T("layout:UIDESIGNER_XML_INSERT_ELEMENT"))
 		,m_xmlInitProp(xmlInitProp)
 		,m_strNodeName(strNodeName)
+,		 m_resMgr(resMgr)
 	{
 	}
 
@@ -221,14 +222,26 @@ namespace SOUI{
 			SComboBox *pCombox = (SComboBox*)e2->pInplaceWnd;
 			if(e2->pItem->GetExtendType() == L"skin")
 			{
-				pCombox->InsertItem(-1,L"skin0",0,0);
-				pCombox->InsertItem(-1,L"skin1",0,0);
-				pCombox->InsertItem(-1,L"skin2",0,0);
+				SStringA skinAuto = m_resMgr->GetSkinAutos(_T(""));
+				SStringT strAuto = S_CA2T(skinAuto,CP_UTF8);
+				SStringTList lstSkin;
+				SplitString(strAuto,' ',lstSkin);
+				pCombox->InsertItem(0,_T(""),0,0);
+				for(int i=0;i<lstSkin.GetCount();i++)
+				{
+					pCombox->InsertItem(i+1,lstSkin[i],0,0);
+				}
 			}else if(e2->pItem->GetExtendType() == L"class")
 			{
-				pCombox->InsertItem(-1,L"style0",0,0);
-				pCombox->InsertItem(-1,L"style1",0,0);
-				pCombox->InsertItem(-1,L"style2",0,0);
+				SStringA strAutoA = m_resMgr->GetStyleAutos(_T(""));
+				SStringT strAuto = S_CA2T(strAutoA,CP_UTF8);
+				SStringTList lstStyle;
+				SplitString(strAuto,' ',lstStyle);
+				pCombox->InsertItem(0,_T(""),0,0);
+				for(int i=0;i<lstStyle.GetCount();i++)
+				{
+					pCombox->InsertItem(i+1,lstStyle[i],0,0);
+				}
 			}
 		}
 	}

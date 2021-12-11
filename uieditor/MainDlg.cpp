@@ -278,21 +278,8 @@ void CMainDlg::OnBtnClose()
 
 bool CMainDlg::CloseProject()
 {
-	if(m_pXmlEdtior->isDirty())
-	{
-		if(m_bAutoSave) 
-			OnBtnSave();
-		else
-		{
-			if(SMessageBox(m_hWnd,_T("当前文件还没有保存，现在保存吗？"),_T("提示"),MB_OKCANCEL)==IDOK)
-			{
-				OnBtnSave();
-			}else
-			{
-				return false;
-			}
-		}
-	}
+	if(!CheckSave())
+		return false;
 	m_xmlDocUiRes.reset();
 	m_pXmlEdtior->CloseProject();
 	m_treePro->RemoveAllItems();
@@ -412,9 +399,15 @@ void CMainDlg::ReloadWorkspaceUIRes()
 	m_UIResFileMgr.LoadUIResFromFile(m_strUiresPath);
 }
 
-void CMainDlg::OnBtnSave()
+BOOL CMainDlg::OnBtnSave()
 {
+	if(!m_pXmlEdtior->isValidXml())
+	{
+		if(IDCANCEL == SMessageBox(m_hWnd,_T("编辑器中的XML文件格式有错误，确定要保存吗？"),_T("提示"),MB_OKCANCEL))
+			return FALSE;
+	}
 	m_pXmlEdtior->SaveFile();
+	return TRUE;
 }
 
 void CMainDlg::OnBtnNewLayout()
@@ -508,21 +501,9 @@ void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 	SStringT strLayoutName;
 	tree->GetItemText(pEvt->hItem, strLayoutName);
 
-	if(m_pXmlEdtior->isDirty())
-	{
-		if(m_bAutoSave) 
-			OnBtnSave();
-		else
-		{
-			if(SMessageBox(m_hWnd,_T("当前文件还没有保存，现在保存吗？"),_T("提示"),MB_OKCANCEL)==IDOK)
-			{
-				OnBtnSave();
-			}else
-			{
-				return;
-			}
-		}
-	}
+	if(!CheckSave())
+		return;
+
 	m_pXmlEdtior->LoadXml(*s, strLayoutName);
 	m_editXmlType = XML_LAYOUT;
 	UpdateToolbar();
@@ -550,21 +531,9 @@ void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
 		else
 			filename += p->m_value;
 
-		if(m_pXmlEdtior->isDirty())
-		{
-			if(m_bAutoSave) 
-				OnBtnSave();
-			else
-			{
-				if(SMessageBox(m_hWnd,_T("当前文件还没有保存，现在保存吗？"),_T("提示"),MB_OKCANCEL)==IDOK)
-				{
-					OnBtnSave();
-				}else
-				{
-					return;
-				}
-			}
-		}
+		if(!CheckSave())
+			return;
+
 		m_pXmlEdtior->LoadXml(filename,SStringT());
 
 		BOOL bSkin = filename.EndsWith(_T("skin.xml"));
@@ -652,7 +621,7 @@ BOOL CMainDlg::OnDrop(LPCTSTR pszName)
 
 void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 {
-	DlgInsertXmlElement dlg(g_SysDataMgr.getCtrlDefNode().child(L"controls"),info->strTxt);
+	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getCtrlDefNode().child(L"controls"),info->strTxt);
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());
@@ -661,7 +630,7 @@ void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 
 void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 {
-	DlgInsertXmlElement dlg(g_SysDataMgr.getSkinDefNode().child(L"skins"),info->strTxt);
+	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getSkinDefNode().child(L"skins"),info->strTxt);
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());
@@ -691,7 +660,18 @@ void CMainDlg::onScintillaAutoComplete(CScintillaWnd *pSci,char ch)
 	long lStart = pSci->SendEditor(SCI_GETCURRENTPOS, 0, 0);
 	int startPos = pSci->SendEditor(SCI_WORDSTARTPOSITION, lStart, true);
 
-	if (ch == '/')
+	if(ch == '_')
+	{//test for skin_xxx
+		SStringA strPrefix = pSci->GetNotePart(lStart - 1);
+		SStringA str;
+		if (strPrefix.CompareNoCase("skin") == 0)
+			str = m_UIResFileMgr.GetSkinAutos(S_CA2T(strPrefix,CP_UTF8));
+		if (!str.IsEmpty())
+		{
+			pSci->SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)str.c_str());
+		}
+	}
+	else if (ch == '/')
 	{
 		SStringA clsName = pSci->GetNotePart(lStart - 1);
 		SStringA str;
@@ -718,8 +698,10 @@ void CMainDlg::onScintillaAutoComplete(CScintillaWnd *pSci,char ch)
 	{
 		int tagpos = -1;
 		SStringA tagname = pSci->GetHtmlTagName(tagpos);
-		if (!tagname.IsEmpty())
-		{
+		SStringA strPrefix = pSci->GetRange(lStart-2,lStart-1);
+
+		if (!tagname.IsEmpty() && strPrefix==" " && strPrefix!="\t")
+		{//编辑的元素name不为空，而且当前不是编辑属性
 			SStringW strTag = S_CA2W(tagname,CP_UTF8);
 			SStringA str = m_editXmlType == XML_LAYOUT?CSysDataMgr::getSingleton().GetCtrlAttrAutos(strTag)
 				:CSysDataMgr::getSingleton().GetSkinAttrAutos(strTag);
@@ -727,7 +709,7 @@ void CMainDlg::onScintillaAutoComplete(CScintillaWnd *pSci,char ch)
 			{	// 自动完成字串要进行升充排列, 否则功能不正常
 				pSci->SendEditor(SCI_AUTOCSHOW, lStart - startPos, (LPARAM)(LPCSTR)str);
 			}
-		}		
+		}
 	}
 }
 
@@ -754,4 +736,28 @@ void CMainDlg::OnDestroy()
 {
 	SaveAppCfg();
 	SHostWnd::OnDestroy();
+}
+
+bool CMainDlg::CheckSave()
+{
+	if(m_pXmlEdtior->isDirty())
+	{
+		if(m_bAutoSave) 
+		{
+			if(!OnBtnSave())
+				return false;
+		}else
+		{
+			UINT ret = SMessageBox(m_hWnd,_T("当前文件还没有保存，现在保存吗？"),_T("提示"),MB_YESNOCANCEL);
+			if(ret == IDYES)
+			{
+				if(!OnBtnSave())
+					return false;
+			}else if(ret == IDCANCEL)
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }

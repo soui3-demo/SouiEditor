@@ -188,6 +188,15 @@ void CScintillaWnd::GetRange(int start, int end, char* text)
 	SendMessage(EM_GETTEXTRANGE, 0, reinterpret_cast<LPARAM>(&tr));
 }
 
+SOUI::SStringA CScintillaWnd::GetRange(int start, int end)
+{
+	char *pBuf=new char[end-start+1];
+	GetRange(start,end,pBuf);
+	SStringA ret(pBuf,end-start);
+	delete []pBuf;
+	return ret;
+}
+
 #define BLOCKSIZE	1024
 BOOL CScintillaWnd::SaveFile(LPCTSTR lpFileName)
 {

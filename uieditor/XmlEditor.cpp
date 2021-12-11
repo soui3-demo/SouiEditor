@@ -15,7 +15,7 @@
 namespace SOUI{
 
 
-CXmlEditor::CXmlEditor(CMainDlg *pMainDlg)
+CXmlEditor::CXmlEditor(CMainDlg *pMainDlg):m_bValidXml(true)
 {
 	m_pMainDlg = pMainDlg;
 }
@@ -30,7 +30,7 @@ BOOL CXmlEditor::CloseProject()
 {
 	m_strXmlFile =
 	m_strProPath = SStringT();
-
+	m_bValidXml = true;
 	m_pScintillaWnd->SendEditor(SCI_CLEARALL);
 	m_pScintillaWnd->SetDirty(false);
 	m_treeXmlStruct->RemoveAllItems();
@@ -103,13 +103,13 @@ BOOL CXmlEditor::LoadXml(SStringT strFileName, SStringT layoutName)
 void CXmlEditor::ReloadLayout()
 {
 	SStringA strUtf8=m_pScintillaWnd->GetWindowText();
-	bool bXml=m_xmlParser.loadUtf8(strUtf8,strUtf8.GetLength());
+	m_bValidXml=m_xmlParser.loadUtf8(strUtf8,strUtf8.GetLength());
 	m_treeXmlStruct->RemoveAllItems();
 
 	spugi::xml_node root = m_xmlParser.first_child();
 	UpdateXmlStruct(root, STVI_ROOT);
 	m_treeXmlStruct->Invalidate();
-	if(bXml)
+	if(m_bValidXml)
 	{
 		if(m_strLayoutName.StartsWith(L"layout:",true))
 			m_pMainDlg->SendMsgToViewer(update_buf_id,strUtf8.c_str(),strUtf8.GetLength());
@@ -126,6 +126,7 @@ bool CXmlEditor::SaveFile()
 	{
 		return false;
 	}
+	
 	return m_pScintillaWnd->SaveFile(m_strProPath + _T("\\")+ m_strXmlFile);
 }
 
@@ -281,6 +282,16 @@ void CXmlEditor::OnTimer(UINT_PTR id)
 	{
 		SetMsgHandled(FALSE);
 	}
+}
+
+bool CXmlEditor::isValidXml()
+{
+	if(m_bChanged)
+	{
+		ReloadLayout();
+		m_bChanged = false;
+	}
+	return m_bValidXml;
 }
 
 }

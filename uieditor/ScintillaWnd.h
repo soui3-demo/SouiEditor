@@ -61,6 +61,8 @@ public:
 
 	void GetRange(int start, int end, char* text);
 
+	SStringA GetRange(int start, int end);
+
 	SStringA GetNotePart(int curPos);
 protected:
 	// 显示行号
