@@ -14,7 +14,6 @@
 		<file name="UIDESIGNER_XML_NEW_SKIN" path="xml\dlg_new_skin.xml" />
 		<file name="UIDESIGNER_XML_INPUT" path="xml\dlg_input.xml" />
 		<file name="UIDESIGNER_XML_ABOUT" path="xml\dlg_about.xml" />
-		<file name="UIDESIGNER_XML_FONTSELECT" path="xml\dlg_font_select.xml" />
     <file name="UIDESIGNER_XML_INSERT_ELEMENT" path="xml\dlg_insert_element.xml" />
   </LAYOUT>
 	<values>

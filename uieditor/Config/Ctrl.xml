@@ -451,8 +451,8 @@
       <groups>
         <propgroup name="属性:listbox">
           <proptext name="itemHeight" description="行高" />
-          <propoption name ="itemSkin"  ButtonType="skin" description="列表行皮肤"/>
-          <propoption name ="iconSkin"  ButtonType="skin" description="图标皮肤"/>
+          <propoption name ="itemSkin"  extendType="skin" description="列表行皮肤"/>
+          <propoption name ="iconSkin"  extendType="skin" description="图标皮肤"/>
           <propcolor name ="colorItemBkgnd" description="列表行背景颜色"/>
           <propcolor name ="colorItemBkgnd2" description="列表行背景颜色2,颜色隔行显示时有效"/>
           <propcolor name ="colorItemSelBkgnd" description="选中行背景颜色"/>
@@ -485,8 +485,8 @@
           <proptext name="itemHeight" description="行高" />
           <propoption name ="checkBox"  options="支持:1|不支持:0" description="是否在第一列显示checkbox"/>
           <propoption name ="multiSelection"  options="支持:1|不支持:0" description="是否支持多选"/>
-          <propoption name ="itemSkin"  ButtonType="skin" description="列表行皮肤"/>
-          <propoption name ="iconSkin"  ButtonType="skin" description="图标皮肤"/>
+          <propoption name ="itemSkin"  extendType="skin" description="列表行皮肤"/>
+          <propoption name ="iconSkin"  extendType="skin" description="图标皮肤"/>
           <propcolor name ="colorItemBkgnd" description="列表行背景颜色"/>
           <propcolor name ="colorItemBkgnd2" description="列表行背景颜色2,颜色隔行显示时有效"/>
           <propcolor name ="colorItemSelBkgnd" description="选中行背景颜色"/>
@@ -555,8 +555,8 @@
       <progress  pos="0,0" size="200,16" value="20" min="0" max="100" showPercent="1"/>
       <groups>
         <propgroup name="属性:progress">
-          <propoption name ="bkgndSkin"  ButtonType="skin" description="背景皮肤"/>
-          <propoption name ="posSkin"  ButtonType="skin" description="数值显示皮肤"/>
+          <propoption name ="bkgndSkin"  extendType="skin" description="背景皮肤"/>
+          <propoption name ="posSkin"  extendType="skin" description="数值显示皮肤"/>
           <proptext name ="min" description="最小值"/>
           <proptext name ="max" description="最大值"/>
           <proptext name ="value" description="初始值"/>
@@ -597,7 +597,7 @@
       <sliderbar size="120,24" thumbInRail="0"  alpha="200" width="200" value="20" min="0" max="100"/>
       <groups>
         <propgroup name="属性:sliderbar">
-          <propoption name ="thumbSkin"  ButtonType="skin" description="滑块皮肤"/>
+          <propoption name ="thumbSkin"  extendType="skin" description="滑块皮肤"/>
           <propoption name ="thumbInRail" options="是:1|否:0" description="是否限制滑块在轨道内"/>
         </propgroup>
       </groups>
@@ -607,7 +607,7 @@
       <groups>
         <propgroup name="属性:splitwnd">
           <proptext name ="sepSize" description="分割条大小"/>
-          <propoption name ="sepSkin"  ButtonType="skin" description="分割条皮肤"/>
+          <propoption name ="sepSkin"  extendType="skin" description="分割条皮肤"/>
           <propoption name ="adjustable" options="是:1|否:0" description="分割窗口可调节标志"/>
           <propoption name ="vertical" options="是:1|否:0" description="垂直排列"/>
         </propgroup>
@@ -650,10 +650,10 @@
           <proptext name ="tabHeight" description="tab高度"/>
           <proptext name ="tabPos" description="tab左偏移"/>
           <proptext name ="tabInterSize" description="tab间隔宽度"/>
-          <propoption name ="tabInterSkin"  ButtonType="skin" description="tab间隔皮肤"/>
-          <propoption name ="tabSkin"  ButtonType="skin" description="tab皮肤"/>
-          <propoption name ="iconSkin"  ButtonType="skin" description="tab图标皮肤"/>
-          <propoption name ="frameSkin"  ButtonType="skin" description="tab"/>
+          <propoption name ="tabInterSkin"  extendType="skin" description="tab间隔皮肤"/>
+          <propoption name ="tabSkin"  extendType="skin" description="tab皮肤"/>
+          <propoption name ="iconSkin"  extendType="skin" description="tab图标皮肤"/>
+          <propoption name ="frameSkin"  extendType="skin" description="tab"/>
           <proptext name ="icon-x" description="图标显示位置X"/>
           <proptext name ="icon-y" description="图标显示位置Y"/>
           <proptext name ="text-x" description="文本显示位置X"/>
@@ -710,11 +710,11 @@
           <proptext name ="itemMargin" />
           <propoption name ="checkBox" options="是:1|否:0" description="有复选框"/>
           <propoption name ="rightClickSel" options="是:1|否:0" description="右键选择"/>
-          <propoption name ="itemBkgndSkin"  ButtonType="skin" description="列表项背景皮肤"/>
-          <propoption name ="itemSelSkin"  ButtonType="skin" description="选中项皮肤"/>
-          <propoption name ="toggleSkin"  ButtonType="skin" description=""/>
-          <propoption name ="iconSkin"  ButtonType="skin" description="图标皮肤"/>
-          <propoption name ="checkSkin"  ButtonType="skin" description="复选框皮肤"/>
+          <propoption name ="itemBkgndSkin"  extendType="skin" description="列表项背景皮肤"/>
+          <propoption name ="itemSelSkin"  extendType="skin" description="选中项皮肤"/>
+          <propoption name ="toggleSkin"  extendType="skin" description=""/>
+          <propoption name ="iconSkin"  extendType="skin" description="图标皮肤"/>
+          <propoption name ="checkSkin"  extendType="skin" description="复选框皮肤"/>
           <propcolor name ="colorItemBkgnd" description="Item背景颜色"/>
           <propcolor name ="colorItemSelBkgnd" description="选中项背景颜色"/>
           <propcolor name ="colorItemText" description="Item文本颜色"/>

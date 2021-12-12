@@ -61,6 +61,7 @@ public:
 
 	SStringA GetColorAutos(SStringT prev);
 
+	SStringT GetSkinXmlName() const;
 
 	void GetSubNodes(pugi::xml_node & parentNode, SStringT parentNodeName);
 

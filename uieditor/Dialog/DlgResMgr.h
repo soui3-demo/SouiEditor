@@ -10,12 +10,13 @@ class ResManger;
 namespace SOUI
 {
 
+	class CResAdapter;
 	class SResMgrDlg: public SHostDialog
 	{
 	public:
 		SResMgrDlg(SStringT strPath,ResManger* pResFileManger);
 
-		~SResMgrDlg(void) { }
+		~SResMgrDlg(void);
 
 
 	protected:
@@ -25,7 +26,7 @@ namespace SOUI
 		void OnRemoveResource();
 
 		bool OnLbResTypeSelChanged(EventArgs *pEvtBase);
-		bool OnLbResSelChanged(EventArgs *pEvtBase);
+		bool OnLvResSelChanged(EventArgs *pEvtBase);
 		bool OnReNotify(EventArgs *pEvt);
 
 		void OnOK();
@@ -56,8 +57,8 @@ namespace SOUI
 	private:
 
 	    SListBox *m_lbResType;  //资源类型
-		SListBox *m_lbRes;  //资源
-
+		SListView * m_lvRes;//资源
+		SAutoRefPtr<CResAdapter> m_pResAdapter;
 		ResManger* m_pResFileManger;	//所有资源文件的管理
 
 		SStringT m_strProPath;

@@ -536,7 +536,7 @@ void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
 
 		m_pXmlEdtior->LoadXml(filename,SStringT());
 
-		BOOL bSkin = filename.EndsWith(_T("skin.xml"));
+		BOOL bSkin = filename.EndsWith(m_UIResFileMgr.GetSkinXmlName());
 		m_editXmlType = bSkin?XML_SKIN:XML_UNKNOWN;
 		UpdateToolbar();
 	}

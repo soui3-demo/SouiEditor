@@ -519,3 +519,8 @@ void ResManger::onXmlSave(LPCTSTR pszFileName)
 		LoadStyleFile();
 	}
 }
+
+SOUI::SStringT ResManger::GetSkinXmlName() const
+{
+	return m_strSkinFile.Right(m_strSkinFile.GetLength()-m_strProPath.GetLength()-1);
+}
