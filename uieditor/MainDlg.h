@@ -27,6 +27,7 @@ public:
 		int iIcon;
 		SStringT strTxt;
 		SStringT strTip;
+		SStringT strElement;
 		SStringA strContent;
 	};
 	struct IListener{
@@ -50,6 +51,7 @@ public:
 			{
 				IconInfo info;
 				info.iIcon = xmlWidget.attribute(L"icon").as_int(0);
+				info.strElement = xmlWidget.name();
 				if(xmlWidget.attribute(L"text"))
 					info.strTxt=xmlWidget.attribute(L"text").as_string();
 				else
@@ -101,6 +103,7 @@ public:
 	struct IconInfo{
 		int iIcon;
 		SStringT strTxt;
+		SStringT strElement;
 		SStringT strTip;
 	};
 
@@ -126,11 +129,11 @@ public:
 			{
 				IconInfo info;
 				info.iIcon = xmlSkin.attribute(L"icon").as_int(0);
+				info.strElement = xmlSkin.name();
 				if(xmlSkin.attribute(L"text"))
 					info.strTxt=xmlSkin.attribute(L"text").as_string();
 				else
 					info.strTxt = xmlSkin.name();
-				info.strTxt = xmlSkin.name();
 				info.strTip = xmlSkin.attribute(L"tip").as_string();
 				m_arrIcons.Add(info);
 			}

@@ -621,7 +621,7 @@ BOOL CMainDlg::OnDrop(LPCTSTR pszName)
 
 void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 {
-	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getCtrlDefNode().child(L"controls"),info->strTxt);
+	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getCtrlDefNode().child(L"controls"),info->strElement);
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());
@@ -630,7 +630,7 @@ void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 
 void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 {
-	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getSkinDefNode().child(L"skins"),info->strTxt);
+	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getSkinDefNode().child(L"skins"),info->strElement);
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());
