@@ -131,7 +131,7 @@
 
           <propoption title="光标" name ="cursor" options="arrow|ibeam|wait|cross|uparrow|size|sizenwse|sizenesw|sizewe|sizens|sizeall|no|hand|help" description="鼠标形状"/>
           <propoption title="float" name ="float" options="是:1|否:0" description="窗口位置固定不动的标志"/>
-          <propoption  title="layout" name ="layout" options="Grid布局:gridLayout|线性水平:hbox|线性垂直:vbox" description="布局形式"/>
+          <propoption  title="layout" name ="layout" options="锚点布局:soui|Grid布局:gridLayout|线性水平:hbox|线性垂直:vbox" description="布局形式"/>
           <propoption title="gravity" name ="gravity" options="左:left|上:top|中:center|右:right|下:bottom" description="子控件的对齐方式"/>
           <propoption title="layout_gravity" name ="layout_gravity" options="左:left|上:top|中:center|右:right|下:bottom" description="相对于父控件的对齐方式"/>
 
