@@ -28,8 +28,8 @@
                 <edit size="-2,20" extend="0,5,0,5" name="NAME_UIDESIGNER_edit_SEARCH" cueText="过滤" />
                 <listview name="lv_res_path" size="-2,0" weight="1"  hotTrack="1">
                   <template itemHeight="30" colorText="#FFFFFF" colorSelText="#FFFFFF" colorItemSelBkgnd="rgb(234,128,16)" layout="hbox">
-                    <text name="txt_name" size="150,-2" colorText="#ff0000"/>
-                    <text name="txt_path" size="0,-2" weight="1" colorText="#ff0000"/>
+                    <text name="txt_name" size="150,-2" colorText="@color/white"/>
+                    <text name="txt_path" size="0,-2" weight="1" colorText="@color/white"/>
                   </template>
                 </listview>
               </window>

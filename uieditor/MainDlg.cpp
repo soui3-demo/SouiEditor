@@ -39,20 +39,11 @@ CMainDlg::~CMainDlg()
 
 BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 {
-
-	m_strOrigTitle = GETSTRING(R.string.title);
-
 	m_treePro = FindChildByName2<STreeCtrl>(L"workspace_tree");
 	m_treePro->SetListener(this);
 	m_lbWorkSpaceXml = FindChildByName2<SListBox>(L"workspace_xmlfile_lb");
-	m_staticAppTitle = FindChildByName2<SStatic>(L"apptitle");
 	m_btn_recentFile = FindChildByName2<SButton>(L"toolbar_btn_recent");
-
-	m_textNodenum = FindChildByName2<SStatic>(L"uidesigner_nodenum");
-	m_textCtrlTypename = FindChildByName2<SStatic>(L"uidesigner_CtrlTypename");
 	
-	m_edtDesc = FindChildByName2<SRichEdit>(L"uidesigner_DescText");
-
 	m_tabWorkspace = FindChildByName2<STabCtrl>(L"workspace_tab");
 
 	m_lvSkin = FindChildByName2<SListView>(L"lv_tb_skin");
@@ -291,7 +282,6 @@ bool CMainDlg::CloseProject()
 
 	SendMsgToViewer(exitviewer_id, NULL, 0);
 	m_bIsOpen = FALSE;
-	m_staticAppTitle->SetWindowText(m_strOrigTitle);
 	return true;
 }
 

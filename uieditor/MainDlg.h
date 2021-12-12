@@ -285,18 +285,12 @@ public:
 	STreeCtrl * m_treePro;			//工程Layout列表
 	SListBox* m_lbWorkSpaceXml;		//工程中的XML文件列表
 
-	SStringT  m_strOrigTitle;		//编辑器原有的默认标题
-
 	SStringT  m_cmdWorkspaceFile;	//命令行要打开的工程文件
 
 	ResManger m_UIResFileMgr;	// 管理编辑的UI文件资源
 
 	CXmlEditor *m_pXmlEdtior;
 	XmlType		m_editXmlType;
-
-	SStatic* m_staticAppTitle;		//软件标题
-	SStatic* m_textNodenum;			//当前编辑窗口的控件数量
-	SStatic* m_textCtrlTypename;	//显示选择的控件类型
 	
 	SListView * m_lvSkin;
 	SListView * m_lvWidget;
@@ -304,11 +298,9 @@ public:
 	SStringT m_strUiresPath;	//uires.idx 的全路径
 	SStringT m_strProPath;
 
-	SRichEdit* m_edtDesc; //属性描述
-
 	STabCtrl *m_tabWorkspace;
 	
 	HWND		m_hViewer;
-	BOOL m_bIsOpen;  //工程是否打开
-	bool	 m_bAutoSave;
+	BOOL		m_bIsOpen;  //工程是否打开
+	bool		m_bAutoSave;
 };
