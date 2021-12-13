@@ -314,7 +314,7 @@ void CScintillaWnd::SetXmlLexer(COLORREF bkColor)
 	SendMessage(SCI_SETSTYLEBITS, 7);
 
 	// 设置全局style. 这些属性会在无其它选择时被应用.
-	SetAStyle(STYLE_DEFAULT, black, bkColor, 9, "Verdana");
+	SetAStyle(STYLE_DEFAULT, black, bkColor, 12, "Verdana");
 	SendMessage(SCI_STYLECLEARALL);
 	const COLORREF CR_RED = RGB(0xFF, 0, 0);
 	const COLORREF CR_OFFWHITE = RGB(0xFF, 0xFB, 0xF0);
@@ -323,7 +323,7 @@ void CScintillaWnd::SetXmlLexer(COLORREF bkColor)
 
 	SendMessage(SCI_STYLESETBOLD, STYLE_CONTROLCHAR, 1);
 	// Hypertext default is used for all the document's text
-	SetAStyle(SCE_H_DEFAULT, black, bkColor, 9, "宋体");
+	SetAStyle(SCE_H_DEFAULT, black, bkColor, 12, "宋体");
 
 	SetAStyle(SCE_H_TAG, RGB(128, 0, 255));
 	SetAStyle(SCE_H_TAGEND, RGB(128, 0, 255));

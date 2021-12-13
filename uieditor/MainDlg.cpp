@@ -80,6 +80,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	if (MainWnd)
 		RegisterDragDrop(MainWnd->GetSwnd(), new CDropTarget(this));
 
+	UpdateToolbar();
 	return 0;
 }
 
@@ -278,10 +279,11 @@ bool CMainDlg::CloseProject()
 	m_UIResFileMgr.ReleaseUIRes();	
 
 	m_editXmlType = XML_UNKNOWN;
-	UpdateToolbar();
+	UpdateEditorToolbar();
 
 	SendMsgToViewer(exitviewer_id, NULL, 0);
 	m_bIsOpen = FALSE;
+	UpdateToolbar();
 	return true;
 }
 
@@ -371,7 +373,7 @@ void CMainDlg::OpenProject(SStringT strFileName)
 
 
 	m_bIsOpen = TRUE;
-
+	UpdateToolbar();
 	if (std::find(m_vecRecentFile.begin(), m_vecRecentFile.end(), strFileName) == m_vecRecentFile.end())
 	{
 		m_vecRecentFile.push_back(strFileName);
@@ -496,7 +498,7 @@ void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 
 	m_pXmlEdtior->LoadXml(*s, strLayoutName);
 	m_editXmlType = XML_LAYOUT;
-	UpdateToolbar();
+	UpdateEditorToolbar();
 }
 
 
@@ -528,7 +530,7 @@ void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
 
 		BOOL bSkin = filename.EndsWith(m_UIResFileMgr.GetSkinXmlName());
 		m_editXmlType = bSkin?XML_SKIN:XML_UNKNOWN;
-		UpdateToolbar();
+		UpdateEditorToolbar();
 	}
 }
 
@@ -703,7 +705,7 @@ void CMainDlg::onScintillaAutoComplete(CScintillaWnd *pSci,char ch)
 	}
 }
 
-void CMainDlg::UpdateToolbar()
+void CMainDlg::UpdateEditorToolbar()
 {
 	switch(m_editXmlType)
 	{
@@ -750,4 +752,16 @@ bool CMainDlg::CheckSave()
 		}
 	}
 	return true;
+}
+
+void CMainDlg::UpdateToolbar()
+{
+	FindChildByID(R.id.toolbar_btn_Open)->EnableWindow(!m_bIsOpen,TRUE);
+	FindChildByID(R.id.toolbar_btn_recent)->EnableWindow(!m_bIsOpen,TRUE);
+	
+	FindChildByID(R.id.toolbar_btn_NewInclude)->EnableWindow(m_bIsOpen,TRUE);
+	FindChildByID(R.id.toolbar_btn_NewLayout)->EnableWindow(m_bIsOpen,TRUE);
+	FindChildByID(R.id.toolbar_btn_savexml)->EnableWindow(m_bIsOpen,TRUE);
+	FindChildByID(R.id.toolbar_btn_resmgr)->EnableWindow(m_bIsOpen,TRUE);
+	FindChildByID(R.id.toolbar_btn_Close)->EnableWindow(m_bIsOpen,TRUE);
 }

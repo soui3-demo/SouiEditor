@@ -193,8 +193,8 @@ protected:
 	void ReloadWorkspaceUIRes();
 	bool CloseProject();
 
+	void UpdateEditorToolbar();
 	void UpdateToolbar();
-
 	bool CheckSave();
 protected:
 	void onScintillaSave(CScintillaWnd *pSci,LPCTSTR pszFileName) override;
@@ -235,7 +235,7 @@ protected:
 		EVENT_ID_COMMAND(R.id.toolbar_btn_NewLayout, OnBtnNewLayout)
 		EVENT_ID_COMMAND(R.id.toolbar_btn_NewInclude, OnBtnNewInclude)
 		EVENT_ID_COMMAND(R.id.toolbar_btn_savexml, OnBtnSave)
-		EVENT_ID_COMMAND(R.id.toolbar_btn_about, OnBtnAbout)
+		EVENT_ID_COMMAND(R.id.btn_help, OnBtnAbout)
 		EVENT_ID_COMMAND(R.id.toolbar_btn_recent, OnBtnRecentFile)
 		
 		EVENT_ID_COMMAND(R.id.toolbar_btn_resmgr, OnBtnResMgr)

@@ -17,11 +17,8 @@ namespace SOUI
 			SStringT strPath;
 		};
 
-		struct IListener
-		{
-		};
 	public:
-		CResAdapter(IListener * pListener):m_pListener(pListener)
+		CResAdapter()
 		{
 
 		}
@@ -117,7 +114,6 @@ namespace SOUI
 	private:
 		SArray<ResInfo> m_arrFiles;
 		SArray<int>		m_arrFilters;
-		IListener * m_pListener;
 		SStringT	    m_strFilter;
 	};
 
@@ -150,7 +146,7 @@ namespace SOUI
 		m_lbResType->GetEventSet()->subscribeEvent(EVT_LB_SELCHANGED, Subscriber(&SResMgrDlg::OnLbResTypeSelChanged, this));
 
 		m_lvRes = FindChildByID2<SListView>(R.id.lv_res_path);
-		m_pResAdapter.Attach(new CResAdapter(NULL));
+		m_pResAdapter.Attach(new CResAdapter());
 		m_lvRes->SetAdapter(m_pResAdapter);
 		m_lvRes->GetEventSet()->subscribeEvent(EventLVSelChanged::EventID,Subscriber(&SResMgrDlg::OnLvResSelChanged,this));
 
@@ -185,6 +181,7 @@ namespace SOUI
 			SStringT strText = listbox->GetText(pEvt->nNewSel);
 			CResAdapter *pAdapter = (CResAdapter*)m_lvRes->GetAdapter();
 			pAdapter->Init(m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strText),true);
+			m_lvRes->SetSel(-1);
 			m_pEdit->GetEventSet()->setMutedState(true);
 			m_pEdit->SetWindowText(_T(""));
 			m_pEdit->GetEventSet()->setMutedState(false);
