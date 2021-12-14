@@ -114,6 +114,10 @@ namespace SOUI
 				SStringT strOption = Value2Option(m_strValue);
 				int iFind = m_pCombobox->FindString(strOption);
 				m_pCombobox->SetCurSel(iFind);
+				if(iFind == -1)
+				{
+					m_pCombobox->SetWindowText(strOption);
+				}
 			}
 			m_pCombobox->SetFocus();
         }else

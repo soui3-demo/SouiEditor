@@ -57,6 +57,7 @@ HEADERS += CDebug.h \
            ResManger.h \
            resource.h \
            DropTarget.h \
+           souidlgs.h \
            ScintillaWnd.h \
            SImageBtnEx.h \
            SImgCanvas.h \
