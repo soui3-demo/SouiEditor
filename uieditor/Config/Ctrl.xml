@@ -2,7 +2,7 @@
 
 <root>
   <toolbar>
-    <icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="31"/>
+    <icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="32"/>
   </toolbar>
   <controls>
     <!-- pos和size都不是必须的，设计器根据鼠标按下的位置设置pos -->
@@ -739,6 +739,23 @@
         </propgroup>
       </groups>
     </treeview>
+    
+    <hexedit icon="31" parent="div">
+      <hexedit pos="0,0" size="200,200" AutoBytesPerRow="1" HexBkColor="#ffff80" AsciiBkColor="#78ebe6" clipClient="1" >        
+      </hexedit>
+      <groups>
+        <propgroup name="属性:hexedit">
+          <proptext name ="AddrSize" description="地址占几字节"/>
+          <proptext name="BytesPerRow" description="每行显示字节数" />
+          <propoption name="AutoBytesPerRow" options="是:1|否:0" description="自动计算每行字节数"/>
+          <propoption name ="readOnly" options="是:1|否:0" description="只读状态"/>
+          <propcolor name ="AddrBkColor" description="地址区背景颜色"/>
+          <propcolor name ="HexBkColor" description="Hex区背景颜色"/>
+          <propcolor name ="AsciiBkColor" description="文本区背景颜色"/>          
+        </propgroup>
+      </groups>
+    </hexedit>
+    
   </controls>
 </root>
 
