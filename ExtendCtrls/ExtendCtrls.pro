@@ -57,7 +57,8 @@ SOURCES+=$(SOUI3PATH)/controls.extend/SRatingBar.cpp
 SOURCES+=$(SOUI3PATH)/controls.extend/SRadioBox2.cpp
 SOURCES+=$(SOUI3PATH)/controls.extend/SMcListViewEx/SHeaderCtrlEx.cpp
 SOURCES+=$(SOUI3PATH)/controls.extend/SGroupList.cpp
-
+SOURCES+=$(SOUI3PATH)/controls.extend/SHexEdit.cpp
+SOURCES+=$(SOUI3PATH)/controls.extend/SByteArray.cpp
 
 HEADERS+= SCtrlsRegister.h
 HEADERS+=$(SOUI3PATH)/controls.extend/image3d/3dlib.h
@@ -82,5 +83,5 @@ HEADERS+=$(SOUI3PATH)/controls.extend/SRatingBar.h
 HEADERS+=$(SOUI3PATH)/controls.extend/SRadioBox2.h
 HEADERS+=$(SOUI3PATH)/controls.extend/SMcListViewEx/SHeaderCtrlEx.h
 HEADERS+=$(SOUI3PATH)/controls.extend/SGroupList.h
-
-
+HEADERS+=$(SOUI3PATH)/controls.extend/SHexEdit.h
+HEADERS+=$(SOUI3PATH)/controls.extend/SByteArray.h

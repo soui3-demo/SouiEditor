@@ -22,6 +22,7 @@
 #include <SGroupList.h>
 #include <SChromeTabCtrl.h>
 #include <SScrollText.h>
+#include "SHexEdit.h"
 
 namespace SOUI{
 
@@ -42,7 +43,7 @@ void SCtrlsRegister::RegisterCtrls(SApplication *theApp)
 	theApp->RegisterWindowClass<SRadioBox2>();
 	theApp->RegisterWindowClass<SGroupList>();
 	theApp->RegisterWindowClass<SScrollText>();
-
+	theApp->RegisterWindowClass<SHexEdit>();
 
 	//extened skins
 	theApp->RegisterSkinClass<SColorMask>();

@@ -164,6 +164,10 @@
 				RelativePath="D:\work\soui3.git\controls.extend\SText.cpp" />
 			<File
 				RelativePath="D:\work\soui3.git\controls.extend\STurn3DView.cpp" />
+             <File
+				RelativePath="D:\work\soui3.git\controls.extend\SByteArray.cpp" />
+            <File
+				RelativePath="D:\work\soui3.git\controls.extend\SHexEdit.cpp" />    
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -215,6 +219,10 @@
 				RelativePath="D:\work\soui3.git\controls.extend\SText.h" />
 			<File
 				RelativePath="D:\work\soui3.git\controls.extend\STurn3DView.h" />
+            <File
+				RelativePath="D:\work\soui3.git\controls.extend\SByteArray.h" />
+            <File
+				RelativePath="D:\work\soui3.git\controls.extend\SHexEdit.h" />
 			<File
 				RelativePath="stdafx.h">
 				<FileConfiguration
