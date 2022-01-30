@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3290A555-C744-3448-8FF1-89DD2BDF1FA3}</ProjectGuid>
-    <RootNamespace>ExtendCtrls</RootNamespace>
+    <ProjectGuid>{0EEAE831-1079-3AAB-A9DE-3A7DEB6C9FF7}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <OutputDirectory>..\bin\</OutputDirectory>
-    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
-    <CharacterSet>Unicode</CharacterSet>
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <IntermediateDirectory>..\obj\release\ExtendCtrls\</IntermediateDirectory>
-    <PlatformToolset>v142</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <OutputDirectory>..\bin\</OutputDirectory>
-    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
-    <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <IntermediateDirectory>..\obj\debug\ExtendCtrls\</IntermediateDirectory>
     <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\obj\release\ExtendCtrls\</IntDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\obj\debug\ExtendCtrls\</IntDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <_ProjectFileVersion>16.0.32002.118</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\bin\</OutDir>
+    <IntDir>..\obj\release\ExtendCtrls\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\bin\</OutDir>
+    <IntDir>..\obj\debug\ExtendCtrls\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;..\..\soui3.git\tools\mkspecs\win32-msvc2017;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-FS /MP -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;..\..\soui3.git\tools\mkspecs\win32-msvc2008;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>..\obj\release\ExtendCtrls\</AssemblerListingLocation>
-      <BrowseInformation>false</BrowseInformation>
-      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DebugInformationFormat />
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
       <ObjectFileName>..\obj\release\ExtendCtrls\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)ExtendCtrls.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)\ExtendCtrls.pch</PrecompiledHeaderOutputFile>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DYNAMIC_CAST;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Lib>
-      <OutputFile>$(OutDir)\ExtendCtrls.lib</OutputFile>
+      <OutputFile>$(OutDir)ExtendCtrls.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Midl>
@@ -82,33 +81,33 @@
     </Midl>
     <ResourceCompile>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DYNAMIC_CAST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ResourceOutputFileName>$(OutDir)\$(InputName).res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(OutDir)%(Filename).res</ResourceOutputFileName>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;..\..\soui3.git\tools\mkspecs\win32-msvc2017;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-FS /MP -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;$(SOUI3PATH)/utilities/include;$(SOUI3PATH)/soui/include;$(SOUI3PATH)/components;$(SOUI3PATH)/config;.;$(SOUI3PATH)/controls.extend;..\..\soui3.git\tools\mkspecs\win32-msvc2008;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>..\obj\debug\ExtendCtrls\</AssemblerListingLocation>
-      <BrowseInformation>false</BrowseInformation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ObjectFileName>..\obj\debug\ExtendCtrls\</ObjectFileName>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)\ExtendCtrlsd.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DYNAMIC_CAST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ObjectFileName>..\obj\debug\ExtendCtrls\</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeaderOutputFile>$(IntDir)ExtendCtrlsd.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DYNAMIC_CAST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Lib>
-      <OutputFile>$(OutDir)\ExtendCtrlsd.lib</OutputFile>
+      <OutputFile>$(OutDir)ExtendCtrlsd.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Midl>
@@ -118,136 +117,141 @@
     </Midl>
     <ResourceCompile>
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DYNAMIC_CAST;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ResourceOutputFileName>$(OutDir)\$(InputName).res</ResourceOutputFileName>
+      <ResourceOutputFileName>$(OutDir)%(Filename).res</ResourceOutputFileName>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="D:\work\soui3.git\controls.extend\image3d\3dlib.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\image3d\3dmatrix.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\image3d\3dtransform.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\ExtendSkins.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SButtonEx.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SChromeTabCtrl.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\ExtendSkins.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\gif\SGifPlayer.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\gif\SSkinAPNG.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\gif\SSkinGif.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\image3d\3dlib.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\image3d\3dmatrix.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\image3d\3dtransform.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SButtonEx.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SByteArray.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SChromeTabCtrl.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SFreeMoveWindow.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SGroupList.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SHexEdit.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SImageMaskWnd.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SIPAddressCtrl.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SListCtrlEx.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SMcListViewEx\SHeaderCtrlEx.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SRadioBox2.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SRatingBar.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SScrollText.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\STabCtrl2.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\SText.cpp" />
+    <ClCompile Include="..\..\..\controls.extend\STurn3DView.cpp" />
     <ClCompile Include="SCtrlsRegister.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SFreeMoveWindow.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\gif\SGifPlayer.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SGroupList.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SMcListViewEx\SHeaderCtrlEx.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SIPAddressCtrl.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SImageMaskWnd.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SListCtrlEx.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SRadioBox2.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SRatingBar.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SScrollText.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\gif\SSkinAPNG.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\gif\SSkinGif.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\STabCtrl2.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\SText.cpp" />
-    <ClCompile Include="D:\work\soui3.git\controls.extend\STurn3DView.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="D:\work\soui3.git\controls.extend\image3d\3dTransform.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\image3d\3dlib.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\image3d\3dmatrix.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\ExtendSkins.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\image3d\PerspectiveTransform.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SButtonEx.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SChromeTabCtrl.h" />
-    <ClInclude Include="SCtrlsRegister.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SFreeMoveWindow.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\gif\SGifPlayer.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SGroupList.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SMcListViewEx\SHeaderCtrlEx.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SIPAddressCtrl.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SImageMaskWnd.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SListCtrlEx.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SRadioBox2.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SRatingBar.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SScrollText.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\gif\SSkinAPNG.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\gif\SSkinGif.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\STabCtrl2.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\SText.h" />
-    <ClInclude Include="D:\work\soui3.git\controls.extend\STurn3DView.h" />
-    <CustomBuild Include="stdafx.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">echo /*-------------------------------------------------------------------- &gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * Precompiled header source file used by Visual Studio.NET to generate&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * the .pch file.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo *&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * Due to issues with the dependencies checker within the IDE, it&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * sometimes fails to recompile the PCH file, if we force the IDE to&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * create the PCH file directly from the header file.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo *&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo *&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * WARNING: All changes made in this file will be lost.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo --------------------------------------------------------------------*/&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo #include "stdafx.h"&gt;&gt;stdafx.h.cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating precompiled header source file 'stdafx.h.cpp' ...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h.cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">echo /*-------------------------------------------------------------------- &gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * Precompiled header source file used by Visual Studio.NET to generate&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * the .pch file.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo *&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * Due to issues with the dependencies checker within the IDE, it&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * sometimes fails to recompile the PCH file, if we force the IDE to&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * create the PCH file directly from the header file.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo *&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo *&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo * WARNING: All changes made in this file will be lost.&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo --------------------------------------------------------------------*/&gt;&gt;stdafx.h.cpp
-if errorlevel 1 goto VCEnd
-echo #include "stdafx.h"&gt;&gt;stdafx.h.cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating precompiled header source file 'stdafx.h.cpp' ...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="stdafx.h.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NOINHERIT)</ForcedIncludeFiles>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NOINHERIT)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\controls.extend\ExtendSkins.h" />
+    <ClInclude Include="..\..\..\controls.extend\gif\SGifPlayer.h" />
+    <ClInclude Include="..\..\..\controls.extend\gif\SSkinAPNG.h" />
+    <ClInclude Include="..\..\..\controls.extend\gif\SSkinGif.h" />
+    <ClInclude Include="..\..\..\controls.extend\image3d\3dlib.h" />
+    <ClInclude Include="..\..\..\controls.extend\image3d\3dmatrix.h" />
+    <ClInclude Include="..\..\..\controls.extend\image3d\3dTransform.h" />
+    <ClInclude Include="..\..\..\controls.extend\image3d\PerspectiveTransform.h" />
+    <ClInclude Include="..\..\..\controls.extend\SButtonEx.h" />
+    <ClInclude Include="..\..\..\controls.extend\SByteArray.h" />
+    <ClInclude Include="..\..\..\controls.extend\SChromeTabCtrl.h" />
+    <ClInclude Include="..\..\..\controls.extend\SFreeMoveWindow.h" />
+    <ClInclude Include="..\..\..\controls.extend\SGroupList.h" />
+    <ClInclude Include="..\..\..\controls.extend\SHexEdit.h" />
+    <ClInclude Include="..\..\..\controls.extend\SImageMaskWnd.h" />
+    <ClInclude Include="..\..\..\controls.extend\SIPAddressCtrl.h" />
+    <ClInclude Include="..\..\..\controls.extend\SListCtrlEx.h" />
+    <ClInclude Include="..\..\..\controls.extend\SMcListViewEx\SHeaderCtrlEx.h" />
+    <ClInclude Include="..\..\..\controls.extend\SRadioBox2.h" />
+    <ClInclude Include="..\..\..\controls.extend\SRatingBar.h" />
+    <ClInclude Include="..\..\..\controls.extend\SScrollText.h" />
+    <ClInclude Include="..\..\..\controls.extend\STabCtrl2.h" />
+    <ClInclude Include="..\..\..\controls.extend\SText.h" />
+    <ClInclude Include="..\..\..\controls.extend\STurn3DView.h" />
+    <ClInclude Include="SCtrlsRegister.h" />
+    <CustomBuild Include="stdafx.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">echo /*-------------------------------------------------------------------- &gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * Precompiled header source file used by Visual Studio.NET to generate&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * the .pch file.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo *&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * Due to issues with the dependencies checker within the IDE, it&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * sometimes fails to recompile the PCH file, if we force the IDE to&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * create the PCH file directly from the header file.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo *&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo *&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * WARNING: All changes made in this file will be lost.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo --------------------------------------------------------------------*/&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo #include "stdafx.h"&gt;&gt;stdafx.h.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating precompiled header source file %27stdafx.h.cpp%27 ...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h.cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">echo /*-------------------------------------------------------------------- &gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * Precompiled header source file used by Visual Studio.NET to generate&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * the .pch file.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo *&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * Due to issues with the dependencies checker within the IDE, it&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * sometimes fails to recompile the PCH file, if we force the IDE to&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * create the PCH file directly from the header file.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo *&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * This file is auto-generated by qmake since no PRECOMPILED_SOURCE was&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * specified, and is used as the common stdafx.cpp. The file is only&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * generated when creating .vcproj project files, and is not used for&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * command line compilations by nmake.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo *&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo * WARNING: All changes made in this file will be lost.&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo --------------------------------------------------------------------*/&gt;&gt;stdafx.h.cpp
+if errorlevel 1 goto VCReportError
+echo #include "stdafx.h"&gt;&gt;stdafx.h.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating precompiled header source file %27stdafx.h.cpp%27 ...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>
