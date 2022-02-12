@@ -4,11 +4,11 @@
 
 cmake_minimum_required(VERSION 3.4.3)
 project(SouiEditor)
-file (TO_CMAKE_PATH "$ENV{SOUIPATH}" SOUI_ROOT)
+file (TO_CMAKE_PATH "$ENV{SOUI3PATH}" SOUI_ROOT)
 
 message(STATUS "SOUI_ROOT: ${SOUI_ROOT}")
 if ("${SOUI_ROOT}" STREQUAL "")
-	message(FATAL_ERROR "FATAL:can't find env variable SOUIPATH, clone soui core and install wizard first, please.")
+	message(FATAL_ERROR "FATAL:can't find env variable SOUI3PATH, clone soui core and install wizard first, please.")
 endif()
 
 include(${SOUI_ROOT}/__cmake/cotire.cmake)
@@ -62,6 +62,19 @@ set(EXTENDCOTROLS ${EXTENDCOTROLS}
 	${SOUI_ROOT}/controls.extend/SRadioBox2.h
 	${SOUI_ROOT}/controls.extend/SMcListViewEx/SHeaderCtrlEx.h
 	${SOUI_ROOT}/controls.extend/SGroupList.h
+            $(SOUI_ROOT)/controls.extend/propgrid/colorpicker/ColourPopup.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/colorpicker/SColorPicker.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/colorpicker/Tooltipctrl.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/SPropertyEmbedWndHelper.hpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/SPropertyGrid.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/SPropertyItem-i.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/SPropertyItemBase.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Color.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Option.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Size.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Rect.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Text.h 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Group.h 
 )
 
 set(EXTENDCOTROLS ${EXTENDCOTROLS}
@@ -88,6 +101,17 @@ set(EXTENDCOTROLS ${EXTENDCOTROLS}
 	${SOUI_ROOT}/controls.extend/SRadioBox2.cpp
 	${SOUI_ROOT}/controls.extend/SMcListViewEx/SHeaderCtrlEx.cpp
 	${SOUI_ROOT}/controls.extend/SGroupList.cpp
+            $(SOUI_ROOT)/controls.extend/propgrid/SPropertyGrid.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/SPropertyItemBase.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Color.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Option.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Size.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Rect.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Text.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/propitem/SPropertyItem-Group.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/colorpicker/ColourPopup.cpp 
+            $(SOUI_ROOT)/controls.extend/propgrid/colorpicker/SColorPicker.cpp 
+
 )
 
 file(GLOB_RECURSE CURRENT_HEADERS  *.h *.hpp)

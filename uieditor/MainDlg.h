@@ -81,7 +81,7 @@ protected:
 		if(pIcon) pIcon->SetIcon(m_arrIcons[position].iIcon);
 		SWindow *pTxt = pItem->FindChildByName(L"item_text");
 		if(pTxt) pTxt->SetWindowText(m_arrIcons[position].strTxt);
-		pItem->GetEventSet()->subscribeEvent(EventItemPanelClick::EventID,Subscriber(&CWidgetTBAdapter::OnItemClick,this));
+		pItem->GetEventSet()->subscribeEvent(EventItemPanelClickUp::EventID,Subscriber(&CWidgetTBAdapter::OnItemClick,this));
 	}
 
 	bool OnItemClick(EventArgs *e)
@@ -156,7 +156,7 @@ protected:
 		if(pIcon) pIcon->SetIcon(m_arrIcons[position].iIcon);
 		SWindow *pTxt = pItem->FindChildByName(L"item_text");
 		if(pTxt) pTxt->SetWindowText(m_arrIcons[position].strTxt);
-		pItem->GetEventSet()->subscribeEvent(EventItemPanelClick::EventID,Subscriber(&CSkinTBAdapter::OnItemClick,this));
+		pItem->GetEventSet()->subscribeEvent(EventItemPanelClickUp::EventID,Subscriber(&CSkinTBAdapter::OnItemClick,this));
 	}
 
 	bool OnItemClick(EventArgs *e)

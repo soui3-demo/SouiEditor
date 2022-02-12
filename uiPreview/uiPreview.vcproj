@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="uiPreview"
-	ProjectGUID="{98B07D38-19B1-393B-9F74-4AB456531A95}"
+	ProjectGUID="{08AFBE58-4A16-3832-83B2-BC05E4BD2EDD}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

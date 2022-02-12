@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="uieditor"
-	ProjectGUID="{2B2D2DD5-0A57-37B1-9050-B5C917B5B5E4}"
+	ProjectGUID="{A4DD77DA-0895-3475-B9F9-2E5E5E556412}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
@@ -142,7 +142,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="propgrid\colorpicker\ColourPopup.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\colorpicker\ColourPopup.cpp" />
 			<File
 				RelativePath="DesignWnd.cpp" />
 			<File
@@ -162,27 +162,27 @@
 			<File
 				RelativePath="ResManger.cpp" />
 			<File
-				RelativePath="propgrid\colorpicker\SColorPicker.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\colorpicker\SColorPicker.cpp" />
 			<File
 				RelativePath="SImageBtnEx.cpp" />
 			<File
 				RelativePath="SImgCanvas.cpp" />
 			<File
-				RelativePath="propgrid\SPropertyGrid.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\SPropertyGrid.cpp" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Color.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Color.cpp" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Group.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Group.cpp" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Option.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Option.cpp" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Rect.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Rect.cpp" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Size.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Size.cpp" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Text.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Text.cpp" />
 			<File
-				RelativePath="propgrid\SPropertyItemBase.cpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\SPropertyItemBase.cpp" />
 			<File
 				RelativePath="SSwitch.cpp" />
 			<File
@@ -215,9 +215,9 @@
 			<File
 				RelativePath="CmdLine.h" />
 			<File
-				RelativePath="colorpicker\ColourPopup.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\colorpicker\ColourPopup.h" />
 			<File
-				RelativePath="propgrid\colorpicker\ColourPopup.h" />
+				RelativePath="colorpicker\ColourPopup.h" />
 			<File
 				RelativePath="DesignWnd.h" />
 			<File
@@ -243,9 +243,9 @@
 			<File
 				RelativePath="ResManger.h" />
 			<File
-				RelativePath="colorpicker\SColorPicker.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\colorpicker\SColorPicker.h" />
 			<File
-				RelativePath="propgrid\colorpicker\SColorPicker.h" />
+				RelativePath="colorpicker\SColorPicker.h" />
 			<File
 				RelativePath="..\ExtendCtrls\SCtrlsRegister.h" />
 			<File
@@ -253,25 +253,25 @@
 			<File
 				RelativePath="SImgCanvas.h" />
 			<File
-				RelativePath="propgrid\SPropertyEmbedWndHelper.hpp" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\SPropertyEmbedWndHelper.hpp" />
 			<File
-				RelativePath="propgrid\SPropertyGrid.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\SPropertyGrid.h" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Color.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Color.h" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Group.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Group.h" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Option.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Option.h" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Rect.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Rect.h" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Size.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Size.h" />
 			<File
-				RelativePath="propgrid\propitem\SPropertyItem-Text.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\propitem\SPropertyItem-Text.h" />
 			<File
-				RelativePath="propgrid\SPropertyItem-i.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\SPropertyItem-i.h" />
 			<File
-				RelativePath="propgrid\SPropertyItemBase.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\SPropertyItemBase.h" />
 			<File
 				RelativePath="SSwitch.h" />
 			<File
@@ -285,7 +285,7 @@
 			<File
 				RelativePath="SysdataMgr.h" />
 			<File
-				RelativePath="propgrid\colorpicker\Tooltipctrl.h" />
+				RelativePath="D:\work\soui3.git\controls.extend\propgrid\colorpicker\Tooltipctrl.h" />
 			<File
 				RelativePath="XmlEditor.h" />
 			<File

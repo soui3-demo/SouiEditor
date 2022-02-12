@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="uiviewer"
-	ProjectGUID="{F42D7928-C381-3967-84F3-CADC2F0B04B1}"
+	ProjectGUID="{EF6903AF-28A0-3991-8BB6-847DF4BD81D6}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

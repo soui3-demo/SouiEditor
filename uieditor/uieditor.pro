@@ -77,23 +77,24 @@ HEADERS += CDebug.h \
            Dialog/DlgNewLayout.h \
            Dialog/DlgResMgr.h \
            Dialog/DlgInsertXmlElement.h \
-           propgrid/colorpicker/ColourPopup.h \
-           propgrid/colorpicker/SColorPicker.h \
-           propgrid/colorpicker/Tooltipctrl.h \
-           propgrid/SPropertyEmbedWndHelper.hpp \
-           propgrid/SPropertyGrid.h \
-           propgrid/SPropertyItem-i.h \
-           propgrid/SPropertyItemBase.h \
-           propgrid/propitem/SPropertyItem-Color.h \
-           propgrid/propitem/SPropertyItem-Option.h \
-           propgrid/propitem/SPropertyItem-Size.h \
-           propgrid/propitem/SPropertyItem-Rect.h \
-           propgrid/propitem/SPropertyItem-Text.h \
-           propgrid/propitem/SPropertyItem-Group.h \
            SImgCanvas.h \
            ../ExtendCtrls/SCtrlsRegister.h \
            colorpicker/SColorPicker.h \
-           colorpicker/ColourPopup.h
+           colorpicker/ColourPopup.h \
+            $(SOUI3PATH)/controls.extend/propgrid/colorpicker/ColourPopup.h \
+            $(SOUI3PATH)/controls.extend/propgrid/colorpicker/SColorPicker.h \
+            $(SOUI3PATH)/controls.extend/propgrid/colorpicker/Tooltipctrl.h \
+            $(SOUI3PATH)/controls.extend/propgrid/SPropertyEmbedWndHelper.hpp \
+            $(SOUI3PATH)/controls.extend/propgrid/SPropertyGrid.h \
+            $(SOUI3PATH)/controls.extend/propgrid/SPropertyItem-i.h \
+            $(SOUI3PATH)/controls.extend/propgrid/SPropertyItemBase.h \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Color.h \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Option.h \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Size.h \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Rect.h \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Text.h \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Group.h
+
 SOURCES +=  \
            DesignWnd.cpp \
            helpapi.cpp \
@@ -117,13 +118,13 @@ SOURCES +=  \
            Dialog/DlgNewLayout.cpp \
            Dialog/DlgResMgr.cpp \
            Dialog/DlgInsertXmlElement.cpp \
-           propgrid/SPropertyGrid.cpp \
-           propgrid/SPropertyItemBase.cpp \
-           propgrid/propitem/SPropertyItem-Color.cpp \
-           propgrid/propitem/SPropertyItem-Option.cpp \
-           propgrid/propitem/SPropertyItem-Size.cpp \
-           propgrid/propitem/SPropertyItem-Rect.cpp \
-           propgrid/propitem/SPropertyItem-Text.cpp \
-           propgrid/propitem/SPropertyItem-Group.cpp \
-           propgrid/colorpicker/ColourPopup.cpp \
-           propgrid/colorpicker/SColorPicker.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/SPropertyGrid.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/SPropertyItemBase.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Color.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Option.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Size.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Rect.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Text.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/propitem/SPropertyItem-Group.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/colorpicker/ColourPopup.cpp \
+            $(SOUI3PATH)/controls.extend/propgrid/colorpicker/SColorPicker.cpp
