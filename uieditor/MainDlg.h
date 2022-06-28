@@ -203,6 +203,8 @@ protected:
 	BOOL OnDrop(LPCTSTR pszName) override;
 	void OnInsertWidget(CWidgetTBAdapter::IconInfo *info) override;
 	void OnInertSkin(CSkinTBAdapter::IconInfo * info) override;
+
+	void OnInsertItem(STreeCtrl *pTreeCtrl,HSTREEITEM hItem) override{}
 	void OnDeleteItem(STreeCtrl *pTreeCtrl,HSTREEITEM hItem,LPARAM lParam) override;
 protected:
 	//soui消息
